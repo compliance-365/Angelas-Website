@@ -1,0 +1,32 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const pages = [
+  { name: 'Home', path: '' },
+  { name: 'About', path: 'about/' },
+  { name: 'Case Studies', path: 'case-studies/' },
+  { name: 'Contact', path: 'contact/' },
+  { name: 'RAP Services', path: 'services/rap/' },
+  { name: 'RAP Dashboard', path: 'services/dashboard/' },
+  { name: 'Cultural Competency Training', path: 'services/training/' },
+  { name: 'Privacy Policy', path: 'privacy/' },
+  { name: 'Terms of Use', path: 'terms/' }
+];
+---
+
+<html lang="en">
+  <head>
+    <title>Sitemap | 2Ways Consultancy</title>
+    <meta name="description" content="Sitemap for 2Ways Consultancy — navigate to RAP services, training, dashboard, and contact pages." />
+  </head>
+  <body class="mx-auto max-w-4xl px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">Sitemap</h1>
+    <ul class="list-disc pl-6 space-y-2">
+      {pages.map((page) => (
+        <li>
+          <a href={`${base}${page.path}`} class="text-brand hover:underline">{page.name}</a>
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>
