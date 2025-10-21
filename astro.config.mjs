@@ -8,10 +8,5 @@ export default defineConfig({ site: 'https://compliance-365.github.io', base, /*
 
 export default defineConfig({
   site: 'https://compliance-365.github.io',
-  base,
-  trailingSlash: 'ignore',
-  output: 'static',
-  integrations: [tailwind({ applyBaseStyles: true }), sitemap()],
-  vite: { build: { sourcemap: true } },
-  server: { port: 4321 }
+  base: '/Angelas-Website/',  // <-- add the trailing slash here
 });
