@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+---
+<BaseLayout title={`Privacy Policy | ${SITE.name}`} description="Our approach to privacy." canonical={`${SITE.url}/privacy/`}>
+  <Fragment slot="header"><Header /></Fragment>
+  <section class="mx-auto max-w-3xl px-4 py-16 prose">
+    <h1>Privacy Policy</h1>
+    <p>Update with your policy text.</p>
+  </section>
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

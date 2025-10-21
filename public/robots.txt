@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://compliance-365.github.io/2ways-consultancy/sitemap-index.xml

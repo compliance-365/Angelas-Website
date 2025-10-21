@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+---
+<BaseLayout title={`Case Studies | ${SITE.name}`} description="RAP outcomes and client stories" canonical={`${SITE.url}/case-studies/`}>
+  <Fragment slot="header"><Header /></Fragment>
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h1 class="text-3xl font-bold">Case Studies</h1>
+    <p class="mt-2 max-w-3xl">Real outcomes from RAP delivery, training programs and evidence frameworks.</p>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      <article class="grid-card">
+        <h3 class="font-semibold">Energy Utility — Innovate RAP</h3>
+        <p class="text-sm mt-2">Scaled training, procurement targets and reporting. 98% actions on track in first quarter.</p>
+        <p class="text-xs mt-2 text-gray-500">Testimonial: “Clear roadmap and reliable reporting.”</p>
+      </article>
+      <article class="grid-card">
+        <h3 class="font-semibold">State Agency — Reflect RAP</h3>
+        <p class="text-sm mt-2">Discovery, stakeholder engagement, and governance foundations.</p>
+        <p class="text-xs mt-2 text-gray-500">Testimonial: “Engaged our leaders and teams effectively.”</p>
+      </article>
+      <article class="grid-card">
+        <h3 class="font-semibold">Construction — Stretch RAP</h3>
+        <p class="text-sm mt-2">Evidence framework, dashboard rollout and leadership workshops.</p>
+        <p class="text-xs mt-2 text-gray-500">Testimonial: “The dashboard made reporting painless.”</p>
+      </article>
+    </div>
+  </section>
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

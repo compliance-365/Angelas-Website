@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/brand/logo-icon.svg`,
+  areaServed: 'AU',
+  description: SITE.description
+};
+---
+<BaseLayout title={SITE.title} description={SITE.description} canonical={SITE.url} schema={schema}>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="relative bg-[url('/hero-home.webp')] bg-cover bg-center">
+    <div class="mx-auto max-w-6xl px-4 py-24 text-center text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));">
+      <p class="kicker">Indigenous Australian-led</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold">Reconciliation Action Plans & Cultural Competency Training</h1>
+      <p class="mt-4 md:text-lg">End-to-end RAP strategy, delivery and reporting — plus modular cultural capability programs for your teams.</p>
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <a href="/services/dashboard/" class="btn">Explore RAP Dashboard</a>
+        <a href="/services/training/" class="btn-outline">Cultural Competency Training</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h2 class="text-2xl font-semibold">Why Choose 2Ways</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+      <div class="grid-card">
+        <h3 class="font-semibold">RAP Dashboard</h3>
+        <p class="mt-2 text-sm">SharePoint-hosted hub for tasks, ownership, evidence and reporting — exportable for governance.</p>
+      </div>
+      <div class="grid-card">
+        <h3 class="font-semibold">Cultural Competency Training</h3>
+        <p class="mt-2 text-sm">Modular learning with live awareness sessions; leadership and team pathways.</p>
+      </div>
+      <div class="grid-card">
+        <h3 class="font-semibold">Supply Nation Registered</h3>
+        <p class="mt-2 text-sm">Support Indigenous procurement and supplier diversity targets with confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h2 class="text-2xl font-semibold">Featured Case Studies</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+      <a class="grid-card" href="/case-studies/">
+        <h3 class="font-semibold">Energy Utility — Innovate RAP</h3>
+        <p class="mt-2 text-sm">Scaled training, procurement targets and reporting — 12-month delivery roadmap.</p>
+      </a>
+      <a class="grid-card" href="/case-studies/">
+        <h3 class="font-semibold">State Agency — Reflect RAP</h3>
+        <p class="mt-2 text-sm">Discovery, stakeholder engagement and governance foundations.</p>
+      </a>
+      <a class="grid-card" href="/case-studies/">
+        <h3 class="font-semibold">Construction — Stretch RAP</h3>
+        <p class="mt-2 text-sm">Evidence framework, dashboard rollout and leadership workshops.</p>
+      </a>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import { SITE } from '../config/site';
+const { title = SITE.title, description = SITE.description, canonical = SITE.url, ogImage = SITE.ogImage, schema } = Astro.props;
+---
+<title>{title}</title>
+<link rel="canonical" href={canonical} />
+<meta name="description" content={description} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={`${SITE.url}${ogImage}`} />
+<meta property="og:site_name" content={SITE.name} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={`${SITE.url}${ogImage}`} />
+<link rel="alternate" href={SITE.url} hreflang={SITE.hreflang} />
+{schema && (<script type="application/ld+json" set:html={JSON.stringify(schema)} />)}

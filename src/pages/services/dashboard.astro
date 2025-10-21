@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE } from '../../config/site';
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "applicationCategory": "BusinessApplication",
+  "name": "2Ways RAP Dashboard",
+  "operatingSystem": "Web",
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"AUD"},
+  "description": "SharePoint-hosted RAP dashboard for tasks, owners, evidence and reporting."
+};
+---
+<BaseLayout title={`RAP Dashboard | ${SITE.name}`} description="SharePoint-hosted hub for RAP tasks, ownership, evidence and reporting." canonical={`${SITE.url}/services/dashboard/`} schema={schema}>
+  <Fragment slot="header"><Header /></Fragment>
+  <section class="relative bg-[url('/hero-dashboard.webp')] bg-cover bg-center">
+    <div class="mx-auto max-w-6xl px-4 py-20 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));">
+      <h1 class="text-3xl md:text-4xl font-extrabold">RAP Dashboard</h1>
+      <p class="mt-3 max-w-3xl">A SharePoint site template bundling lists, libraries and views for RAP delivery — exportable to customer tenants.</p>
+      <div class="mt-6 flex items-center gap-4">
+        <a href="#" class="btn">Request a Demo</a>
+        <a href="/contact/" class="btn-outline">Talk to Us</a>
+      </div>
+    </div>
+  </section>
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid-card">
+        <h3 class="font-semibold">Lists & Libraries</h3>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>RAP Actions (owners, due dates, status)</li>
+          <li>Milestones & Evidence</li>
+          <li>Training Sessions & Attendance</li>
+          <li>Risks & Issues</li>
+          <li>Reporting Periods (quarters)</li>
+        </ul>
+      </div>
+      <div class="grid-card">
+        <h3 class="font-semibold">Views & Reports</h3>
+        <p class="text-sm mt-2">Quarterly status, overdue actions, evidence due, KPI snapshots. Export to Excel or connect to Power BI.</p>
+      </div>
+      <div class="grid-card">
+        <h3 class="font-semibold">Automation</h3>
+        <p class="text-sm mt-2">Power Automate reminders, approvals and evidence requests.</p>
+      </div>
+    </div>
+    <div class="mt-10 p-6 border rounded-2xl">
+      <h3 class="font-semibold">Provisioning Approach</h3>
+      <ol class="list-decimal ml-5 text-sm mt-2">
+        <li>We build the site in our tenant (SharePoint).</li>
+        <li>Export via PnP provisioning or site template.</li>
+        <li>Import to your tenant; adjust permissions, flows and branding.</li>
+      </ol>
+      <p class="text-xs mt-3 text-gray-500">Note: Customer SharePoint admin access is required for import.</p>
+    </div>
+  </section>
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
