@@ -1,7 +1,6 @@
 ---
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL;  // "/" locally, "/Angelas-Website/" on Pages
 ---
-
 <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
   <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
     <a href={`${base}`} class="flex items-center gap-3">
@@ -16,12 +15,12 @@ const base = import.meta.env.BASE_URL;
       onclick="document.getElementById('navlinks').classList.toggle('hidden')">☰</button>
 
     <ul id="navlinks" class="hidden md:flex items-center gap-6 text-base font-medium">
-      <li><a href={`${base}about/`} class="hover:text-[#00A3AF] transition">About</a></li>
-      <li><a href={`${base}case-studies/`} class="hover:text-[#00A3AF] transition">Case Studies</a></li>
-      <li><a href={`${base}services/rap/`} class="hover:text-[#00A3AF] transition">RAP</a></li>
-      <li><a href={`${base}services/dashboard/`} class="hover:text-[#00A3AF] transition">RAP Dashboard</a></li>
-      <li><a href={`${base}services/training/`} class="hover:text-[#00A3AF] transition">Training</a></li>
-      <li><a href={`${base}contact/`} class="hover:text-[#00A3AF] transition">Contact</a></li>
+      <li><a href={`${base}about/`} class="hover:text-[#00A3AF]">About</a></li>
+      <li><a href={`${base}case-studies/`} class="hover:text-[#00A3AF]">Case Studies</a></li>
+      <li><a href={`${base}services/rap/`} class="hover:text-[#00A3AF]">RAP</a></li>
+      <li><a href={`${base}services/dashboard/`} class="hover:text-[#00A3AF]">RAP Dashboard</a></li>
+      <li><a href={`${base}services/training/`} class="hover:text-[#00A3AF]">Training</a></li>
+      <li><a href={`${base}contact/`} class="hover:text-[#00A3AF]">Contact</a></li>
     </ul>
   </nav>
 </header>
