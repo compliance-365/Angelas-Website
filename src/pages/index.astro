@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -16,51 +17,59 @@ const schema = {
 <BaseLayout title={SITE.title} description={SITE.description} canonical={SITE.url} schema={schema}>
   <Fragment slot="header"><Header /></Fragment>
 
+  <!-- Hero -->
   <section class="relative bg-[url('/hero-home.webp')] bg-cover bg-center">
-    <div class="mx-auto max-w-6xl px-4 py-24 text-center text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));">
+    <div class="mx-auto max-w-6xl px-4 py-24 text-center text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));">
       <p class="kicker">Indigenous Australian-led</p>
       <h1 class="text-3xl md:text-5xl font-extrabold">Reconciliation Action Plans & Cultural Competency Training</h1>
-      <p class="mt-4 md:text-lg">End-to-end RAP strategy, delivery and reporting — plus modular cultural capability programs for your teams.</p>
+      <p class="mt-4 md:text-lg">End-to-end RAP strategy, SharePoint dashboards for evidence & reporting, and practical training pathways.</p>
       <div class="mt-6 flex items-center justify-center gap-4">
-        <a href="/services/dashboard/" class="btn">Explore RAP Dashboard</a>
-        <a href="/services/training/" class="btn-outline">Cultural Competency Training</a>
+        <a href="/services/rap/" class="btn">Explore RAP Services</a>
+        <a href="/services/dashboard/" class="btn-outline">See RAP Dashboard</a>
+        <a href="/services/training/" class="btn-outline">Training Programs</a>
       </div>
     </div>
   </section>
 
+  <!-- 3-up Features -->
   <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="text-2xl font-semibold">Why Choose 2Ways</h2>
+    <h2 class="text-2xl font-semibold">What we do</h2>
     <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <div class="grid-card">
-        <h3 class="font-semibold">RAP Dashboard</h3>
-        <p class="mt-2 text-sm">SharePoint-hosted hub for tasks, ownership, evidence and reporting — exportable for governance.</p>
-      </div>
-      <div class="grid-card">
+      <a class="grid-card" href="/services/rap/">
+        <h3 class="font-semibold">RAP Strategy & Delivery</h3>
+        <p class="mt-2 text-sm">Reflect → Innovate → Stretch → Elevate. Clear governance, timelines, and measurable outcomes.</p>
+      </a>
+      <a class="grid-card" href="/services/dashboard/">
+        <h3 class="font-semibold">RAP Dashboard (SharePoint)</h3>
+        <p class="mt-2 text-sm">Actions, owners, due dates, evidence & reporting in one place. Exportable to your tenant.</p>
+      </a>
+      <a class="grid-card" href="/services/training/">
         <h3 class="font-semibold">Cultural Competency Training</h3>
-        <p class="mt-2 text-sm">Modular learning with live awareness sessions; leadership and team pathways.</p>
-      </div>
-      <div class="grid-card">
-        <h3 class="font-semibold">Supply Nation Registered</h3>
-        <p class="mt-2 text-sm">Support Indigenous procurement and supplier diversity targets with confidence.</p>
-      </div>
+        <p class="mt-2 text-sm">Awareness modules & leadership workshops tailored by sector. E-learning to follow.</p>
+      </a>
     </div>
   </section>
 
+  <!-- Process / How it works -->
   <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="text-2xl font-semibold">Featured Case Studies</h2>
-    <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <a class="grid-card" href="/case-studies/">
-        <h3 class="font-semibold">Energy Utility — Innovate RAP</h3>
-        <p class="mt-2 text-sm">Scaled training, procurement targets and reporting — 12-month delivery roadmap.</p>
-      </a>
-      <a class="grid-card" href="/case-studies/">
-        <h3 class="font-semibold">State Agency — Reflect RAP</h3>
-        <p class="mt-2 text-sm">Discovery, stakeholder engagement and governance foundations.</p>
-      </a>
-      <a class="grid-card" href="/case-studies/">
-        <h3 class="font-semibold">Construction — Stretch RAP</h3>
-        <p class="mt-2 text-sm">Evidence framework, dashboard rollout and leadership workshops.</p>
-      </a>
+    <h2 class="text-2xl font-semibold">How we work</h2>
+    <div class="grid md:grid-cols-4 gap-6 mt-6">
+      <div class="grid-card"><h3 class="font-semibold">1. Discover</h3><p class="text-sm mt-2">Stakeholder mapping, baseline, compliance & goals.</p></div>
+      <div class="grid-card"><h3 class="font-semibold">2. Plan</h3><p class="text-sm mt-2">Roadmap, owners, timelines, metrics & governance.</p></div>
+      <div class="grid-card"><h3 class="font-semibold">3. Deliver</h3><p class="text-sm mt-2">Training, procurement, engagement, comms.</p></div>
+      <div class="grid-card"><h3 class="font-semibold">4. Report</h3><p class="text-sm mt-2">Evidence, dashboards, quarterly roll-ups & review.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-4 py-16 text-center">
+    <div class="p-8 border rounded-2xl">
+      <h2 class="text-2xl font-semibold">Ready to start?</h2>
+      <p class="mt-2 text-gray-600">Book a discovery call or request a RAP dashboard demo.</p>
+      <div class="mt-5 flex items-center justify-center gap-4">
+        <a class="btn" href="/contact/">Talk to us</a>
+        <a class="btn-outline" href="/services/dashboard/">Request a demo</a>
+      </div>
     </div>
   </section>
 
