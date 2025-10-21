@@ -1,5 +1,5 @@
 ---
-const base = import.meta.env.BASE_URL; // e.g. "/" locally, "/Angelas-Website/" on GH Pages
+const base = import.meta.env.BASE_URL;
 ---
 <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-100">
   <nav class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
@@ -9,15 +9,13 @@ const base = import.meta.env.BASE_URL; // e.g. "/" locally, "/Angelas-Website/" 
     </a>
 
     <button class="md:hidden p-2 border rounded-lg" aria-label="Toggle menu"
-      onclick="document.getElementById('navlinks').classList.toggle('hidden')">
-      ☰
-    </button>
+      onclick="document.getElementById('navlinks').classList.toggle('hidden')">☰</button>
 
     <ul id="navlinks" class="hidden md:flex items-center gap-6 text-sm">
-      <li><a href={`${base}about/`} class="hover:text-brand">About</a></li>
-      <li><a href={`${base}case-studies/`} class="hover:text-brand">Case Studies</a></li>
+      <li><a href={`${base}about/`} class="hover:text-[#00A3AF]">About</a></li>
+      <li><a href={`${base}case-studies/`} class="hover:text-[#00A3AF]">Case Studies</a></li>
       <li class="relative group">
-        <a href="#" class="hover:text-brand">Services ▾</a>
+        <a href="#" class="hover:text-[#00A3AF]">Services ▾</a>
         <ul class="absolute left-0 hidden group-hover:block bg-white shadow rounded-lg p-2 mt-2 min-w-[240px]">
           <li><a href={`${base}services/rap/`} class="block px-3 py-2 hover:bg-gray-50 rounded-md">Reconciliation Action Plans</a></li>
           <li><a href={`${base}services/dashboard/`} class="block px-3 py-2 hover:bg-gray-50 rounded-md">RAP Dashboard (SharePoint)</a></li>
@@ -27,21 +25,5 @@ const base = import.meta.env.BASE_URL; // e.g. "/" locally, "/Angelas-Website/" 
       <li><a href={`${base}contact/`} class="btn-outline">Contact</a></li>
     </ul>
   </nav>
-</header>---
----
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-100">
-  <nav class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3">
-      <img src="/brand/logo-icon.svg" width="40" height="40" alt="2Ways logo" />
-      <span class="font-semibold leading-tight">2Ways<br/>Consultancy</span>
-    </a>
-    <ul class="hidden md:flex items-center gap-6 text-sm">
-      <li><a href="/about/" class="hover:text-brand">About</a></li>
-      <li><a href="/case-studies/" class="hover:text-brand">Case Studies</a></li>
-      <li><a href="/services/rap/" class="hover:text-brand">RAP</a></li>
-      <li><a href="/services/dashboard/" class="hover:text-brand">RAP Dashboard</a></li>
-      <li><a href="/services/training/" class="hover:text-brand">Training</a></li>
-      <li><a href="/contact/" class="btn-outline">Contact</a></li>
-    </ul>
-  </nav>
 </header>
+
