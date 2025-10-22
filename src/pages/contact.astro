@@ -5,162 +5,189 @@ import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
 
 const base = import.meta.env.BASE_URL;
+const params = new URLSearchParams(Astro.url.search);
+const isSuccess = params.get('success') === '1';
 ---
 <BaseLayout
   title={`Contact | ${SITE.name}`}
-  description="Start your RAP or training journey — request a discovery call or RAP Dashboard demo."
+  description="Start a conversation about your RAP, RAP Dashboard or cultural competency training."
   canonical={`${SITE.url}/contact/`}
 >
   <Fragment slot="header"><Header /></Fragment>
 
-  <!-- Page wrapper -->
+  <!-- Wrapper -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16">
-    <div class="grid md:grid-cols-[0.95fr_1.05fr] gap-6 items-start">
 
-      <!-- Left intro panel -->
-      <aside class="rounded-2xl p-6 md:p-8 text-[var(--brand-dark)] relative overflow-hidden">
-        <div class="absolute inset-0 -z-10 opacity-90"
-             style="background: radial-gradient(1200px 600px at -10% 110%, #ffd39b 0%, #fecb7b 20%, #f9b570 40%, #61c6cc 85%, #2aa3ad 100%);"></div>
-        <h2 class="kicker mb-2">• CONTACT US</h2>
-        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Partner with us to create new futures.</h1>
-        <p class="mt-5 max-w-prose text-base/7 text-[rgba(0,0,0,.75)]">
-          We partner with organisations committed to meaningful legacies — ready to foster cultural understanding and build
-          lasting connections. From utilities and government to construction, our partners share our vision of driving
-          impactful change.
-        </p>
-
-        <div class="mt-6 grid gap-3">
-          <span class="pill-strong w-max">Indigenous-led</span>
-          <span class="pill w-max">SharePoint + Power Platform</span>
-          <span class="pill w-max">Supply Nation (registered)</span>
+    <!-- Success panel -->
+    {isSuccess ? (
+      <div class="rounded-2xl border bg-white p-6 md:p-8 shadow-sm text-center">
+        <div class="mx-auto h-12 w-12 rounded-full flex items-center justify-center brand-gradient text-white">
+          ✓
         </div>
-
-        <div class="mt-8 hidden md:block">
-          <img src={`${base}brand/logo-icon.svg`} alt="" class="h-10 opacity-80" />
+        <h1 class="mt-4 text-2xl md:text-3xl font-extrabold text-[var(--brand-dark)]">Thanks — we’ve got your message</h1>
+        <p class="mt-2 text-gray-600">We’ll come back to you shortly. If it’s urgent, reply to the confirmation email and mention your timeframe.</p>
+        <div class="mt-6 flex justify-center gap-3">
+          <a href={`${base}services/rap/`} class="btn-outline">Explore RAP services</a>
+          <a href={`${base}services/dashboard/`} class="btn">See RAP Dashboard</a>
         </div>
-      </aside>
-
-      <!-- Right form card -->
-      <div class="rounded-2xl border bg-white p-4 md:p-6 lg:p-7 shadow-sm">
-
-        <!-- Tabs -->
-        <div class="text-sm font-semibold mb-3">Which service are you interested in?</div>
-        <div class="grid grid-cols-2 gap-3">
-          <button id="tab-consult" type="button"
-                  class="tab-btn rounded-xl px-4 py-3 text-center font-semibold text-white"
-                  style="background: linear-gradient(135deg, var(--brand-aqua), #11b7c2);">Training & Consulting</button>
-          <button id="tab-art" type="button"
-                  class="tab-btn rounded-xl px-4 py-3 text-center font-semibold bg-gray-100 text-gray-800">
-                  Art & Design</button>
-        </div>
-
-        <h2 id="form-title" class="mt-6 text-2xl md:text-[26px] font-extrabold text-[var(--brand-dark)]">
-          Training & Consulting Enquiry
-        </h2>
-
-        <form action="https://formspree.io/f/xgvwovew" method="POST" class="mt-4 grid gap-4" id="contact-form">
-          <!-- Tab-selected service -->
-          <input type="hidden" name="serviceType" id="serviceType" value="Training & Consulting" />
-
-          <!-- Details -->
-          <fieldset class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">First name*</label>
-              <input name="firstName" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Last name*</label>
-              <input name="lastName" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Contact number</label>
-              <input name="phone" class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Email*</label>
-              <input type="email" name="email" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium mb-1">Company name*</label>
-              <input name="company" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium mb-1">How did you hear about us?*</label>
-              <select name="referrer" required class="w-full border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]">
-                <option value="" disabled selected>Please select</option>
-                <option>Referral</option>
-                <option>LinkedIn</option>
-                <option>Search engine</option>
-                <option>Conference / Event</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </fieldset>
-
-          <!-- Enquiry -->
-          <div class="mt-2">
-            <h3 class="text-xl font-extrabold text-[var(--brand-dark)]">Your enquiry</h3>
-            <p class="text-sm text-gray-600">Please select all that apply</p>
-            <div class="mt-3 grid md:grid-cols-2 gap-y-2 gap-x-6 text-sm">
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="RAP Services" /> Reconciliation Action Plan (RAP) Services</label>
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Training" /> Training</label>
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="E-Learning" /> E-Learning</label>
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="First Nations Consulting" /> First Nations Consulting & Advisory</label>
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Design & Connecting with Country" /> Designing & Connecting with Country</label>
-              <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Other" /> Other services</label>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Comments</label>
-            <textarea name="message" rows="6" class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" placeholder="Tell us about your goals, timelines and context…"></textarea>
-          </div>
-
-          <div class="flex items-start gap-3 text-sm">
-            <input type="checkbox" id="consent" required class="mt-1.5">
-            <label for="consent">I agree to be contacted about my enquiry and understand this form stores my submitted information.</label>
-          </div>
-
-          <!-- Honeypot -->
-          <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
-
-          <div class="pt-2">
-            <button class="btn" type="submit">Send Enquiry</button>
-          </div>
-        </form>
       </div>
-    </div>
+    ) : (
+      <div class="grid md:grid-cols-[0.95fr_1.05fr] gap-6 items-start">
+
+        <!-- Intro panel -->
+        <aside class="rounded-2xl p-6 md:p-8 text-[var(--brand-dark)] relative overflow-hidden">
+          <div class="absolute inset-0 -z-10 opacity-95"
+              style="background: radial-gradient(1200px 600px at -10% 110%, #ffd39b 0%, #fecb7b 20%, #f9b570 40%, #61c6cc 85%, #2aa3ad 100%);"></div>
+
+          <h2 class="kicker mb-2">• CONTACT</h2>
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Partner with us to turn intent into impact.</h1>
+          <p class="mt-5 max-w-prose text-base/7 text-[rgba(0,0,0,.75)]">
+            Tell us about your goals and context and we’ll recommend the best next step—whether that’s a RAP discovery,
+            a RAP Dashboard walkthrough, or cultural competency pathways for leaders and teams.
+          </p>
+
+          <div class="mt-6 grid gap-3">
+            <span class="pill-strong w-max">Indigenous-led</span>
+            <span class="pill w-max">SharePoint & Power Platform ready</span>
+            <span class="pill w-max">Evidence & reporting built in</span>
+          </div>
+
+          <div class="mt-8 hidden md:block">
+            <img src={`${base}brand/logo-icon.svg`} alt="" class="h-10 opacity-80" />
+          </div>
+        </aside>
+
+        <!-- Form card -->
+        <div class="rounded-2xl border bg-white p-4 md:p-6 lg:p-7 shadow-sm">
+          <h2 class="text-2xl md:text-[26px] font-extrabold text-[var(--brand-dark)]">Enquiry form</h2>
+          <p class="mt-1 text-sm text-gray-600">Fields marked * are required.</p>
+
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/xgvwovew"
+            method="POST"
+            class="mt-4 grid gap-4"
+          >
+            <!-- Formspree helpers -->
+            <input type="hidden" name="_subject" value="2Ways Website Enquiry" />
+            <input type="hidden" name="_redirect" value={`${SITE.url}/contact/?success=1`} />
+            <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+            <input type="hidden" name="page_url" value={`${SITE.url}/contact/`} />
+
+            <!-- Your details -->
+            <fieldset class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-1">First name*</label>
+                <input name="firstName" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">Last name*</label>
+                <input name="lastName" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">Work email*</label>
+                <input type="email" name="email" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">Phone</label>
+                <input name="phone" class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium mb-1">Organisation*</label>
+                <input name="company" required class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" />
+              </div>
+            </fieldset>
+
+            <!-- Interests -->
+            <div class="mt-1">
+              <h3 class="text-lg font-semibold text-[var(--brand-dark)]">What do you need help with?</h3>
+              <p class="text-sm text-gray-600">Select all that apply.</p>
+              <div class="mt-3 grid md:grid-cols-2 gap-y-2 gap-x-6 text-sm">
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="RAP Strategy & Delivery" /> RAP Strategy & Delivery</label>
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="RAP Dashboard (SharePoint)" /> RAP Dashboard (SharePoint)</label>
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Cultural Competency Training" /> Cultural Competency Training</label>
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Advisory / Consultation" /> Advisory / Consultation</label>
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Speaking / Workshops" /> Speaking / Workshops</label>
+                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Other" /> Other</label>
+              </div>
+            </div>
+
+            <!-- Quick qualifiers -->
+            <div class="grid md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-1">Timeline</label>
+                <select name="timeline" class="w-full border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]">
+                  <option value="" selected>Choose…</option>
+                  <option>ASAP (0–4 weeks)</option>
+                  <option>Soon (1–3 months)</option>
+                  <option>Planning (3–6+ months)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">Company size</label>
+                <select name="company_size" class="w-full border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]">
+                  <option value="" selected>Choose…</option>
+                  <option>1–49</option>
+                  <option>50–249</option>
+                  <option>250–999</option>
+                  <option>1000+</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">How did you hear about us?</label>
+                <select name="referrer" class="w-full border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]">
+                  <option value="" selected>Choose…</option>
+                  <option>Referral</option>
+                  <option>LinkedIn</option>
+                  <option>Search</option>
+                  <option>Event / Conference</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Tell us a little about your goals</label>
+              <textarea name="message" rows="6" class="w-full border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-aqua)]" placeholder="e.g., Current RAP stage; priorities; any deadlines; who should be involved…"></textarea>
+            </div>
+
+            <!-- Consent -->
+            <div class="flex items-start gap-3 text-sm">
+              <input type="checkbox" id="consent" required class="mt-1.5">
+              <label for="consent">
+                I agree to be contacted about my enquiry and understand this form stores my submitted information in accordance with the
+                <a href={`${base}privacy/`} class="underline">privacy policy</a>.
+              </label>
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-1">
+              <button id="submitBtn" class="btn inline-flex items-center gap-2" type="submit">
+                <span id="btnText">Send enquiry</span>
+                <svg id="spinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" d="M4 12a8 8 0 0 1 8-8" stroke="currentColor" stroke-width="4"></path></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
 
-  <!-- Tab toggle + tiny UX helpers -->
+  <!-- Loading UX -->
   <script is:inline>
-    const tabConsult = document.getElementById('tab-consult');
-    const tabArt = document.getElementById('tab-art');
-    const serviceInput = document.getElementById('serviceType');
-    const titleEl = document.getElementById('form-title');
-
-    function setActive(which){
-      const active = which === 'consult';
-      serviceInput.value = active ? 'Training & Consulting' : 'Art & Design';
-      titleEl.textContent = active ? 'Training & Consulting Enquiry' : 'Art & Design Enquiry';
-
-      tabConsult.style.background = active ? 'linear-gradient(135deg, var(--brand-aqua), #11b7c2)' : '';
-      tabConsult.classList.toggle('text-white', active);
-      tabConsult.classList.toggle('bg-gray-100', !active);
-      tabConsult.classList.toggle('text-gray-800', !active);
-
-      tabArt.style.background = !active ? 'linear-gradient(135deg, var(--brand-aqua), #11b7c2)' : '';
-      tabArt.classList.toggle('text-white', !active);
-      tabArt.classList.toggle('bg-gray-100', active);
-      tabArt.classList.toggle('text-gray-800', active);
+    const form = document.getElementById('contact-form');
+    if (form) {
+      form.addEventListener('submit', () => {
+        const btn = document.getElementById('submitBtn');
+        const txt = document.getElementById('btnText');
+        const spin = document.getElementById('spinner');
+        btn.setAttribute('disabled', 'true');
+        spin.classList.remove('hidden');
+        txt.textContent = 'Sending…';
+      });
     }
-    tabConsult.addEventListener('click', ()=>setActive('consult'));
-    tabArt.addEventListener('click', ()=>setActive('art'));
-
-    // If a hash specifies ?service=art etc.
-    const params = new URLSearchParams(location.search);
-    if(params.get('service') === 'art'){ setActive('art'); }
   </script>
 </BaseLayout>
