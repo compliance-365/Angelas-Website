@@ -8,5 +8,6 @@ export default defineConfig({ site: 'https://compliance-365.github.io', base, /*
 
 export default defineConfig({
   site: 'https://compliance-365.github.io',
-  base: '/Angelas-Website/',  // <-- add the trailing slash here
+  base: '/Angelas-Website/',              // <-- trailing slash matters on GH Pages
+  integrations: [tailwind({ applyBaseStyles: false })],
 });
