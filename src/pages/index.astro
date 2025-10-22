@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
 
-const base = import.meta.env.BASE_URL; // base path safe links
+const base = import.meta.env.BASE_URL;
 
 // JSON-LD
 const orgSchema = {
@@ -64,131 +64,208 @@ const faqSchema = {
 
 <BaseLayout
   title="RAP Consultants & Cultural Competency Training | 2Ways Consultancy"
-  description="Indigenous Australian-led consultancy delivering Reconciliation Action Plans (RAP), a SharePoint RAP Dashboard for evidence & reporting, and cultural competency training. Brisbane-based, serving Australia-wide."
+  description="Indigenous-led consultancy delivering Reconciliation Action Plans (RAP), a SharePoint RAP Dashboard for evidence & reporting, and cultural competency training. Brisbane-based, serving Australia-wide."
   canonical={`${SITE.url}/`}
   schema={[orgSchema, webSiteSchema, faqSchema]}
 >
   <Fragment slot="header"><Header /></Fragment>
 
-  <!-- HERO -->
+  <!-- HERO: Parallax + Glass Card -->
   <section class="relative overflow-hidden">
     <div class="absolute inset-0">
-    <img
-  src={`${base}hero-home.webp`}   <!-- file is in /public/hero-home.webp -->
-  alt="Abstract teal background with flowing aqua shapes"
-  class="w-full h-full object-cover"
-  width="1920" height="900" loading="eager" decoding="async"
-/>
-      <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/30"></div>
+      <div
+        class="h-[48rem] bg-cover bg-center md:bg-fixed will-change-transform"
+        style={`background-image:url('${base}hero-home.webp')`}
+        data-parallax
+        data-speed="0.15"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-black/30"></div>
     </div>
 
-    <div class="relative mx-auto max-w-6xl px-4 py-24 md:py-28 text-white">
-      <p class="kicker text-brand-light">Indigenous Australian–led</p>
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.1]">
-        Reconciliation Action Plans & Cultural Competency Training
-      </h1>
-      <p class="mt-4 md:text-lg text-white/90 max-w-3xl">
-        We help organisations plan, deliver and report on RAPs — backed by a SharePoint RAP Dashboard for actions,
-        evidence and governance — and practical training that builds cultural safety across teams.
-      </p>
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a href={`${base}services/rap/`} class="btn">Explore RAP Services</a>
-        <a href={`${base}services/dashboard/`} class="btn-outline">See RAP Dashboard</a>
-        <a href={`${base}services/training/`} class="btn-outline">Training Programs</a>
-      </div>
+    <div class="relative mx-auto max-w-6xl px-4 h-[48rem] flex items-end pb-12">
+      <div class="max-w-4xl text-white bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 reveal opacity-0 translate-y-4">
+        <p class="kicker">Indigenous Australian–led</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.1]">
+          Reconciliation Action Plans & Cultural Competency Training
+        </h1>
+        <p class="mt-4 md:text-lg text-white/90">
+          We help organisations plan, deliver and report on RAPs — backed by a SharePoint RAP Dashboard for actions,
+          evidence and governance — and practical training that builds cultural safety across teams.
+        </p>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <a href={`${base}services/rap/`} class="btn">Explore RAP Services</a>
+          <a href={`${base}services/dashboard/`} class="btn-outline">See RAP Dashboard</a>
+          <a href={`${base}services/training/`} class="btn-outline">Training Programs</a>
+        </div>
 
-      <!-- Trust bar -->
-      <div class="mt-8 flex flex-wrap items-center gap-4 text-xs text-white/85">
-        <div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
-          <img src={`${base}brand/supply-nation-placeholder.svg`} alt="Supply Nation Registered (placeholder)" class="h-6 w-6" />
-          <span>Supply Nation Registered</span>
-        </div>
-        <div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
-          <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
-          <span>Brisbane-based, Australia-wide</span>
-        </div>
-        <div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
-          <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
-          <span>SharePoint + Power Platform friendly</span>
+        <!-- Trust bar -->
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-white/90">
+          <span class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
+            <img src={`${base}brand/supply-nation-placeholder.svg`} alt="Supply Nation Registered (placeholder)" class="h-5 w-5" />
+            Supply Nation Registered
+          </span>
+          <span class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
+            <span class="h-2 w-2 rounded-full bg-emerald-300"></span> Brisbane-based, Australia-wide
+          </span>
+          <span class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
+            <span class="h-2 w-2 rounded-full bg-cyan-300"></span> SharePoint + Power Platform friendly
+          </span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3 FEATURE CARDS -->
-  <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="text-2xl font-semibold">What we do</h2>
+  <!-- VALUE PROPS -->
+  <section class="section pt-10">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="grid-card card-raise reveal opacity-0 translate-y-4">
+        <span class="pill-strong">Outcome-driven</span>
+        <p class="mt-3 text-sm text-gray-700">Governance, owners and evidence — so RAPs move from documents to measurable impact.</p>
+      </div>
+      <div class="grid-card card-raise reveal opacity-0 translate-y-4">
+        <span class="pill">SharePoint-ready</span>
+        <p class="mt-3 text-sm text-gray-700">RAP Dashboard lists, views and flows provisioned to your Microsoft 365 tenant.</p>
+      </div>
+      <div class="grid-card card-raise reveal opacity-0 translate-y-4">
+        <span class="pill">Respectful + Practical</span>
+        <p class="mt-3 text-sm text-gray-700">Indigenous-led, culturally grounded training and engagement tailored to your sector.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO (Icon Cards) -->
+  <section class="section pt-0">
+    <h2 class="text-2xl font-semibold reveal">What we do</h2>
     <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <a class="grid-card" href={`${base}services/rap/`}>
-        <h3 class="font-semibold">RAP Strategy & Delivery</h3>
+      <a class="stage-card p-6 card-raise reveal opacity-0 translate-y-4" href={`${base}services/rap/`}>
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">RAP Strategy & Delivery</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h13l5 4v10H3V5z" stroke="white" stroke-width="1.8"/><path d="M16 5v6h5" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
         <p class="mt-2 text-sm">Reflect → Innovate → Stretch → Elevate. Clear governance, timelines and measurable outcomes.</p>
       </a>
-      <a class="grid-card" href={`${base}services/dashboard/`}>
-        <h3 class="font-semibold">RAP Dashboard (SharePoint)</h3>
+
+      <a class="stage-card p-6 card-raise reveal opacity-0 translate-y-4" href={`${base}services/dashboard/`}>
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">RAP Dashboard (SharePoint)</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20V8m6 12V4m6 16v-6m4 6V10" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
         <p class="mt-2 text-sm">Actions, owners, due dates, evidence & quarterly roll-ups. Exportable to your tenant.</p>
       </a>
-      <a class="grid-card" href={`${base}services/training/`}>
-        <h3 class="font-semibold">Cultural Competency Training</h3>
+
+      <a class="stage-card p-6 card-raise reveal opacity-0 translate-y-4" href={`${base}services/training/`}>
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Cultural Competency Training</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3" stroke="white" stroke-width="1.8"/><path d="M5 21a7 7 0 0 1 14 0" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
         <p class="mt-2 text-sm">Awareness modules, leadership sessions and team pathways with sector-specific examples.</p>
       </a>
     </div>
   </section>
 
-  <!-- HOW WE WORK -->
-  <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="text-2xl font-semibold">How we work</h2>
+  <!-- PROCESS (Animated Stage Bars) -->
+  <section class="section pt-0">
+    <h2 class="text-2xl font-semibold reveal">How we work</h2>
     <div class="grid md:grid-cols-4 gap-6 mt-6">
-      <div class="grid-card"><h3 class="font-semibold">1. Discover</h3><p class="text-sm mt-2">Stakeholder mapping, baseline, compliance and goals.</p></div>
-      <div class="grid-card"><h3 class="font-semibold">2. Plan</h3><p class="text-sm mt-2">Roadmap, owners, timelines, metrics and governance.</p></div>
-      <div class="grid-card"><h3 class="font-semibold">3. Deliver</h3><p class="text-sm mt-2">Training, procurement, engagement and communications.</p></div>
-      <div class="grid-card"><h3 class="font-semibold">4. Report</h3><p class="text-sm mt-2">Evidence capture, dashboards, quarterly roll-ups and review.</p></div>
+      <div class="stage-card p-5 reveal opacity-0 translate-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">1. Discover</h3>
+          <span class="pill">Baseline</span>
+        </div>
+        <p class="text-sm mt-2">Stakeholder mapping, maturity check, compliance and goals.</p>
+      </div>
+      <div class="stage-card p-5 reveal opacity-0 translate-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">2. Plan</h3>
+          <span class="pill">Roadmap</span>
+        </div>
+        <p class="text-sm mt-2">Owners, timelines, metrics and governance cadence.</p>
+      </div>
+      <div class="stage-card p-5 reveal opacity-0 translate-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">3. Deliver</h3>
+          <span class="pill">Enable</span>
+        </div>
+        <p class="text-sm mt-2">Training, engagement, supplier diversity and communications.</p>
+      </div>
+      <div class="stage-card p-5 reveal opacity-0 translate-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">4. Report</h3>
+          <span class="pill">Evidence</span>
+        </div>
+        <p class="text-sm mt-2">Evidence capture, dashboards, quarterly roll-ups and review.</p>
+      </div>
     </div>
   </section>
 
-  <!-- SEO-RICH COPY + INTERNAL LINKS -->
-  <section class="mx-auto max-w-6xl px-4 py-16 prose">
-    <h2>Why partner with 2Ways Consultancy</h2>
-    <p>
-      As an Indigenous Australian-led consultancy, we help organisations deliver meaningful
-      <a href={`${base}services/rap/`}>Reconciliation Action Plans</a> and lift cultural capability. Our
-      <a href={`${base}services/dashboard/`}>RAP Dashboard</a> reduces admin and improves accountability with
-      clear owners, due dates, evidence and exportable reports. We complement this with practical
-      <a href={`${base}services/training/`}>cultural competency training</a> for leaders and teams.
-    </p>
-    <ul>
-      <li>Supply Nation registered</li>
-      <li>SharePoint & Power Automate provisioning support</li>
-      <li>Sector experience: utilities, government, construction and more</li>
-    </ul>
+  <!-- OPTIONAL LOGOS STRIP (Replace with real logos when ready) -->
+  <section class="section pt-4">
+    <div class="border rounded-2xl p-6 bg-white reveal opacity-0 translate-y-4">
+      <p class="text-sm text-gray-500">Trusted by teams across utilities, government and construction.</p>
+      <div class="mt-4 grid grid-cols-2 md:grid-cols-5 gap-4 place-items-center opacity-80">
+        <img src={`${base}brand/logo-icon.svg`} alt="" class="h-8" />
+        <img src={`${base}brand/logo-icon.svg`} alt="" class="h-8" />
+        <img src={`${base}brand/logo-icon.svg`} alt="" class="h-8" />
+        <img src={`${base}brand/logo-icon.svg`} alt="" class="h-8" />
+        <img src={`${base}brand/logo-icon.svg`} alt="" class="h-8" />
+      </div>
+    </div>
   </section>
 
-  <!-- CTA -->
-  <section class="mx-auto max-w-6xl px-4 pb-16">
-    <div class="p-6 border rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+  <!-- TESTIMONIAL -->
+  <section class="section pt-4">
+    <div class="grid md:grid-cols-[1.2fr_.8fr] gap-6">
+      <blockquote class="stage-card p-6 reveal opacity-0 translate-y-4">
+        <p class="text-lg md:text-xl font-semibold">
+          “2Ways turned our RAP from a checklist into a program with accountability. Their dashboard made progress visible and our teams more confident.”
+        </p>
+        <footer class="mt-3 text-sm text-gray-600">HR Manager — Utilities</footer>
+      </blockquote>
+      <div class="stage-card p-6 reveal opacity-0 translate-y-4">
+        <h3 class="font-semibold">Why partner with 2Ways</h3>
+        <ul class="list-disc ml-5 text-sm mt-2 text-gray-700">
+          <li>Indigenous-led, culturally grounded</li>
+          <li>RAP Dashboard provisioned to your tenant</li>
+          <li>Practical training pathways for leaders & teams</li>
+        </ul>
+        <a href={`${base}case-studies/`} class="btn mt-4 inline-flex">See case studies</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="section">
+    <div class="cta-banner">
       <div>
-        <h3 class="font-semibold text-lg">Ready to start your RAP or training program?</h3>
-        <p class="text-sm text-gray-600">Book a discovery call or request a RAP Dashboard demo.</p>
+        <h3 class="text-xl font-semibold">Ready to move from intent to impact?</h3>
+        <p class="text-white/90 text-sm">Book a discovery call or request a RAP Dashboard demo.</p>
       </div>
       <div class="flex gap-3">
-        <a class="btn" href={`${base}contact/`}>Talk to us</a>
-        <a class="btn-outline" href={`${base}services/dashboard/`}>Request a demo</a>
+        <a class="btn bg-white text-[var(--brand-dark)] hover:bg-white/90" href={`${base}contact/`}>Talk to us</a>
+        <a class="btn-outline border-white text-white hover:bg-white/10" href={`${base}services/dashboard/`}>Request a demo</a>
       </div>
     </div>
   </section>
 
-  <!-- In-page FAQ (matches FAQ schema) -->
-  <section class="mx-auto max-w-6xl px-4 pb-16">
-    <h2 class="text-2xl font-semibold">FAQs</h2>
+  <!-- FAQ (matches FAQ schema) -->
+  <section class="section pt-6">
+    <h2 class="text-2xl font-semibold reveal">FAQs</h2>
     <div class="mt-6 grid gap-4">
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">What is included in your RAP service?</summary>
         <p class="mt-2 text-sm">Support across Reflect, Innovate, Stretch and Elevate: discovery, drafting, governance, delivery and reporting.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Can we host the RAP Dashboard in our Microsoft 365 tenant?</summary>
         <p class="mt-2 text-sm">Yes — we provide a SharePoint PnP template and help configure lists, views, permissions and flows.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Do you provide cultural competency training?</summary>
         <p class="mt-2 text-sm">Yes — awareness modules, leadership sessions and team pathways; self-paced e-learning is coming soon.</p>
       </details>
@@ -196,4 +273,28 @@ const faqSchema = {
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
+
+  <!-- Parallax (mobile fallback) + Reveal -->
+  <script is:inline>
+    // desktop gets bg-fixed; mobile gets translate fallback
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+    const onScroll = () => {
+      const y = window.scrollY || window.pageYOffset;
+      parallaxEls.forEach(el => {
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          const speed = parseFloat(el.dataset.speed || '0.15');
+          el.style.transform = `translate3d(0,${y * speed * -0.4}px,0)`;
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // simple reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.remove('opacity-0','translate-y-4'); io.unobserve(e.target); }
+      });
+    },{threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </BaseLayout>
