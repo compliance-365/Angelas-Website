@@ -4,6 +4,8 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE } from '../../config/site';
 
+const base = import.meta.env.BASE_URL;
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -16,53 +18,72 @@ const schema = {
 ---
 <BaseLayout
   title={`RAP Dashboard | ${SITE.name}`}
-  description="SharePoint-hosted hub for RAP tasks, ownership, evidence and reporting."
+  description="The SharePoint RAP Hub: live tracker, progress dashboard and one-stop RAP knowledge base — exportable to your tenant."
   canonical={`${SITE.url}/services/dashboard/`}
   schema={schema}
 >
   <Fragment slot="header"><Header /></Fragment>
 
-  <!-- Hero -->
-  <section class="relative bg-[url('/hero-dashboard.webp')] bg-cover bg-center">
-    <div class="mx-auto max-w-6xl px-4 py-20 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));">
-      <h1 class="text-3xl md:text-4xl font-extrabold">RAP Dashboard (SharePoint)</h1>
-      <p class="mt-3 max-w-3xl">Actions, owners, due dates, evidence and reporting — exportable to your tenant via PnP provisioning.</p>
-      <div class="mt-6 flex items-center gap-4">
-        <a href="/contact/" class="btn">Request a Demo</a>
-        <a href="/services/rap/" class="btn-outline">See RAP Services</a>
+  <!-- Parallax Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div
+        class="h-[44rem] bg-cover bg-center will-change-transform"
+        style={`background-image:url('${base}hero-dashboard.webp')`}
+        data-parallax
+        data-speed="0.25"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/25"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-4 h-[44rem] flex items-end pb-14 text-white">
+      <div class="max-w-3xl">
+        <p class="kicker">SharePoint + Power Platform ready</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">RAP Dashboard (SharePoint)</h1>
+        <p class="mt-3 text-white/90">
+          A single hub for actions, owners, evidence and reporting — provisioned to your Microsoft 365 tenant via PnP.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={`${base}contact/`} class="btn">Request a Demo</a>
+          <a href={`${base}services/rap/`} class="btn-outline">See RAP Services</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- Three pillars: Tracker / Dashboard / Hub -->
   <section class="mx-auto max-w-6xl px-4 py-16">
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="grid-card">
-        <h3 class="font-semibold">Lists & Libraries</h3>
+    <h2 class="text-2xl font-semibold reveal">Your RAP, organised</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+      <div class="grid-card opacity-0 translate-y-4 reveal">
+        <h3 class="font-semibold">Tracker</h3>
+        <p class="text-sm mt-2">Every action with an owner, due date, status and evidence type. Overdue and upcoming views keep teams honest.</p>
         <ul class="list-disc ml-5 text-sm mt-2">
-          <li>RAP Actions (owners, due dates, status)</li>
-          <li>Milestones & Evidence</li>
-          <li>Training Sessions & Attendance</li>
-          <li>Risks & Issues</li>
-          <li>Reporting Periods (quarters)</li>
+          <li>Actions & milestones</li><li>Owners & approvals</li><li>Evidence library links</li>
         </ul>
       </div>
-      <div class="grid-card">
-        <h3 class="font-semibold">Views & Reports</h3>
-        <p class="text-sm mt-2">Quarterly status, overdue actions, evidence-due, KPI snapshots. Export to Excel or connect Power BI.</p>
+      <div class="grid-card opacity-0 translate-y-4 reveal">
+        <h3 class="font-semibold">Dashboard</h3>
+        <p class="text-sm mt-2">Quarterly progress, risk & issue snapshots and KPI roll-ups. Export to Excel or connect Power BI.</p>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>Quarterly status</li><li>Overdue & due-soon</li><li>KPI & completion %</li>
+        </ul>
       </div>
-      <div class="grid-card">
-        <h3 class="font-semibold">Automation</h3>
-        <p class="text-sm mt-2">Power Automate reminders, approvals and evidence requests with owner notifications.</p>
+      <div class="grid-card opacity-0 translate-y-4 reveal">
+        <h3 class="font-semibold">Hub</h3>
+        <p class="text-sm mt-2">A one-stop knowledge base for policies, templates, stories and training links. Searchable and permissioned.</p>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>Docs & templates</li><li>Stories & comms</li><li>Training catalogue</li>
+        </ul>
       </div>
     </div>
 
-    <div class="mt-10 p-6 border rounded-2xl">
+    <div class="mt-10 p-6 border rounded-2xl opacity-0 translate-y-4 reveal">
       <h3 class="font-semibold">Provisioning</h3>
       <ol class="list-decimal ml-5 text-sm mt-2">
-        <li>We build in our tenant (SharePoint).</li>
-        <li>Export via PnP provisioning (.pnp template).</li>
-        <li>Import into your tenant; set permissions, flows and branding.</li>
+        <li>We build and demo in our tenant.</li>
+        <li>Export via PnP template (.pnp).</li>
+        <li>Import to your tenant; configure permissions, flows and branding.</li>
       </ol>
       <p class="text-xs mt-3 text-gray-500">Note: Customer SharePoint admin access is required for import.</p>
     </div>
@@ -72,15 +93,15 @@ const schema = {
   <section class="mx-auto max-w-6xl px-4 pb-16">
     <h2 class="text-2xl font-semibold">Dashboard FAQs</h2>
     <div class="mt-6 grid gap-4">
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Can we host this in our own Microsoft 365 tenant?</summary>
         <p class="mt-2 text-sm">Yes. We provide a PnP template for import, then help enable flows and permissions.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Can we add custom fields or views?</summary>
-        <p class="mt-2 text-sm">Absolutely. The lists and views are extendable; we commonly add sector-specific fields.</p>
+        <p class="mt-2 text-sm">Absolutely. Lists and views are extendable; we commonly add sector-specific fields.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Do you support Power BI?</summary>
         <p class="mt-2 text-sm">Yes — we can publish summary reports from list data and evidence status.</p>
       </details>
@@ -88,4 +109,24 @@ const schema = {
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
+
+  <!-- Parallax + Reveal Scripts -->
+  <script is:inline>
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+    const onScroll = () => {
+      const y = window.scrollY || window.pageYOffset;
+      parallaxEls.forEach(el => {
+        const speed = parseFloat(el.dataset.speed || '0.25');
+        el.style.transform = `translate3d(0,${y * speed * -0.2}px,0)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.remove('opacity-0','translate-y-4'); e.target.classList.add('transition','duration-700'); io.unobserve(e.target); }
+      });
+    },{threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </BaseLayout>
