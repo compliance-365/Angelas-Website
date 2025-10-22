@@ -76,34 +76,46 @@ const schema = {
     </p>
   </section>
 
-  <!-- THREE PILLARS -->
+   <!-- THREE PILLARS -->
   <section class="section pt-0">
-    <div class="grid md:grid-cols-3 gap-6 mt-2">
-      <div id="tracker" class="grid-card opacity-0 translate-y-4 reveal">
-        <h3 class="font-semibold">Tracker</h3>
-        <p class="text-sm mt-2">Every action with an owner, due date, status and evidence type. Overdue and upcoming views keep teams honest.</p>
-        <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Actions & milestones</li>
-          <li>Owners & approvals</li>
-          <li>Evidence library links</li>
+    <h2 class="text-2xl font-semibold reveal">Your RAP, organised</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+      <div id="tracker" class="stage-card p-5 opacity-0 translate-y-4 reveal card-raise">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Tracker</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h6" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
+        <p class="text-sm mt-2">Every action has an owner, due date, status and evidence type. Overdue & upcoming views keep teams honest.</p>
+        <ul class="list-disc ml-5 text-sm mt-3 text-gray-700">
+          <li>Actions & milestones</li><li>Owners & approvals</li><li>Evidence library links</li>
         </ul>
       </div>
-      <div id="dashboard" class="grid-card opacity-0 translate-y-4 reveal">
-        <h3 class="font-semibold">Dashboard</h3>
-        <p class="text-sm mt-2">Quarterly progress, risk & issue snapshots and KPI roll-ups. Export to Excel or connect Power BI.</p>
-        <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Quarterly status</li>
-          <li>Overdue & due-soon</li>
-          <li>KPI & completion %</li>
+
+      <div id="dashboard" class="stage-card p-5 opacity-0 translate-y-4 reveal card-raise">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Dashboard</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20V8m6 12V4m6 16v-6m4 6V10" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
+        <p class="text-sm mt-2">Quarterly progress, risk snapshots and KPI roll-ups. Export to Excel or connect Power BI.</p>
+        <ul class="list-disc ml-5 text-sm mt-3 text-gray-700">
+          <li>Quarterly status</li><li>Overdue & due-soon</li><li>Completion %</li>
         </ul>
       </div>
-      <div id="hub" class="grid-card opacity-0 translate-y-4 reveal">
-        <h3 class="font-semibold">Hub</h3>
+
+      <div id="hub" class="stage-card p-5 opacity-0 translate-y-4 reveal card-raise">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Hub</h3>
+          <span class="icon-circle" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4z" stroke="white" stroke-width="1.8"/><path d="M8 9h8M8 13h5" stroke="white" stroke-width="1.8"/></svg>
+          </span>
+        </div>
         <p class="text-sm mt-2">A one-stop knowledge base for policies, templates, stories and training links. Searchable and permissioned.</p>
-        <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Docs & templates</li>
-          <li>Stories & comms</li>
-          <li>Training catalogue</li>
+        <ul class="list-disc ml-5 text-sm mt-3 text-gray-700">
+          <li>Docs & templates</li><li>Stories & comms</li><li>Training catalogue</li>
         </ul>
       </div>
     </div>
