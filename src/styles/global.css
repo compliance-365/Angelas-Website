@@ -57,3 +57,42 @@ header a { @apply no-underline text-[var(--brand-dark)] hover:text-[var(--brand-
 
 /* smooth reveal baseline (so it’s snappier) */
 .reveal { transition: transform .7s ease, opacity .7s ease; }
+
+/* ---- 2Ways visual helpers ---- */
+:root{
+  --brand-dark:#003D4D;
+  --brand-aqua:#00A3AF;
+}
+
+/* Gradient brand background & accents */
+.brand-gradient { background: linear-gradient(135deg, var(--brand-dark), var(--brand-aqua)); }
+.brand-ring { box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.05); }
+
+/* Pill badges */
+.pill { @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide; background: rgba(0,163,175,.12); color: var(--brand-aqua); }
+.pill-strong { @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide text-white; background: linear-gradient(135deg, var(--brand-aqua), #11b7c2); }
+
+/* Cards that lift on hover */
+.card-raise { @apply transition transform; }
+.card-raise:hover { transform: translateY(-4px); box-shadow: 0 10px 18px rgba(0,0,0,.06); }
+
+/* Stage cards: thin animated top bar + subtle gradient */
+.stage-card { @apply relative rounded-2xl border bg-white overflow-hidden; border-color: rgba(0,0,0,.06); }
+.stage-card::before{
+  content:"";
+  position:absolute; inset:0 0 auto 0; height:4px;
+  background: linear-gradient(90deg, var(--brand-aqua), #4dd7df, var(--brand-aqua));
+  background-size: 200% 100%;
+  animation: barFlow 6s linear infinite;
+}
+@keyframes barFlow{ 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+
+/* Icon circle */
+.icon-circle { @apply inline-flex items-center justify-center w-10 h-10 rounded-full text-white; background: linear-gradient(135deg, var(--brand-dark), var(--brand-aqua)); }
+
+/* Section utility (spacing) & reveal snappier */
+.section { @apply mx-auto max-w-6xl px-4 py-16; }
+.reveal { transition: transform .6s ease, opacity .6s ease; }
+
+/* CTA banner */
+.cta-banner { @apply rounded-2xl text-white p-6 flex flex-col md:flex-row items-center justify-between gap-4; background: linear-gradient(135deg, var(--brand-dark), var(--brand-aqua)); }
