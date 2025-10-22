@@ -10,3 +10,44 @@
 .prose p { @apply mb-3; }
 .grid-card { @apply p-6 border rounded-2xl hover:shadow-sm transition; }
 .kicker { @apply uppercase tracking-wide text-xs text-brand-light; }
+
+/* src/styles/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand variables */
+:root{
+  --brand-dark:#003D4D;
+  --brand-aqua:#00A3AF;
+}
+
+/* Typography tweaks */
+.kicker{ @apply uppercase tracking-wide text-sm font-semibold; color:var(--brand-aqua); }
+
+/* Buttons */
+.btn{
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold transition shadow-sm;
+  background: var(--brand-aqua);
+  color: white;
+}
+.btn:hover{ filter: brightness(0.95); }
+.btn-outline{
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold border transition;
+  border-color: rgba(0,0,0,.1);
+  color: var(--brand-dark);
+}
+.btn-outline:hover{ @apply bg-gray-50; }
+
+/* Grid cards */
+.grid-card{
+  @apply p-5 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition bg-white;
+}
+
+/* Header tweaks */
+header a{ @apply no-underline; }
+
+/* Simple prose defaults */
+.prose h2{ @apply text-2xl font-semibold; }
+.prose p{ @apply text-gray-700; }
+.prose ul{ @apply list-disc pl-6; }
