@@ -4,58 +4,84 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE } from '../../config/site';
 
+const base = import.meta.env.BASE_URL;
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "Cultural Competency Training",
   "provider": {"@type": "Organization", "name": "2Ways Consultancy"},
-  "description": "Modular training with awareness modules and leadership workshops. E-learning coming soon."
+  "description": "Modular training with awareness modules, leadership workshops and sector examples. E-learning coming soon."
 };
 ---
 <BaseLayout
   title={`Cultural Competency Training | ${SITE.name}`}
-  description="Modular training with live awareness sessions and sector-specific examples. E-learning coming soon."
+  description="Culturally grounded training pathways for staff and leaders — awareness modules, leadership sessions and sector-specific scenarios."
   canonical={`${SITE.url}/services/training/`}
   schema={schema}
 >
   <Fragment slot="header"><Header /></Fragment>
 
-  <!-- Hero -->
-  <section class="relative bg-[url('/hero-training.webp')] bg-cover bg-center">
-    <div class="mx-auto max-w-6xl px-4 py-20 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));">
-      <h1 class="text-3xl md:text-4xl font-extrabold">Cultural Competency Training</h1>
-      <p class="mt-3 max-w-3xl">Awareness modules, leadership sessions and practical scenarios by sector — with measurable outcomes.</p>
-      <div class="mt-6 flex items-center gap-4">
-        <a href="/contact/" class="btn">Register Your Interest</a>
-        <a href="/case-studies/" class="btn-outline">See Outcomes</a>
+  <!-- Parallax Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div
+        class="h-[44rem] bg-cover bg-center will-change-transform"
+        style={`background-image:url('${base}hero-training.webp')`}
+        data-parallax
+        data-speed="0.25"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/25"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-4 h-[44rem] flex items-end pb-14 text-white">
+      <div class="max-w-3xl">
+        <p class="kicker">Cultural competence that sticks</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Cultural Competency Training</h1>
+        <p class="mt-3 text-white/90">
+          Awareness modules, leadership sessions and practical scenarios by sector — aligned to your RAP and measured for impact.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={`${base}contact/`} class="btn">Register Your Interest</a>
+          <a href={`${base}case-studies/`} class="btn-outline">See Outcomes</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Streams -->
+  <!-- Program Streams -->
   <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="text-2xl font-semibold">Program streams</h2>
+    <h2 class="text-2xl font-semibold reveal">Program streams</h2>
     <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <div class="grid-card">
+      <div class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Foundations</h3>
-        <p class="text-sm mt-2">Terminology, history, protocols and culturally safe interactions for all staff.</p>
+        <p class="text-sm mt-2">Terminology, context, protocols and culturally safe interactions for all staff.</p>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>History & terminology</li><li>Culturally safe practice</li><li>Everyday scenarios</li>
+        </ul>
       </div>
-      <div class="grid-card">
+      <div class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Leaders</h3>
         <p class="text-sm mt-2">Policy & practice, inclusive leadership, recruitment and supplier diversity.</p>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>Inclusive leadership</li><li>Recruitment & retention</li><li>Supplier diversity</li>
+        </ul>
       </div>
-      <div class="grid-card">
+      <div class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Teams</h3>
-        <p class="text-sm mt-2">Everyday cultural competence, working with community, scenario-based learning.</p>
+        <p class="text-sm mt-2">Practical, role-relevant learning with sector-specific casework.</p>
+        <ul class="list-disc ml-5 text-sm mt-2">
+          <li>Sector scenarios</li><li>Community engagement</li><li>Team commitments</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <!-- Outcomes -->
   <section class="mx-auto max-w-6xl px-4 py-6">
-    <h2 class="text-2xl font-semibold">Measurable outcomes</h2>
-    <ul class="list-disc ml-6 text-sm mt-4 max-w-3xl">
-      <li>Improved cultural safety and engagement scores</li>
+    <h2 class="text-2xl font-semibold reveal">Measurable outcomes</h2>
+    <ul class="list-disc ml-6 text-sm mt-4 max-w-3xl opacity-0 translate-y-4 reveal">
+      <li>Improved cultural safety & engagement scores</li>
       <li>Completion tracking and attendance reporting</li>
       <li>Alignment with RAP actions and evidence requirements</li>
     </ul>
@@ -65,15 +91,15 @@ const schema = {
   <section class="mx-auto max-w-6xl px-4 py-16">
     <h2 class="text-2xl font-semibold">Training FAQs</h2>
     <div class="mt-6 grid gap-4">
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Is the training in-person or virtual?</summary>
         <p class="mt-2 text-sm">Both are available; we also offer hybrid delivery across sites.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Do you offer sector-specific examples?</summary>
         <p class="mt-2 text-sm">Yes — utilities, government, construction and more.</p>
       </details>
-      <details class="p-4 border rounded-xl">
+      <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
         <summary class="font-semibold">Will there be e-learning?</summary>
         <p class="mt-2 text-sm">Yes — self-paced modules optimised for mobile and LMS course tiles.</p>
       </details>
@@ -81,4 +107,24 @@ const schema = {
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
+
+  <!-- Parallax + Reveal Scripts -->
+  <script is:inline>
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+    const onScroll = () => {
+      const y = window.scrollY || window.pageYOffset;
+      parallaxEls.forEach(el => {
+        const speed = parseFloat(el.dataset.speed || '0.25');
+        el.style.transform = `translate3d(0,${y * speed * -0.2}px,0)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.remove('opacity-0','translate-y-4'); e.target.classList.add('transition','duration-700'); io.unobserve(e.target); }
+      });
+    },{threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </BaseLayout>
