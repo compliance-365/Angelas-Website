@@ -1,53 +1,56 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root { color-scheme: light; }
-
-.btn { @apply inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-brand text-white hover:bg-brand-light transition; }
-.btn-outline { @apply inline-flex items-center gap-2 rounded-xl px-5 py-3 border border-brand text-brand hover:bg-brand/5 transition; }
-
-.prose p { @apply mb-3; }
-.grid-card { @apply p-6 border rounded-2xl hover:shadow-sm transition; }
-.kicker { @apply uppercase tracking-wide text-xs text-brand-light; }
-
 /* src/styles/global.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Brand variables */
-:root{
-  --brand-dark:#003D4D;
-  --brand-aqua:#00A3AF;
+/* --- Brand Palette --- */
+:root {
+  --brand-dark: #003D4D;
+  --brand-aqua: #00A3AF;
+  color-scheme: light;
 }
 
-/* Typography tweaks */
-.kicker{ @apply uppercase tracking-wide text-sm font-semibold; color:var(--brand-aqua); }
+/* --- Typography --- */
+.kicker {
+  @apply uppercase tracking-wide text-sm font-semibold;
+  color: var(--brand-aqua);
+}
 
-/* Buttons */
-.btn{
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold transition shadow-sm;
+.prose p { @apply mb-3 text-gray-700; }
+.prose h2 { @apply text-2xl font-semibold; }
+.prose ul { @apply list-disc pl-6; }
+
+/* --- Buttons --- */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition shadow-sm;
   background: var(--brand-aqua);
   color: white;
 }
-.btn:hover{ filter: brightness(0.95); }
-.btn-outline{
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold border transition;
+.btn:hover {
+  filter: brightness(0.95);
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold border transition;
   border-color: rgba(0,0,0,.1);
   color: var(--brand-dark);
 }
-.btn-outline:hover{ @apply bg-gray-50; }
-
-/* Grid cards */
-.grid-card{
-  @apply p-5 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition bg-white;
+.btn-outline:hover {
+  @apply bg-gray-50;
 }
 
-/* Header tweaks */
-header a{ @apply no-underline; }
+/* --- Cards --- */
+.grid-card {
+  @apply p-6 border rounded-2xl hover:shadow-sm transition bg-white;
+  border-color: rgba(0,0,0,.05);
+}
 
-/* Simple prose defaults */
-.prose h2{ @apply text-2xl font-semibold; }
-.prose p{ @apply text-gray-700; }
-.prose ul{ @apply list-disc pl-6; }
+/* --- Header / Navigation --- */
+header a {
+  @apply no-underline text-[var(--brand-dark)] hover:text-[var(--brand-aqua)] transition;
+}
+
+/* --- Accessibility & Utility --- */
+:focus-visible {
+  outline: 2px solid var(--brand-aqua);
+  outline-offset: 2px;
+}
