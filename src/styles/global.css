@@ -44,3 +44,16 @@ header a { @apply no-underline text-[var(--brand-dark)] hover:text-[var(--brand-
 
 /* --- Accessibility --- */
 :focus-visible { outline: 2px solid var(--brand-aqua); outline-offset: 2px; }
+
+  /* sticky subnav */
+.subnav {
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.75);
+}
+.subnav a { @apply text-sm font-medium px-3 py-2 rounded-lg hover:bg-gray-100 transition; }
+
+/* section spacing */
+.section { @apply mx-auto max-w-6xl px-4 py-16; }
+
+/* smooth reveal baseline (so it’s snappier) */
+.reveal { transition: transform .7s ease, opacity .7s ease; }
