@@ -24,24 +24,27 @@ const schema = {
 >
   <Fragment slot="header"><Header /></Fragment>
 
-  <!-- Parallax Hero -->
-  <section class="relative overflow-hidden">
+  <!-- HERO: stronger parallax + glass panel -->
+  <section id="top" class="relative overflow-hidden">
+    <!-- background -->
     <div class="absolute inset-0">
+      <!-- desktop: bg-fixed makes the parallax obvious; mobile: JS translate below -->
       <div
-        class="h-[44rem] bg-cover bg-center will-change-transform"
+        class="h-[48rem] bg-cover bg-center md:bg-fixed will-change-transform"
         style={`background-image:url('${base}hero-dashboard.webp')`}
         data-parallax
-        data-speed="0.25"
+        data-speed="0.15"
       ></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/25"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-black/30"></div>
     </div>
 
-    <div class="relative mx-auto max-w-6xl px-4 h-[44rem] flex items-end pb-14 text-white">
-      <div class="max-w-3xl">
+    <!-- foreground -->
+    <div class="relative mx-auto max-w-6xl px-4 h-[48rem] flex items-end pb-14">
+      <div class="max-w-3xl text-white bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
         <p class="kicker">SharePoint + Power Platform ready</p>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">RAP Dashboard (SharePoint)</h1>
         <p class="mt-3 text-white/90">
-          A single hub for actions, owners, evidence and reporting — provisioned to your Microsoft 365 tenant via PnP.
+          A single hub for actions, owners, evidence and reporting — provisioned to your Microsoft&nbsp;365 tenant via PnP.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href={`${base}contact/`} class="btn">Request a Demo</a>
@@ -51,34 +54,64 @@ const schema = {
     </div>
   </section>
 
-  <!-- Three pillars: Tracker / Dashboard / Hub -->
-  <section class="mx-auto max-w-6xl px-4 py-16">
+  <!-- STICKY IN-PAGE NAV -->
+  <nav class="subnav sticky top-[64px] z-40 border-b border-gray-200">
+    <div class="mx-auto max-w-6xl px-4 py-2 flex flex-wrap gap-1">
+      <a href="#overview">Overview</a>
+      <a href="#tracker">Tracker</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#hub">Hub</a>
+      <a href="#provisioning">Provisioning</a>
+      <a href="#faq">FAQ</a>
+      <a href={`${base}contact/`}>Contact</a>
+    </div>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <section id="overview" class="section">
     <h2 class="text-2xl font-semibold reveal">Your RAP, organised</h2>
-    <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <div class="grid-card opacity-0 translate-y-4 reveal">
+    <p class="mt-3 max-w-3xl text-gray-700 reveal">
+      The 2Ways RAP Hub is a SharePoint site template with lists, views and flows that make RAP delivery visible and accountable.
+      It’s designed to be imported into your tenant, branded to your organisation and extended as you grow.
+    </p>
+  </section>
+
+  <!-- THREE PILLARS -->
+  <section class="section pt-0">
+    <div class="grid md:grid-cols-3 gap-6 mt-2">
+      <div id="tracker" class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Tracker</h3>
         <p class="text-sm mt-2">Every action with an owner, due date, status and evidence type. Overdue and upcoming views keep teams honest.</p>
         <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Actions & milestones</li><li>Owners & approvals</li><li>Evidence library links</li>
+          <li>Actions & milestones</li>
+          <li>Owners & approvals</li>
+          <li>Evidence library links</li>
         </ul>
       </div>
-      <div class="grid-card opacity-0 translate-y-4 reveal">
+      <div id="dashboard" class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Dashboard</h3>
         <p class="text-sm mt-2">Quarterly progress, risk & issue snapshots and KPI roll-ups. Export to Excel or connect Power BI.</p>
         <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Quarterly status</li><li>Overdue & due-soon</li><li>KPI & completion %</li>
+          <li>Quarterly status</li>
+          <li>Overdue & due-soon</li>
+          <li>KPI & completion %</li>
         </ul>
       </div>
-      <div class="grid-card opacity-0 translate-y-4 reveal">
+      <div id="hub" class="grid-card opacity-0 translate-y-4 reveal">
         <h3 class="font-semibold">Hub</h3>
         <p class="text-sm mt-2">A one-stop knowledge base for policies, templates, stories and training links. Searchable and permissioned.</p>
         <ul class="list-disc ml-5 text-sm mt-2">
-          <li>Docs & templates</li><li>Stories & comms</li><li>Training catalogue</li>
+          <li>Docs & templates</li>
+          <li>Stories & comms</li>
+          <li>Training catalogue</li>
         </ul>
       </div>
     </div>
+  </section>
 
-    <div class="mt-10 p-6 border rounded-2xl opacity-0 translate-y-4 reveal">
+  <!-- PROVISIONING -->
+  <section id="provisioning" class="section">
+    <div class="p-6 border rounded-2xl opacity-0 translate-y-4 reveal bg-white">
       <h3 class="font-semibold">Provisioning</h3>
       <ol class="list-decimal ml-5 text-sm mt-2">
         <li>We build and demo in our tenant.</li>
@@ -90,7 +123,7 @@ const schema = {
   </section>
 
   <!-- FAQ -->
-  <section class="mx-auto max-w-6xl px-4 pb-16">
+  <section id="faq" class="section">
     <h2 class="text-2xl font-semibold">Dashboard FAQs</h2>
     <div class="mt-6 grid gap-4">
       <details class="p-4 border rounded-xl reveal opacity-0 translate-y-4">
@@ -110,21 +143,29 @@ const schema = {
 
   <Fragment slot="footer"><Footer /></Fragment>
 
-  <!-- Parallax + Reveal Scripts -->
+  <!-- Parallax (mobile fallback) + Reveal -->
   <script is:inline>
+    // desktop gets bg-fixed; mobile gets translate fallback
     const parallaxEls = document.querySelectorAll('[data-parallax]');
     const onScroll = () => {
       const y = window.scrollY || window.pageYOffset;
       parallaxEls.forEach(el => {
-        const speed = parseFloat(el.dataset.speed || '0.25');
-        el.style.transform = `translate3d(0,${y * speed * -0.2}px,0)`;
+        // skip if bg-fixed is active (desktop), apply only on small screens
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          const speed = parseFloat(el.dataset.speed || '0.15');
+          el.style.transform = `translate3d(0,${y * speed * -0.4}px,0)`;
+        }
       });
     };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+    // simple reveal
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.remove('opacity-0','translate-y-4'); e.target.classList.add('transition','duration-700'); io.unobserve(e.target); }
+        if(e.isIntersecting){
+          e.target.classList.remove('opacity-0','translate-y-4');
+          io.unobserve(e.target);
+        }
       });
     },{threshold:0.15});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
