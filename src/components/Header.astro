@@ -11,8 +11,8 @@ const base = import.meta.env.BASE_URL;  // "/" locally, "/Angelas-Website/" on P
       </div>
     </a>
 
-    <button class="md:hidden p-2 border rounded-lg" aria-label="Toggle menu"
-      onclick="document.getElementById('navlinks').classList.toggle('hidden')">☰</button>
+    <button id="nav-toggle" class="md:hidden p-2 border rounded-lg"
+      aria-label="Toggle menu" aria-expanded="false" aria-controls="navlinks">☰</button>
 
     <ul id="navlinks" class="hidden md:flex items-center gap-6 text-base font-medium">
       <li><a href={`${base}about/`} class="hover:text-[#00A3AF]">About</a></li>
@@ -24,3 +24,13 @@ const base = import.meta.env.BASE_URL;  // "/" locally, "/Angelas-Website/" on P
     </ul>
   </nav>
 </header>
+
+<script is:inline>
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('navlinks');
+  navToggle?.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', String(!expanded));
+    navLinks?.classList.toggle('hidden');
+  });
+</script>
