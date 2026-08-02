@@ -56,45 +56,172 @@ const gettingStartedBands = [
 ];
 
 // ---- Tracks: already have a RAP (Reflect / Innovate / Stretch / Elevate) ----
-// Same four pillars, but the questions assume the basics are already in
-// place and probe how embedded/systematic practice has become — testing
-// readiness to progress to the next stage, rather than whether the
-// organisation has started at all.
-const deepeningPillars = [
+// Each stage gets its own question set, not a shared generic one — what
+// "readiness to progress" looks like is genuinely different depending on
+// where an organisation already is. Asking a Stretch-stage organisation
+// "have you done any cultural training" wastes the chance to ask something
+// actually relevant to them.
+
+// Reflect → Innovate: tests whether foundational scoping work is solid
+// enough to formalise into a structured, resourced plan.
+const reflectPillars = [
   {
     key: 'relationships',
     name: 'Relationships',
     questions: [
-      'Have your relationships with Aboriginal and Torres Strait Islander communities moved beyond consultation toward genuine partnership or co-design?',
-      'Are these relationships sustained by your organisation as a whole, rather than resting on one or two individuals?',
-      'Have you formalised any partnerships — such as MOUs, ongoing funding or joint initiatives — with Aboriginal and Torres Strait Islander organisations?'
+      'Have you identified the specific Aboriginal and Torres Strait Islander stakeholders and organisations relevant to your operations?',
+      'Has engagement moved beyond a one-off introduction to regular, ongoing contact?',
+      "Have you scoped potential partnership opportunities, even if none are formalised yet?"
     ]
   },
   {
     key: 'respect',
     name: 'Respect',
     questions: [
-      'Has cultural competency training moved beyond a one-off session to an ongoing, refreshed program?',
-      'Are Aboriginal and Torres Strait Islander perspectives embedded in everyday decision-making, not just RAP-specific activities?',
-      'Does your organisation take a public stance on reconciliation beyond your RAP commitments — for example, NAIDOC Week or Reconciliation Week?'
+      'Have staff completed at least an introductory cultural awareness session?',
+      'Has your organisation started developing cultural protocols, such as Acknowledgement of Country practices?',
+      'Have you researched the histories and cultures of the Traditional Owners of the land you operate on?'
     ]
   },
   {
     key: 'opportunities',
     name: 'Opportunities',
     questions: [
-      'Have you met or exceeded your original RAP employment or procurement targets?',
-      'Do Aboriginal and Torres Strait Islander employees have visible pathways into leadership and senior roles?',
-      'Is your spend with Aboriginal and Torres Strait Islander-owned businesses growing year on year, not just being maintained?'
+      'Have you identified potential areas for Aboriginal and Torres Strait Islander employment or procurement in your business?',
+      'Have you begun reviewing your current recruitment and procurement practices for barriers?',
+      'Have you identified internal champions to help progress these opportunities?'
     ]
   },
   {
     key: 'governance',
     name: 'Governance',
     questions: [
-      'Is RAP governance reviewed on a cadence beyond the minimum required reporting?',
-      'Has leadership succession planning considered who will champion reconciliation work beyond your current champions?',
-      'Do you publicly report RAP progress — for example in an annual report or on your website — beyond what Reconciliation Australia requires?'
+      'Has your RAP working group been formally established, with clear terms of reference?',
+      'Has senior leadership formally endorsed your reconciliation commitments?',
+      'Do you have a realistic timeline and resourcing plan to move from Reflect to Innovate?'
+    ]
+  }
+];
+
+// Innovate → Stretch: tests whether piloted approaches are being embedded
+// organisation-wide with real measurement, not just tried once.
+const innovatePillars = [
+  {
+    key: 'relationships',
+    name: 'Relationships',
+    questions: [
+      'Are your Aboriginal and Torres Strait Islander partnerships now formalised — for example, through agreements or ongoing programs?',
+      'Have relationships expanded beyond your initial contacts to a broader network?',
+      "Is community input shaping your organisation's broader strategy, not just RAP-specific activities?"
+    ]
+  },
+  {
+    key: 'respect',
+    name: 'Respect',
+    questions: [
+      'Is cultural competency training mandatory and ongoing for all staff, rather than a one-off pilot group?',
+      'Have cultural protocols been embedded into standard business processes — events, communications, onboarding?',
+      'Does your organisation actively contribute to public reconciliation initiatives beyond internal activities?'
+    ]
+  },
+  {
+    key: 'opportunities',
+    name: 'Opportunities',
+    questions: [
+      'Have you implemented — not just planned — employment or procurement initiatives with measurable results?',
+      'Are you actively tracking progress against the specific targets set in your Innovate RAP?',
+      'Have you identified barriers to opportunities and taken concrete action to address them?'
+    ]
+  },
+  {
+    key: 'governance',
+    name: 'Governance',
+    questions: [
+      'Is RAP progress reported regularly to senior leadership or the board, not just at renewal time?',
+      'Has RAP accountability been embedded into position descriptions or performance measures?',
+      'Do you have a system for capturing and reporting evidence against your RAP commitments?'
+    ]
+  }
+];
+
+// Stretch → Elevate: tests for genuine, sustained impact and governance
+// sophisticated enough to support sector leadership.
+const stretchPillars = [
+  {
+    key: 'relationships',
+    name: 'Relationships',
+    questions: [
+      'Do you have long-term, multi-year partnerships with Aboriginal and Torres Strait Islander organisations delivering mutual benefit?',
+      'Are Aboriginal and Torres Strait Islander partners involved in governance or advisory roles within your organisation?',
+      "Does your organisation influence or support reconciliation efforts across your industry or sector?"
+    ]
+  },
+  {
+    key: 'respect',
+    name: 'Respect',
+    questions: [
+      'Has cultural competency become part of your organisational culture — reflected in values, behaviours and leadership expectations?',
+      'Does your organisation contribute to public discourse or education on reconciliation?',
+      "Are Aboriginal and Torres Strait Islander histories and perspectives reflected in your organisation's core products, services or communications?"
+    ]
+  },
+  {
+    key: 'opportunities',
+    name: 'Opportunities',
+    questions: [
+      'Have you achieved significant, sustained improvements in Aboriginal and Torres Strait Islander employment or procurement outcomes?',
+      'Is there Aboriginal and Torres Strait Islander representation in senior leadership or on your board?',
+      'Are your outcomes recognised externally — for example through awards, case studies or industry recognition?'
+    ]
+  },
+  {
+    key: 'governance',
+    name: 'Governance',
+    questions: [
+      "Is reconciliation governance integrated into your organisation's core strategic and risk frameworks?",
+      'Do you publicly and transparently report on both successes and shortcomings in your RAP journey?',
+      'Does your organisation mentor or support other organisations on their reconciliation journeys?'
+    ]
+  }
+];
+
+// Elevate: there's no further formal RAP stage, so this tests depth and
+// sustainability of leading practice rather than readiness to progress.
+const elevatePillars = [
+  {
+    key: 'relationships',
+    name: 'Relationships',
+    questions: [
+      "Are your partnerships self-sustaining and mutually led, rather than dependent on your organisation's ongoing initiation?",
+      "Have you helped other organisations build their own relationships with Aboriginal and Torres Strait Islander communities?",
+      'Is your organisation seen as a trusted partner by Aboriginal and Torres Strait Islander communities beyond your immediate operations?'
+    ]
+  },
+  {
+    key: 'respect',
+    name: 'Respect',
+    questions: [
+      'Does your organisation help shape sector-wide standards or policy on cultural safety and respect?',
+      'Have your Elevate practices been sustained through leadership changes or organisational restructuring?',
+      'Do you invest in developing the next generation of reconciliation leaders within your organisation?'
+    ]
+  },
+  {
+    key: 'opportunities',
+    name: 'Opportunities',
+    questions: [
+      'Are your employment and procurement outcomes sustained over multiple years, not just a single reporting period?',
+      'Have you influenced supply chains or industry practices beyond your own organisation?',
+      'Do you actively support the growth of Aboriginal and Torres Strait Islander businesses beyond your own direct procurement?'
+    ]
+  },
+  {
+    key: 'governance',
+    name: 'Governance',
+    questions: [
+      'Is your reconciliation governance regularly reviewed and refreshed to stay ambitious, rather than steady-state?',
+      'Do you contribute learnings from your RAP journey to sector bodies, government or Reconciliation Australia?',
+      "Is your organisation recognised as a benchmark or reference point for other organisations' RAPs?"
     ]
   }
 ];
@@ -138,10 +265,10 @@ const gate = {
 
 const tracks = {
   'getting-started': { pillars: gettingStartedPillars, bands: gettingStartedBands },
-  reflect: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.reflect) },
-  innovate: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.innovate) },
-  stretch: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.stretch) },
-  elevate: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.elevate) }
+  reflect: { pillars: reflectPillars, bands: deepeningBands(stageMeta.reflect) },
+  innovate: { pillars: innovatePillars, bands: deepeningBands(stageMeta.innovate) },
+  stretch: { pillars: stretchPillars, bands: deepeningBands(stageMeta.stretch) },
+  elevate: { pillars: elevatePillars, bands: deepeningBands(stageMeta.elevate) }
 };
 
 const disclaimer = "This is a general guide to help you plan your next step, not a formal RAP type determination — Reconciliation Australia assesses and approves the specific RAP type your organisation registers for.";
