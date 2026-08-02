@@ -1,0 +1,115 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+export interface Props {
+  slug: string;
+  navTitle: string;
+  pageTitle: string;
+  metaDescription: string;
+  heroBlurb: string;
+  whatIsHeading: string;
+  whatIsBody: string;
+  pullquote: string;
+  howWeConduct: { title: string; body: string }[];
+  howWeHelp: string;
+  schemaDescription: string;
+}
+
+const {
+  slug,
+  navTitle,
+  pageTitle,
+  metaDescription,
+  heroBlurb,
+  whatIsHeading,
+  whatIsBody,
+  pullquote,
+  howWeConduct,
+  howWeHelp,
+  schemaDescription
+} = Astro.props;
+
+const services = [
+  { label: 'Reconciliation Action Plans (RAP)', href: 'services/rap/' },
+  { label: 'Business and Strategic Planning', href: 'services/business-strategic/' },
+  { label: 'Employment and Workplace', href: 'services/employment-workplace/' },
+  { label: 'Monitoring and Evaluation', href: 'services/monitoring-evaluation/' },
+  { label: 'Diversity and Inclusion Programs', href: 'services/diversity-inclusion/' }
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: navTitle,
+  provider: { '@type': 'Organization', name: SITE.name },
+  areaServed: 'AU',
+  description: schemaDescription
+};
+---
+<BaseLayout
+  title={`${pageTitle} | ${SITE.name}`}
+  description={metaDescription}
+  canonical={`${SITE.url}/${slug}/`}
+  schema={schema}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand via-brand to-surface"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-16 md:py-20">
+      <nav class="text-sm text-white/60 mb-3"><a href={`${base}`} class="hover:underline">Home</a> / <span class="text-white/90">{navTitle}</span></nav>
+      <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">{navTitle}</h1>
+      <p class="mt-3 max-w-2xl text-white/80">{heroBlurb}</p>
+    </div>
+  </section>
+
+  <section class="section grid md:grid-cols-[1fr_280px] gap-10">
+    <div class="prose">
+      <h2>{whatIsHeading}</h2>
+      <p>{whatIsBody}</p>
+      <blockquote class="stage-card p-5 not-prose my-6">
+        <p class="text-sm italic text-white/90">&ldquo;{pullquote}&rdquo;</p>
+      </blockquote>
+
+      <h2>How we work</h2>
+      <div class="grid gap-4 not-prose mt-4">
+        {howWeConduct.map((item) => (
+          <div class="grid-card">
+            <h3 class="font-semibold text-white">{item.title}</h3>
+            <p class="mt-2 text-sm text-white/80">{item.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2>How we can help your organisation</h2>
+      <p>{howWeHelp}</p>
+
+      <a href={`${base}contact/`} class="btn not-prose mt-2 inline-flex">Contact us today</a>
+    </div>
+
+    <aside class="space-y-6">
+      <div class="grid-card">
+        <h3 class="font-semibold text-brand-light mb-3">Services List</h3>
+        <ul class="space-y-1 text-sm">
+          {services.map((s) => (
+            <li>
+              <a href={`${base}${s.href}`} class={`block rounded-lg px-2 py-1.5 ${s.href === `${slug}/` ? 'bg-white/10 font-semibold' : 'hover:bg-white/10'}`}>{s.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="grid-card">
+        <h3 class="font-semibold text-brand-light mb-2">Have a Question?</h3>
+        <a href={`mailto:${SITE.email}`} class="text-sm underline break-all">{SITE.email}</a>
+      </div>
+    </aside>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

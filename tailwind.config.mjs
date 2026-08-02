@@ -4,11 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Nunito', 'system-ui', 'sans-serif'],
-        accent: ['"Source Sans Pro"', 'ui-sans-serif', 'system-ui']
+        sans: ['Roboto', 'system-ui', 'sans-serif'],
+        heading: ['Raleway', 'system-ui', 'sans-serif'],
+        nav: ['Poppins', 'system-ui', 'sans-serif']
       },
       colors: {
-        brand: { DEFAULT: '#003D4D', light: '#00A3AF', contrast: '#FFFFFF' }
+        // Matches the live site's palette (assets/css/main.css) so this is a
+        // platform migration, not a re-brand.
+        brand: { DEFAULT: '#0D1B2A', light: '#FFC451', contrast: '#FFFFFF' },
+        surface: '#1B263B',
+        ink: '#EDEDED'
       }
     }
   },

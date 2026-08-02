@@ -1,0 +1,37 @@
+---
+// A one-time, dismissible Acknowledgement of Country, shown on first visit.
+// Ported from the live site's modal; remembered via localStorage so it
+// doesn't interrupt returning visitors.
+---
+<div
+  id="aoc-modal"
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="aoc-heading"
+>
+  <div class="max-w-lg rounded-2xl p-6 md:p-8 text-center" style="background:#1B263B;color:#EDEDED;">
+    <h2 id="aoc-heading" class="text-xl font-semibold" style="color:#FFC451;">Acknowledgment of Country</h2>
+    <p class="mt-3 text-sm leading-relaxed">
+      2Ways Consulting acknowledges the Traditional Owners of the lands on which we live and work.
+      We pay our respects to Elders past and present, honouring the path they have forged and their
+      continued role in guiding us forward.
+    </p>
+    <button id="aoc-continue" class="btn mt-6">Acknowledge and Continue</button>
+  </div>
+</div>
+
+<script is:inline>
+  const AOC_KEY = '2ways-aoc-acknowledged';
+  const modal = document.getElementById('aoc-modal');
+  const btn = document.getElementById('aoc-continue');
+  if (modal && btn && !localStorage.getItem(AOC_KEY)) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  btn?.addEventListener('click', () => {
+    localStorage.setItem(AOC_KEY, '1');
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+  });
+</script>
