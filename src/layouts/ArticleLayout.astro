@@ -1,0 +1,55 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+export interface Props {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  kicker: string;
+  publishedDate: string; // e.g. "August 2026"
+  readTime: string; // e.g. "5 min read"
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { slug, title, metaDescription, kicker, publishedDate, readTime, schema } = Astro.props;
+---
+<BaseLayout
+  title={`${title} | ${SITE.name}`}
+  description={metaDescription}
+  canonical={`${SITE.url}/insights/${slug}/`}
+  schema={schema}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand via-brand to-surface"></div>
+    <div class="relative mx-auto max-w-3xl px-4 py-16 md:py-20">
+      <nav class="text-sm text-white/60 mb-3"><a href={`${base}insights/`} class="hover:underline">Insights</a></nav>
+      <p class="kicker">{kicker}</p>
+      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold text-white leading-tight">{title}</h1>
+      <p class="mt-4 text-sm text-white/60">{publishedDate} &middot; {readTime}</p>
+    </div>
+  </section>
+
+  <section class="section max-w-3xl">
+    <div class="prose">
+      <slot />
+    </div>
+
+    <div class="mt-10 grid-card">
+      <h3 class="font-semibold text-lg">Not sure where your organisation stands?</h3>
+      <p class="mt-2 text-sm text-white/80">Take a free 5-minute readiness check, or talk to us directly.</p>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a href={`${base}procurement-readiness/`} class="btn">Free Procurement Readiness Check</a>
+        <a href={`${base}contact/`} class="btn-outline">Talk to us</a>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
