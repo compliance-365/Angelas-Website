@@ -14,7 +14,7 @@ const freeTools = [
   { label: 'Indigenous Procurement Readiness Check', href: 'procurement-readiness/' }
 ];
 ---
-<header class="sticky top-0 z-50 bg-brand/95 backdrop-blur border-b border-white/10 font-nav">
+<header id="site-header" class="sticky top-0 z-50 bg-brand/95 backdrop-blur border-b border-white/10 font-nav transition-shadow">
   <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
     <a href={`${base}`} class="flex items-center gap-3">
       <img src={`${base}brand/logo.png`} alt="2Ways Consultancy logo" width="40" height="40" class="rounded-lg" />
@@ -84,4 +84,9 @@ const freeTools = [
     toolsToggle.setAttribute('aria-expanded', String(!expanded));
     toolsMenu?.classList.toggle('hidden');
   });
+
+  const siteHeader = document.getElementById('site-header');
+  const setElevated = () => siteHeader?.classList.toggle('is-elevated', window.scrollY > 8);
+  setElevated();
+  window.addEventListener('scroll', setElevated, { passive: true });
 </script>
