@@ -1,0 +1,69 @@
+---
+import AssessmentTool from '../layouts/AssessmentTool.astro';
+
+// Structured around the practical building blocks of a genuine Indigenous
+// procurement practice, timed to the Commonwealth Indigenous Procurement
+// Policy (IPP) changes: the target rises to 3% (from 1 July 2025) toward 4%
+// by 2029-30, and from 1 July 2026 a business must be at least 51% First
+// Nations-owned to count toward IPP targets.
+const pillars = [
+  {
+    key: 'policy',
+    name: 'Policy & Targets',
+    questions: [
+      'Does your organisation have a formal target or commitment for spend with Aboriginal and Torres Strait Islander-owned businesses?',
+      'Is Indigenous procurement referenced in your Reconciliation Action Plan or a broader supplier diversity policy?',
+      'Does senior leadership or procurement leadership actively own and report on this target?'
+    ]
+  },
+  {
+    key: 'verification',
+    name: 'Supplier Verification',
+    questions: [
+      'Does your organisation use a verified directory — such as Supply Nation — to identify genuine Aboriginal and Torres Strait Islander-owned businesses?',
+      'Are your procurement or category teams aware of the ownership requirements for a business to count as an Indigenous supplier?',
+      'Do you have a process to periodically re-verify supplier eligibility as ownership requirements change?'
+    ]
+  },
+  {
+    key: 'tracking',
+    name: 'Tracking & Reporting',
+    questions: [
+      'Does your organisation track total spend with Aboriginal and Torres Strait Islander-owned businesses?',
+      'Can you report this spend by category, business unit or contract — not just as a single annual figure?',
+      'Is procurement performance against target reviewed regularly (e.g. quarterly), not only at year-end?'
+    ]
+  },
+  {
+    key: 'relationships',
+    name: 'Relationships & Capability',
+    questions: [
+      'Does your organisation proactively build relationships with Aboriginal and Torres Strait Islander businesses before tenders are released?',
+      'Do you provide support — such as mentoring, flexible payment terms or capability building — to help Indigenous suppliers compete for and deliver contracts?',
+      'Do staff involved in procurement decisions receive any training on culturally safe supplier engagement?'
+    ]
+  }
+];
+
+const bands = [
+  { min: 0, max: 9, name: 'Early Stage', blurb: "There's no formal approach to Indigenous procurement in place yet. With the Indigenous Procurement Policy target rising and ownership eligibility rules tightening from 1 July 2026, now is a good time to build the policy and strategic foundations before gaps become compliance risk.", cta: 'services/business-strategic/' },
+  { min: 10, max: 18, name: 'Building the Basics', blurb: "Some elements are in place, but the approach isn't yet systematic — often the gap between a stated intention and a tracked, verifiable practice. Embedding this within a structured RAP tends to be the fastest way to close that gap.", cta: 'services/rap/' },
+  { min: 19, max: 27, name: 'Solid Foundations', blurb: "You have good systems in most areas. The highest-leverage next step is usually deepening measurement and reporting — making sure spend, supplier verification and outcomes are tracked well enough to withstand scrutiny as targets rise.", cta: 'services/monitoring-evaluation/' },
+  { min: 28, max: 36, name: 'Mature Practice', blurb: "You're demonstrating leading practice across policy, verification, tracking and relationships. From here, the focus tends to shift to scaling: deepening supplier relationships and connecting procurement outcomes to broader Aboriginal and Torres Strait Islander employment pathways.", cta: 'services/employment-workplace/' }
+];
+
+const disclaimer = "This is a general self-assessment tool to help guide your planning, not a formal determination of Indigenous Procurement Policy (IPP) eligibility or compliance. For a definitive assessment of your obligations, refer to official NIAA guidance or Supply Nation, or talk to us about a tailored review.";
+---
+<AssessmentTool
+  slug="procurement-readiness"
+  pageTitle="Free Indigenous Procurement Readiness Check"
+  metaDescription="A free, 5-minute self-assessment of your organisation's Indigenous procurement practice — policy, supplier verification, tracking and relationships — aligned to the 2025-26 Indigenous Procurement Policy changes."
+  kicker="Free tool · Takes about 5 minutes"
+  heroTitle="Indigenous Procurement Readiness Check"
+  heroIntro="From 1 July 2026, a business must be at least 51% First Nations-owned to count toward Indigenous Procurement Policy targets, and the target itself is rising toward 4% by 2029-30. 12 quick questions across policy, supplier verification, tracking and relationships — get an instant, personalised read on where your organisation stands."
+  pillars={pillars}
+  bands={bands}
+  emailSubject="Indigenous Procurement Readiness result"
+  disclaimer={disclaimer}
+  crossLink={{ label: 'RAP Readiness Assessment', href: 'assessment/' }}
+/>
