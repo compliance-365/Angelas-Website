@@ -8,6 +8,11 @@ const services = [
   { label: 'Monitoring & Evaluation', href: 'services/monitoring-evaluation/' },
   { label: 'Diversity & Inclusion Programs', href: 'services/diversity-inclusion/' }
 ];
+
+const freeTools = [
+  { label: 'RAP Readiness Assessment', href: 'assessment/' },
+  { label: 'Indigenous Procurement Readiness Check', href: 'procurement-readiness/' }
+];
 ---
 <header class="sticky top-0 z-50 bg-brand/95 backdrop-blur border-b border-white/10 font-nav">
   <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
@@ -36,7 +41,17 @@ const services = [
           ))}
         </ul>
       </li>
-      <li><a href={`${base}assessment/`} class="text-brand-light">Free Assessment</a></li>
+      <li class="relative group">
+        <button id="tools-toggle" class="flex items-center gap-1 text-brand-light" aria-expanded="false" aria-controls="tools-menu">
+          Free Tools
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <ul id="tools-menu" class="hidden md:group-hover:block md:absolute left-0 top-full mt-2 min-w-[280px] rounded-xl border border-white/10 bg-surface p-2 shadow-lg">
+          {freeTools.map((t) => (
+            <li><a href={`${base}${t.href}`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">{t.label}</a></li>
+          ))}
+        </ul>
+      </li>
       <li><a href={`${base}contact/`}>Contact</a></li>
     </ul>
     <a href={`${base}contact/`} class="hidden md:inline-flex btn">Get Started</a>
@@ -58,5 +73,13 @@ const services = [
     const expanded = servicesToggle.getAttribute('aria-expanded') === 'true';
     servicesToggle.setAttribute('aria-expanded', String(!expanded));
     servicesMenu?.classList.toggle('hidden');
+  });
+
+  const toolsToggle = document.getElementById('tools-toggle');
+  const toolsMenu = document.getElementById('tools-menu');
+  toolsToggle?.addEventListener('click', () => {
+    const expanded = toolsToggle.getAttribute('aria-expanded') === 'true';
+    toolsToggle.setAttribute('aria-expanded', String(!expanded));
+    toolsMenu?.classList.toggle('hidden');
   });
 </script>

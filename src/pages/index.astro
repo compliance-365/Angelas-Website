@@ -110,15 +110,21 @@ const webSiteSchema = {
     </div>
   </section>
 
-  <!-- FREE ASSESSMENT PROMO -->
+  <!-- FREE TOOLS PROMO -->
   <section class="section">
-    <div class="cta-banner">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-wide">Free · 5 minutes · No obligation</p>
-        <h3 class="text-xl font-semibold mt-1">Not sure where to start? Take the RAP Readiness Assessment.</h3>
-        <p class="text-sm mt-1">See where your organisation stands across Relationships, Respect, Opportunities and Governance.</p>
+    <p class="text-xs font-semibold uppercase tracking-wide text-brand-light text-center">Free · 5 minutes · No obligation</p>
+    <h2 class="text-2xl font-semibold text-center mt-1">Not sure where to start? Take a free readiness check.</h2>
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+      <div class="stage-card p-6 flex flex-col">
+        <h3 class="font-semibold text-lg">RAP Readiness Assessment</h3>
+        <p class="mt-2 text-sm text-white/80 flex-1">See where your organisation stands across Relationships, Respect, Opportunities and Governance.</p>
+        <a class="btn mt-4 self-start" href={`${base}assessment/`}>Start the assessment</a>
       </div>
-      <a class="btn bg-brand text-white hover:opacity-90" href={`${base}assessment/`}>Start the free assessment</a>
+      <div class="stage-card p-6 flex flex-col">
+        <h3 class="font-semibold text-lg">Indigenous Procurement Readiness Check</h3>
+        <p class="mt-2 text-sm text-white/80 flex-1">Check your procurement practice against the 2025–26 Indigenous Procurement Policy changes.</p>
+        <a class="btn mt-4 self-start" href={`${base}procurement-readiness/`}>Start the check</a>
+      </div>
     </div>
   </section>
 

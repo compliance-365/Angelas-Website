@@ -1,10 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE } from '../config/site';
-
-const base = import.meta.env.BASE_URL;
+import AssessmentTool from '../layouts/AssessmentTool.astro';
 
 // Structured around Reconciliation Australia's four RAP pillars, so the
 // result maps onto real, recognised categories rather than an arbitrary quiz.
@@ -47,13 +42,6 @@ const pillars = [
   }
 ];
 
-const options = [
-  { label: 'Not yet', value: 0 },
-  { label: 'Just started', value: 1 },
-  { label: 'In progress', value: 2 },
-  { label: 'Well established', value: 3 }
-];
-
 // 12 questions × 3 max = 36. Bands loosely mirror the Reflect → Elevate
 // RAP journey without claiming they ARE a formal RAP type assessment.
 const bands = [
@@ -62,209 +50,16 @@ const bands = [
   { min: 19, max: 27, name: 'Well Progressed', blurb: "You're well progressed across most pillars. This is often where organisations benefit most from monitoring and evaluation — making sure existing commitments are tracked, measured and reported, not just underway.", cta: 'services/monitoring-evaluation/' },
   { min: 28, max: 36, name: 'Leading Practice', blurb: "You're demonstrating leading practice across relationships, respect, opportunities and governance. The focus from here is usually deepening impact — strengthening Aboriginal and Torres Strait Islander employment and procurement outcomes, and formalising governance for the long term.", cta: 'services/employment-workplace/' }
 ];
-
-const pageTitle = 'Free RAP Readiness Assessment';
-const metaDescription = 'A free, 5-minute self-assessment against the four RAP pillars — Relationships, Respect, Opportunities and Governance — with a personalised next step for your organisation.';
 ---
-<BaseLayout
-  title={`${pageTitle} | ${SITE.name}`}
-  description={metaDescription}
-  canonical={`${SITE.url}/assessment/`}
->
-  <Fragment slot="header"><Header /></Fragment>
-
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand via-brand to-surface"></div>
-    <div class="relative mx-auto max-w-3xl px-4 py-16 md:py-20 text-center">
-      <p class="kicker">Free tool · Takes about 5 minutes</p>
-      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold text-white leading-tight">RAP Readiness Assessment</h1>
-      <p class="mt-4 text-white/80">
-        12 quick questions across the four RAP pillars — Relationships, Respect, Opportunities and Governance —
-        used by Reconciliation Australia. Get an instant, personalised read on where your organisation stands
-        and what to focus on next. No obligation, and you don't need to give us anything to see your result.
-      </p>
-    </div>
-  </section>
-
-  <section class="section max-w-3xl">
-    <form id="assessment-form" class="space-y-10">
-      <div class="grid-card !bg-white text-slate-900">
-        <div class="flex items-center justify-between text-sm font-semibold">
-          <span id="progress-label">0 of 12 answered</span>
-          <span id="progress-pct">0%</span>
-        </div>
-        <div class="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
-          <div id="progress-bar" class="h-full bg-brand-light" style="width:0%"></div>
-        </div>
-      </div>
-
-      {pillars.map((pillar, pIdx) => (
-        <fieldset>
-          <legend class="kicker mb-4">{pillar.name}</legend>
-          <div class="space-y-6">
-            {pillar.questions.map((q, qIdx) => {
-              const name = `${pillar.key}-${qIdx}`;
-              return (
-                <div class="grid-card">
-                  <p class="font-medium">{q}</p>
-                  <div class="mt-3 grid sm:grid-cols-2 gap-2">
-                    {options.map((opt) => (
-                      <label class="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm cursor-pointer hover:bg-white/10">
-                        <input type="radio" name={name} value={opt.value} class="assessment-input" required />
-                        {opt.label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </fieldset>
-      ))}
-
-      <button type="submit" class="btn w-full sm:w-auto">See my result</button>
-    </form>
-
-    <div id="results" class="hidden">
-      <div class="grid-card !bg-white text-slate-900 text-center">
-        <p class="kicker">Your result</p>
-        <p class="mt-2 text-4xl font-extrabold" style="color:#0D1B2A;" id="result-score">0/36</p>
-        <h2 class="mt-1 text-2xl font-bold" style="color:#0D1B2A;" id="result-band"></h2>
-        <p class="mt-3 text-slate-700" id="result-blurb"></p>
-
-        <div class="mt-6 grid sm:grid-cols-4 gap-3 text-left" id="result-breakdown"></div>
-
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a id="result-cta" href={`${base}contact/`} class="btn">Talk to us about your result</a>
-          <button type="button" id="retake-btn" class="btn-outline !text-slate-700 !border-slate-300">Retake assessment</button>
-        </div>
-      </div>
-
-      <div class="grid-card mt-6">
-        <h3 class="font-semibold">Want a copy emailed to you?</h3>
-        <p class="text-sm text-white/70 mt-1">Optional — leave your details and we'll send your result and some relevant next steps.</p>
-        <form
-          id="results-email-form"
-          action="https://formspree.io/f/xgvwovew"
-          method="POST"
-          class="mt-4 grid sm:grid-cols-[1fr_1fr_auto] gap-3"
-        >
-          <input type="hidden" name="_subject" value="RAP Readiness Assessment result" />
-          <input type="hidden" name="assessment_score" id="email-score-field" value="" />
-          <input type="hidden" name="assessment_band" id="email-band-field" value="" />
-          <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
-          <input name="name" required placeholder="Your name" class="w-full border rounded-xl px-3 py-2.5 text-slate-900" />
-          <input type="email" name="email" required placeholder="Work email" class="w-full border rounded-xl px-3 py-2.5 text-slate-900" />
-          <button type="submit" class="btn">Email my result</button>
-        </form>
-        <p id="email-sent-msg" class="hidden mt-3 text-sm text-brand-light">Thanks — we'll be in touch shortly.</p>
-      </div>
-    </div>
-  </section>
-
-  <Fragment slot="footer"><Footer /></Fragment>
-
-  <script type="application/json" id="assessment-data" set:html={JSON.stringify({ pillars: pillars.map(p => ({ key: p.key, name: p.name, count: p.questions.length })), bands, base })} />
-
-  <script is:inline>
-    const data = JSON.parse(document.getElementById('assessment-data').textContent);
-    const form = document.getElementById('assessment-form');
-    const inputs = () => Array.from(form.querySelectorAll('.assessment-input'));
-    const progressLabel = document.getElementById('progress-label');
-    const progressPct = document.getElementById('progress-pct');
-    const progressBar = document.getElementById('progress-bar');
-
-    const totalQuestions = data.pillars.reduce((n, p) => n + p.count, 0);
-
-    function updateProgress() {
-      const answeredNames = new Set(
-        inputs().filter(i => i.checked).map(i => i.name)
-      );
-      const answered = answeredNames.size;
-      const pct = Math.round((answered / totalQuestions) * 100);
-      progressLabel.textContent = `${answered} of ${totalQuestions} answered`;
-      progressPct.textContent = `${pct}%`;
-      progressBar.style.width = `${pct}%`;
-    }
-
-    form.addEventListener('change', updateProgress);
-    updateProgress();
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const perPillar = {};
-      data.pillars.forEach(p => { perPillar[p.key] = { score: 0, max: p.count * 3 }; });
-
-      let total = 0;
-      data.pillars.forEach(p => {
-        for (let i = 0; i < p.count; i++) {
-          const name = `${p.key}-${i}`;
-          const checked = form.querySelector(`input[name="${name}"]:checked`);
-          const val = checked ? parseInt(checked.value, 10) : 0;
-          perPillar[p.key].score += val;
-          total += val;
-        }
-      });
-
-      const band = data.bands.find(b => total >= b.min && total <= b.max) || data.bands[0];
-
-      document.getElementById('result-score').textContent = `${total}/36`;
-      document.getElementById('result-band').textContent = band.name;
-      document.getElementById('result-blurb').textContent = band.blurb;
-      document.getElementById('result-cta').href = `${data.base}${band.cta}`;
-      document.getElementById('result-cta').textContent = 'Explore the recommended next step';
-
-      const breakdown = document.getElementById('result-breakdown');
-      breakdown.innerHTML = '';
-      data.pillars.forEach(p => {
-        const { score, max } = perPillar[p.key];
-        const pct = Math.round((score / max) * 100);
-        const cell = document.createElement('div');
-        cell.innerHTML = `
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">${p.name}</p>
-          <div class="mt-1 h-2 rounded-full bg-slate-200 overflow-hidden">
-            <div class="h-full" style="width:${pct}%;background:#0D1B2A;"></div>
-          </div>
-          <p class="mt-1 text-xs text-slate-500">${score}/${max}</p>
-        `;
-        breakdown.appendChild(cell);
-      });
-
-      document.getElementById('email-score-field').value = `${total}/36`;
-      document.getElementById('email-band-field').value = band.name;
-
-      form.classList.add('hidden');
-      document.getElementById('results').classList.remove('hidden');
-      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    document.getElementById('retake-btn')?.addEventListener('click', () => {
-      form.reset();
-      updateProgress();
-      document.getElementById('results').classList.add('hidden');
-      form.classList.remove('hidden');
-      form.scrollIntoView({ behavior: 'smooth' });
-    });
-
-    const emailForm = document.getElementById('results-email-form');
-    emailForm?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = emailForm.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      try {
-        await fetch(emailForm.action, {
-          method: 'POST',
-          body: new FormData(emailForm),
-          headers: { Accept: 'application/json' }
-        });
-        emailForm.classList.add('hidden');
-        document.getElementById('email-sent-msg').classList.remove('hidden');
-      } catch (err) {
-        btn.disabled = false;
-        btn.textContent = 'Email my result';
-      }
-    });
-  </script>
-</BaseLayout>
+<AssessmentTool
+  slug="assessment"
+  pageTitle="Free RAP Readiness Assessment"
+  metaDescription="A free, 5-minute self-assessment against the four RAP pillars — Relationships, Respect, Opportunities and Governance — with a personalised next step for your organisation."
+  kicker="Free tool · Takes about 5 minutes"
+  heroTitle="RAP Readiness Assessment"
+  heroIntro="12 quick questions across the four RAP pillars — Relationships, Respect, Opportunities and Governance — used by Reconciliation Australia. Get an instant, personalised read on where your organisation stands and what to focus on next. No obligation, and you don't need to give us anything to see your result."
+  pillars={pillars}
+  bands={bands}
+  emailSubject="RAP Readiness Assessment result"
+  crossLink={{ label: 'Indigenous Procurement Readiness Check', href: 'procurement-readiness/' }}
+/>
