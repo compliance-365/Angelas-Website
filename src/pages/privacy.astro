@@ -4,11 +4,79 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
 ---
-<BaseLayout title={`Privacy Policy | ${SITE.name}`} description="Our approach to privacy." canonical={`${SITE.url}/privacy/`}>
+<BaseLayout
+  title={`Privacy Policy | ${SITE.name}`}
+  description="Committed to protecting your privacy and handling personal information responsibly and transparently."
+  canonical={`${SITE.url}/privacy/`}
+>
   <Fragment slot="header"><Header /></Fragment>
-  <section class="mx-auto max-w-3xl px-4 py-16 prose">
-    <h1>Privacy Policy</h1>
-    <p>Update with your policy text.</p>
+  <section class="section prose max-w-3xl">
+    <h1 class="text-white">Privacy Policy</h1>
+    <p>
+      At 2Ways Consulting, we are committed to protecting your privacy and ensuring that your personal information is
+      handled in accordance with the Australian Privacy Principles (APPs) set out in the Privacy Act 1988 (Cth). This
+      Privacy Policy explains how we collect, use, store, and protect your personal information when you engage with
+      our services, including our business and strategic planning services.
+    </p>
+
+    <h2>What information we collect</h2>
+    <p>We may collect personal information that is reasonably necessary for us to deliver our services, including:</p>
+    <ul>
+      <li>Your name, position, organisation, and contact details (such as email address and phone number);</li>
+      <li>Details of your interactions with us, including correspondence, project details, and feedback;</li>
+      <li>Any other information you choose to provide to us that is relevant to our services or your engagement with us.</li>
+    </ul>
+
+    <h2>How we collect information</h2>
+    <p>
+      We collect personal information directly from you when you communicate with us, participate in our services,
+      provide feedback, or use our website. We may also collect information from publicly available sources or third
+      parties, but only where you would reasonably expect us to do so or where you have given consent.
+    </p>
+
+    <h2>How we use your information</h2>
+    <p>We use your personal information to:</p>
+    <ul>
+      <li>Provide and manage our services, including business and strategic planning, and consultancy services;</li>
+      <li>Communicate with you regarding your projects, enquiries, and ongoing engagement with us;</li>
+      <li>Comply with our legal and regulatory obligations;</li>
+      <li>Improve our services and offerings based on feedback and evaluation;</li>
+      <li>Promote inclusive, culturally safe, and respectful practices within our services and your organisation.</li>
+    </ul>
+
+    <h2>How we share your information</h2>
+    <p>We do not sell your personal information. We may disclose your information to:</p>
+    <ul>
+      <li>Our trusted employees, contractors, and advisors who assist us in delivering our services and are bound by confidentiality obligations;</li>
+      <li>Third parties where required or authorised by law, or with your consent;</li>
+      <li>Relevant stakeholders, such as funding bodies or partners, where necessary to facilitate our services, with appropriate privacy safeguards in place.</li>
+    </ul>
+
+    <h2>How we store and protect your information</h2>
+    <p>
+      We take reasonable steps to protect your personal information from misuse, interference, and loss, as well as
+      unauthorised access, modification, or disclosure. This includes secure electronic and physical storage systems,
+      access controls, and staff training on privacy obligations.
+    </p>
+
+    <h2>Accessing and correcting your information</h2>
+    <p>
+      You have the right to access the personal information we hold about you and to request corrections if it is
+      inaccurate, out-of-date, or incomplete. To make a request, please contact us using the details provided below.
+    </p>
+
+    <h2>Updates to this Privacy Policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time to reflect changes in our practices, services, or legal
+      obligations. The updated version will be published on our website and effective from the date of posting.
+    </p>
+
+    <h2>Contact us</h2>
+    <p>
+      If you have any questions, concerns, or requests about your personal information or this Privacy Policy,
+      please contact us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+    </p>
+    <p class="text-sm text-white/60">This Privacy Policy was last updated in August 2025.</p>
   </section>
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>

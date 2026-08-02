@@ -3,19 +3,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
+const base = import.meta.env.BASE_URL;
 ---
-<BaseLayout title={`About | ${SITE.name}`} description={SITE.description} canonical={`${SITE.url}/about/`}>
+<BaseLayout
+  title={`About Us | ${SITE.name}`}
+  description="Learn about 2Ways Consultancy, our mission, vision, and our commitment to enabling reconciliation and cultural awareness."
+  canonical={`${SITE.url}/about/`}
+>
   <Fragment slot="header"><Header /></Fragment>
-  <section class="mx-auto max-w-3xl px-4 py-16 prose">
-    <h1>About 2Ways Consultancy</h1>
-    <p>2Ways Consultancy is an Indigenous Australian-led consultancy partnering with organisations to deliver measurable reconciliation outcomes and culturally safe workplaces.</p>
-    <h2>Our Approach</h2>
-    <ul>
-      <li>Culturally grounded and respectful engagement</li>
-      <li>Practical roadmaps from Reflect to Elevate RAPs</li>
-      <li>Evidence-based monitoring and evaluation</li>
-      <li>Cultural competency pathways for leaders and teams</li>
-    </ul>
+
+  <section class="section prose">
+    <p class="kicker">About Us</p>
+    <h1 class="text-white text-4xl font-extrabold">About 2Ways Consultancy</h1>
+    <p>
+      As a 100% Indigenous-owned business, 2Ways Consultancy specialises in strategic consultancy and training.
+      We excel at bridging cultural gaps and promoting understanding between Indigenous and non-Indigenous
+      communities. We see cultural intelligence not just as a concept, but as a powerful tool that creates
+      genuinely inclusive, respectful, and productive workplaces.
+    </p>
+    <p>
+      Our comprehensive services are designed to meet diverse organisational needs. We offer expertise in
+      Reconciliation Action Plans (RAPs), business and strategic planning, employment and workplace practices,
+      diversity and inclusion programs, and monitoring and evaluation services to ensure tangible and lasting
+      positive impact.
+    </p>
+
+    <h2>Our Vision</h2>
+    <p>
+      To be the trusted partner that empowers organisations to unlock their full potential, driving sustainable
+      growth and creating a future where every challenge is a pathway to unprecedented success.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      Our core commitment is to address and close disparities for Aboriginal and Torres Strait Islander peoples,
+      building authentic reconciliation across Australia. We believe the work we do is foundational and essential
+      for building a just and equitable future for all.
+    </p>
+
+    <p>
+      Every solution we deliver is grounded in collaboration and innovation, reflecting a profound respect for
+      Indigenous knowledge and perspectives. By partnering with 2Ways Consultancy, you're choosing a path towards
+      organisational excellence that simultaneously contributes to a more reconciled and equitable Australia.
+    </p>
+
+    <a href={`${base}contact/`} class="btn mt-4 inline-flex not-prose">Start the conversation</a>
   </section>
+
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>

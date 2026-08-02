@@ -1,49 +1,61 @@
 ---
+import { SITE } from '../config/site';
 const base = import.meta.env.BASE_URL;
 ---
 
-<footer class="bg-[#003D4D] text-white mt-16">
-  <div class="mx-auto max-w-6xl px-4 py-12 grid md:grid-cols-4 gap-8">
-    <div>
-      <img src={`${base}brand/logo-icon.svg`} alt="2Ways Consultancy logo" class="h-12 w-12 mb-3" />
-      <p class="text-sm leading-relaxed">
-        Indigenous Australian–led consultancy helping organisations deliver meaningful Reconciliation Action Plans and
-        build cultural competence across teams.
+<footer class="bg-surface text-ink mt-16 border-t border-white/10">
+  <div class="mx-auto max-w-6xl px-4 py-12 grid md:grid-cols-5 gap-8">
+    <div class="md:col-span-2">
+      <img src={`${base}brand/logo.png`} alt="2Ways Consultancy logo" class="h-12 w-12 mb-3 rounded-lg" />
+      <p class="text-sm leading-relaxed text-white/80">
+        2Ways Consultancy is a 100% Indigenous-owned business helping organisations deliver meaningful Reconciliation
+        Action Plans and build cultural capability across teams.
       </p>
-      <div class="mt-3 text-xs text-white/80">
-        <p>📍 Brisbane, QLD</p>
-        <p>📧 <a href="mailto:info@2waysconsultancy.com.au" class="underline hover:text-brand-light">info@2waysconsultancy.com.au</a></p>
+      <div class="mt-3 text-sm text-white/80 space-y-1">
+        <p>{SITE.address}</p>
+        <p><a href={`mailto:${SITE.email}`} class="underline hover:text-brand-light">{SITE.email}</a></p>
+        <p><a href={`tel:${SITE.phone.replace(/\s/g, '')}`} class="underline hover:text-brand-light">{SITE.phone}</a></p>
       </div>
+      <a href={SITE.supplyNationUrl} target="_blank" rel="noopener" class="mt-4 inline-block">
+        <img src={`${base}brand/supply-nation-registered.png`} alt="Supply Nation Registered" class="h-16 w-auto" />
+      </a>
     </div>
 
     <div>
       <h3 class="font-semibold mb-3 text-brand-light">Services</h3>
-      <ul class="space-y-1 text-sm">
+      <ul class="space-y-1 text-sm text-white/80">
         <li><a href={`${base}services/rap/`} class="hover:underline">Reconciliation Action Plans</a></li>
-        <li><a href={`${base}services/dashboard/`} class="hover:underline">RAP Dashboard (SharePoint)</a></li>
-        <li><a href={`${base}services/training/`} class="hover:underline">Cultural Competency Training</a></li>
+        <li><a href={`${base}services/business-strategic/`} class="hover:underline">Business & Strategic Planning</a></li>
+        <li><a href={`${base}services/employment-workplace/`} class="hover:underline">Employment & Workplace</a></li>
+        <li><a href={`${base}services/monitoring-evaluation/`} class="hover:underline">Monitoring & Evaluation</a></li>
+        <li><a href={`${base}services/diversity-inclusion/`} class="hover:underline">Diversity & Inclusion Programs</a></li>
       </ul>
     </div>
 
     <div>
       <h3 class="font-semibold mb-3 text-brand-light">Company</h3>
-      <ul class="space-y-1 text-sm">
+      <ul class="space-y-1 text-sm text-white/80">
         <li><a href={`${base}about/`} class="hover:underline">About Us</a></li>
-        <li><a href={`${base}case-studies/`} class="hover:underline">Case Studies</a></li>
         <li><a href={`${base}contact/`} class="hover:underline">Contact</a></li>
+      </ul>
+      <h3 class="font-semibold mb-3 mt-6 text-brand-light">Legal</h3>
+      <ul class="space-y-1 text-sm text-white/80">
+        <li><a href={`${base}privacy/`} class="hover:underline">Privacy Policy</a></li>
+        <li><a href={`${base}terms/`} class="hover:underline">Terms and Conditions</a></li>
       </ul>
     </div>
 
     <div>
-      <h3 class="font-semibold mb-3 text-brand-light">Legal</h3>
-      <ul class="space-y-1 text-sm">
-        <li><a href={`${base}privacy/`} class="hover:underline">Privacy Policy</a></li>
-        <li><a href={`${base}terms/`} class="hover:underline">Terms of Use</a></li>
-      </ul>
+      <h3 class="font-semibold mb-3 text-brand-light">Our Newsletter</h3>
+      <p class="text-sm text-white/80">Subscribe for the latest news about our services.</p>
+      <form action="https://formspree.io/f/xvgpzgoz" method="POST" class="mt-3 flex gap-2">
+        <input type="email" name="email" required placeholder="Your email" class="min-w-0 flex-1 rounded-lg px-3 py-2 text-sm text-slate-900" />
+        <button type="submit" class="btn px-4 py-2 text-sm">Subscribe</button>
+      </form>
     </div>
   </div>
 
-  <div class="border-t border-white/20 py-4 text-center text-xs text-white/70">
-    <p>© {new Date().getFullYear()} 2Ways Consultancy. ABN [insert here]. Supply Nation Registered.</p>
+  <div class="border-t border-white/10 py-4 text-center text-xs text-white/60">
+    <p>&copy; {new Date().getFullYear()} 2Ways Consultancy. ABN {SITE.abn}. Supply Nation Registered.</p>
   </div>
 </footer>

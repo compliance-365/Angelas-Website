@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';  // <-- THIS makes Tailwind apply globally
 import { SITE } from '../config/site';
+import AcknowledgementOfCountry from '../components/AcknowledgementOfCountry.astro';
+import CookieNotice from '../components/CookieNotice.astro';
 
 const {
   title = SITE.title,
@@ -20,7 +22,12 @@ const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={`${base}brand/logo-icon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}brand/logo.png`} type="image/png" />
+    <link rel="apple-touch-icon" href={`${base}brand/apple-touch-icon.png`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:type" content="website" />
@@ -35,10 +42,34 @@ const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta name="twitter:image" content={`${SITE.url}${ogImage}`} />
 
     {schemaList.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19R2JCRJ9Y"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-19R2JCRJ9Y');
+    </script>
+
+    <!-- Apollo website visitor tracker -->
+    <script is:inline>
+      function initApollo(){
+        var n = Math.random().toString(36).substring(7),
+            o = document.createElement('script');
+        o.src = 'https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=' + n;
+        o.async = true; o.defer = true;
+        o.onload = function(){ window.trackingFunctions.onLoad({ appId: '6909a2cbe5d2c0001134df57' }); };
+        document.head.appendChild(o);
+      }
+      initApollo();
+    </script>
   </head>
-  <body class="min-h-full bg-white text-slate-900 antialiased">
+  <body class="min-h-full antialiased bg-brand text-ink font-sans">
     <slot name="header" />
     <main><slot /></main>
     <slot name="footer" />
+    <AcknowledgementOfCountry />
+    <CookieNotice />
   </body>
 </html>
