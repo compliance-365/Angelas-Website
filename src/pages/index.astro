@@ -58,7 +58,19 @@ const orgSchema = {
   foundingLocation: 'Brisbane, Australia',
   areaServed: 'AU',
   sameAs: SITE.sameAs,
-  description: SITE.description
+  description: SITE.description,
+  // Structured NAP (name/address/phone) for local SEO — keep in sync with
+  // SITE.address/phone in site.ts and whatever's entered on Google
+  // Business Profile / Bing Places so the signals match.
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Brisbane',
+    addressRegion: 'QLD',
+    postalCode: '4000',
+    addressCountry: 'AU'
+  },
+  telephone: `+61${SITE.phone.replace(/^0/, '').replace(/\s/g, '')}`,
+  email: SITE.email
 };
 
 const webSiteSchema = {

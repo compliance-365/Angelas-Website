@@ -1,0 +1,104 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+const faqs = [
+  {
+    q: 'What is the Indigenous Procurement Policy?',
+    a: "The Indigenous Procurement Policy (IPP) is a Commonwealth Government policy that sets targets for how much government contracting spend goes to Aboriginal and Torres Strait Islander-owned businesses, and includes mandatory set-asides for certain contracts. It applies directly to Australian Government agencies, and indirectly to any business that supplies them."
+  },
+  {
+    q: 'What is changing in the Indigenous Procurement Policy?',
+    a: "Two things: the Commonwealth procurement target is rising to 3% in 2025-26 and increasing by 0.25% each year to reach 4% by 2029-30. Separately, from 1 July 2026, a business must be at least 51% First Nations-owned and controlled (or registered with the Office of the Registrar of Indigenous Corporations) to count toward IPP targets — up from the previous 50% threshold."
+  },
+  {
+    q: 'Who does the Indigenous Procurement Policy affect?',
+    a: 'Australian Government agencies directly, and any organisation that supplies them or wants to be considered an eligible Indigenous business under the policy. It also affects corporates and state government bodies that model their own supplier diversity commitments on the Commonwealth framework, often as part of a Reconciliation Action Plan.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'The Indigenous Procurement Policy is changing: what your organisation needs to know',
+  datePublished: '2026-08-02',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="indigenous-procurement-policy-changes"
+  title="The Indigenous Procurement Policy is changing: what your organisation needs to know"
+  metaDescription="From 1 July 2026, businesses must be at least 51% First Nations-owned to count toward Indigenous Procurement Policy targets, and the target itself is rising toward 4% by 2029-30. Here's what's changing and what to do about it."
+  kicker="Policy update"
+  publishedDate="August 2026"
+  readTime="5 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    If your organisation supplies the Australian Government, or models its own supplier diversity commitments on
+    the Commonwealth framework, two changes to the Indigenous Procurement Policy (IPP) are worth understanding now
+    — not when they take effect.
+  </p>
+
+  <h2>What is the IPP, briefly</h2>
+  <p>
+    The Indigenous Procurement Policy sets targets for how much Commonwealth Government contracting spend goes to
+    Aboriginal and Torres Strait Islander-owned businesses, alongside mandatory set-asides for certain contracts.
+    It applies directly to Australian Government agencies, and in practice shapes how any business supplying
+    government — or benchmarking itself against government practice — approaches Indigenous procurement.
+  </p>
+
+  <h2>Change one: the target is rising</h2>
+  <p>
+    The Commonwealth procurement target increased to 3% from 2025–26, and is scheduled to rise by 0.25% each year
+    until it reaches 4% by 2029–30. For organisations already tracking against a target, this means the bar moves
+    every year — a spend level that met expectations last year may fall short going forward.
+  </p>
+
+  <h2>Change two: a stricter ownership threshold from 1 July 2026</h2>
+  <p>
+    From 1 July 2026, a business must be at least <strong>51% First Nations-owned and controlled</strong> — or
+    registered with the Office of the Registrar of Indigenous Corporations (ORIC) — to count toward IPP targets.
+    This replaces the previous 50% threshold. The stated intent is to ensure the economic benefits of the policy
+    flow directly to First Nations people, by requiring a genuine, formal majority rather than an even split.
+  </p>
+  <p>
+    Full transitional arrangements were still being finalised at the time of writing — organisations should check
+    current guidance from the <a href="https://www.niaa.gov.au/our-work/employment-and-economic-development/indigenous-procurement-policy-ipp" target="_blank" rel="noopener">National Indigenous Australians Agency</a>
+    for the latest detail rather than relying solely on this summary.
+  </p>
+
+  <h2>What this means in practice</h2>
+  <p>
+    If your organisation tracks Indigenous procurement spend as part of a RAP or broader supplier diversity
+    commitment, this is a good moment to:
+  </p>
+  <ul>
+    <li>Re-verify existing Indigenous suppliers against the new ownership threshold, rather than assuming past verification still holds</li>
+    <li>Check whether your procurement and category teams understand what the change means for supplier eligibility</li>
+    <li>Review how systematically you're tracking and reporting spend — a single annual figure won't show whether you're on track as the target climbs each year</li>
+    <li>Build supplier relationships ahead of the 2026 transition, rather than scrambling once it takes effect</li>
+  </ul>
+
+  <h2>Where to start</h2>
+  <p>
+    Our free <a href="/procurement-readiness/">Indigenous Procurement Readiness Check</a> walks through exactly
+    these areas — policy and targets, supplier verification, tracking and reporting, and relationships — and gives
+    you a personalised read on where your organisation stands, in about five minutes.
+  </p>
+
+  <p class="text-sm text-white/50 mt-6">
+    This article is general information, not legal or compliance advice. For guidance specific to your organisation's
+    obligations, refer to official NIAA guidance or speak with us directly.
+  </p>
+</ArticleLayout>
