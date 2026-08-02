@@ -1,9 +1,10 @@
 ---
 import AssessmentTool from '../layouts/AssessmentTool.astro';
 
+// ---- Track: no RAP yet ----
 // Structured around Reconciliation Australia's four RAP pillars, so the
 // result maps onto real, recognised categories rather than an arbitrary quiz.
-const pillars = [
+const gettingStartedPillars = [
   {
     key: 'relationships',
     name: 'Relationships',
@@ -47,24 +48,113 @@ const pillars = [
 // directional guide to which stage an organisation is best positioned for —
 // the AssessmentTool disclaimer makes clear this isn't a formal RAP type
 // determination, which only Reconciliation Australia can award.
-const bands = [
+const gettingStartedBands = [
   { min: 0, max: 9, name: 'Reflect', blurb: "Your organisation is at the Reflect stage of the reconciliation journey — the right starting point for building internal understanding, relationships and governance before committing to bigger actions.", cta: 'services/rap/' },
   { min: 10, max: 18, name: 'Innovate', blurb: 'Your organisation has real foundations in place and is well positioned for an Innovate RAP — turning good intentions into a structured, accountable plan with clear owners, timelines and evidence.', cta: 'services/rap/' },
   { min: 19, max: 27, name: 'Stretch', blurb: "You're well progressed across most pillars and positioned for a Stretch RAP — embedding practice more deeply, with a stronger focus on measurable outcomes and accountability.", cta: 'services/monitoring-evaluation/' },
   { min: 28, max: 36, name: 'Elevate', blurb: "You're demonstrating leading practice across relationships, respect, opportunities and governance — positioned for Elevate, with a focus on sector leadership and deepening employment and procurement impact.", cta: 'services/employment-workplace/' }
 ];
 
+// ---- Tracks: already have a RAP (Reflect / Innovate / Stretch / Elevate) ----
+// Same four pillars, but the questions assume the basics are already in
+// place and probe how embedded/systematic practice has become — testing
+// readiness to progress to the next stage, rather than whether the
+// organisation has started at all.
+const deepeningPillars = [
+  {
+    key: 'relationships',
+    name: 'Relationships',
+    questions: [
+      'Have your relationships with Aboriginal and Torres Strait Islander communities moved beyond consultation toward genuine partnership or co-design?',
+      'Are these relationships sustained by your organisation as a whole, rather than resting on one or two individuals?',
+      'Have you formalised any partnerships — such as MOUs, ongoing funding or joint initiatives — with Aboriginal and Torres Strait Islander organisations?'
+    ]
+  },
+  {
+    key: 'respect',
+    name: 'Respect',
+    questions: [
+      'Has cultural competency training moved beyond a one-off session to an ongoing, refreshed program?',
+      'Are Aboriginal and Torres Strait Islander perspectives embedded in everyday decision-making, not just RAP-specific activities?',
+      'Does your organisation take a public stance on reconciliation beyond your RAP commitments — for example, NAIDOC Week or Reconciliation Week?'
+    ]
+  },
+  {
+    key: 'opportunities',
+    name: 'Opportunities',
+    questions: [
+      'Have you met or exceeded your original RAP employment or procurement targets?',
+      'Do Aboriginal and Torres Strait Islander employees have visible pathways into leadership and senior roles?',
+      'Is your spend with Aboriginal and Torres Strait Islander-owned businesses growing year on year, not just being maintained?'
+    ]
+  },
+  {
+    key: 'governance',
+    name: 'Governance',
+    questions: [
+      'Is RAP governance reviewed on a cadence beyond the minimum required reporting?',
+      'Has leadership succession planning considered who will champion reconciliation work beyond your current champions?',
+      'Do you publicly report RAP progress — for example in an annual report or on your website — beyond what Reconciliation Australia requires?'
+    ]
+  }
+];
+
+const stageMeta: Record<string, { current: string; next: string | null; cta: string }> = {
+  reflect: { current: 'Reflect', next: 'Innovate', cta: 'services/rap/' },
+  innovate: { current: 'Innovate', next: 'Stretch', cta: 'services/monitoring-evaluation/' },
+  stretch: { current: 'Stretch', next: 'Elevate', cta: 'services/employment-workplace/' },
+  elevate: { current: 'Elevate', next: null, cta: 'contact/' }
+};
+
+function deepeningBands(meta: { current: string; next: string | null; cta: string }) {
+  if (meta.next) {
+    return [
+      { min: 0, max: 9, name: `Early in ${meta.current}`, blurb: `You're still consolidating the basics of your ${meta.current} RAP. Before looking toward ${meta.next}, it's worth focusing on embedding what's already committed to — deepening relationships, training and governance rather than adding new commitments.`, cta: meta.cta },
+      { min: 10, max: 18, name: `Progressing through ${meta.current}`, blurb: `You're making solid progress within ${meta.current}. Keep building — closing the remaining gaps here will put you in a strong position to plan your ${meta.next} RAP.`, cta: meta.cta },
+      { min: 19, max: 27, name: `Well-positioned for ${meta.next}`, blurb: `You've embedded ${meta.current} practice well and are showing genuine readiness signals for ${meta.next} — it's a good time to start scoping what a ${meta.next} RAP would involve.`, cta: meta.cta },
+      { min: 28, max: 36, name: `Ready for ${meta.next}`, blurb: `You're exceeding what's typically expected at ${meta.current} and showing strong, embedded practice across all four pillars. You're a strong candidate to begin your ${meta.next} RAP now.`, cta: meta.cta }
+    ];
+  }
+  // Elevate has no further formal RAP stage — framing shifts to sustaining
+  // and sector leadership rather than "progressing to the next stage".
+  return [
+    { min: 0, max: 9, name: 'Early in Elevate', blurb: "You're still consolidating Elevate-level practice. Focus on deepening and embedding your existing commitments before looking at what comes next.", cta: meta.cta },
+    { min: 10, max: 18, name: 'Progressing through Elevate', blurb: "You're making solid progress at Elevate level. Keep building toward consistent, embedded practice across all four pillars.", cta: meta.cta },
+    { min: 19, max: 27, name: 'Strong Elevate practice', blurb: "You're demonstrating strong, embedded Elevate practice. From here, consider a focus on sector leadership — mentoring other organisations or sharing your approach publicly.", cta: meta.cta },
+    { min: 28, max: 36, name: 'Exemplary practice', blurb: "You're demonstrating exemplary, embedded practice across all four pillars. Consider formalising your role as a sector leader — mentoring, speaking, or helping shape best practice for others.", cta: meta.cta }
+  ];
+}
+
+const gate = {
+  question: 'Does your organisation currently have a Reconciliation Action Plan?',
+  options: [
+    { value: 'getting-started', label: "No, we don't have a RAP yet" },
+    { value: 'reflect', label: 'Yes — we have a Reflect RAP' },
+    { value: 'innovate', label: 'Yes — we have an Innovate RAP' },
+    { value: 'stretch', label: 'Yes — we have a Stretch RAP' },
+    { value: 'elevate', label: 'Yes — we have an Elevate RAP' }
+  ]
+};
+
+const tracks = {
+  'getting-started': { pillars: gettingStartedPillars, bands: gettingStartedBands },
+  reflect: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.reflect) },
+  innovate: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.innovate) },
+  stretch: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.stretch) },
+  elevate: { pillars: deepeningPillars, bands: deepeningBands(stageMeta.elevate) }
+};
+
 const disclaimer = "This is a general guide to help you plan your next step, not a formal RAP type determination — Reconciliation Australia assesses and approves the specific RAP type your organisation registers for.";
 ---
 <AssessmentTool
   slug="assessment"
   pageTitle="Free RAP Readiness Assessment"
-  metaDescription="A free, 5-minute self-assessment against the four RAP pillars — Relationships, Respect, Opportunities and Governance — mapped to the Reflect, Innovate, Stretch and Elevate RAP stages."
+  metaDescription="A free, 5-minute self-assessment against the four RAP pillars — Relationships, Respect, Opportunities and Governance — tailored to whether you're just starting out or already progressing a RAP."
   kicker="Free tool · Takes about 5 minutes"
   heroTitle="RAP Readiness Assessment"
-  heroIntro="12 quick questions across the four RAP pillars — Relationships, Respect, Opportunities and Governance — used by Reconciliation Australia. Get an instant, personalised read on which RAP stage — Reflect, Innovate, Stretch or Elevate — your organisation is best positioned for next."
-  pillars={pillars}
-  bands={bands}
+  heroIntro="Whether you're just starting out or already have a RAP in place, tell us where you're starting from and we'll ask the right questions — then give you an instant, personalised read on what's next for your organisation."
+  gate={gate}
+  tracks={tracks}
   emailSubject="RAP Readiness Assessment result"
   disclaimer={disclaimer}
   crossLink={{ label: 'Indigenous Procurement Readiness Check', href: 'procurement-readiness/' }}

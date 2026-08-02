@@ -6,6 +6,10 @@ import { SITE } from '../config/site';
 
 const base = import.meta.env.BASE_URL;
 
+type Pillar = { key: string; name: string; questions: string[] };
+type Band = { min: number; max: number; name: string; blurb: string; cta: string };
+type Track = { pillars: Pillar[]; bands: Band[] };
+
 export interface Props {
   slug: string;
   pageTitle: string;
@@ -13,8 +17,14 @@ export interface Props {
   kicker: string;
   heroTitle: string;
   heroIntro: string;
-  pillars: { key: string; name: string; questions: string[] }[];
-  bands: { min: number; max: number; name: string; blurb: string; cta: string }[];
+  // Either provide a flat pillars/bands pair (single-track tools, e.g. the
+  // procurement check), or a gate + tracks (branching tools, e.g. the RAP
+  // assessment routing "no RAP yet" vs "already have a RAP" to different
+  // question sets before any scoring question appears).
+  pillars?: Pillar[];
+  bands?: Band[];
+  gate?: { question: string; options: { value: string; label: string }[] };
+  tracks?: Record<string, Track>;
   emailSubject: string;
   disclaimer?: string;
   crossLink?: { label: string; href: string };
@@ -29,10 +39,21 @@ const {
   heroIntro,
   pillars,
   bands,
+  gate,
+  tracks: tracksProp,
   emailSubject,
   disclaimer,
   crossLink
 } = Astro.props;
+
+// Normalise to always work with a track map internally. Non-branching tools
+// (no `gate`) get a single implicit "default" track from the flat props, so
+// the rendering/JS below has exactly one code path either way.
+const tracks: Record<string, Track> = gate ? (tracksProp as Record<string, Track>) : { default: { pillars: pillars!, bands: bands! } };
+const trackKeys = Object.keys(tracks);
+const maxScoreByTrack = Object.fromEntries(
+  trackKeys.map((k) => [k, tracks[k].pillars.reduce((n, p) => n + p.questions.length, 0) * 3])
+);
 
 const options = [
   { label: 'Not yet', value: 0 },
@@ -40,9 +61,6 @@ const options = [
   { label: 'In progress', value: 2 },
   { label: 'Well established', value: 3 }
 ];
-
-const totalQuestions = pillars.reduce((n, p) => n + p.questions.length, 0);
-const maxScore = totalQuestions * 3;
 ---
 <BaseLayout
   title={`${pageTitle} | ${SITE.name}`}
@@ -62,9 +80,23 @@ const maxScore = totalQuestions * 3;
 
   <section class="section max-w-3xl">
     <form id="assessment-form" class="space-y-10">
-      <div class="grid-card !bg-white text-slate-900">
+
+      {gate && (
+        <fieldset id="gate-fieldset">
+          <legend class="kicker mb-4">{gate.question}</legend>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {gate.options.map((opt) => (
+              <button type="button" class="gate-option grid-card text-left card-raise" data-track={opt.value}>
+                <span class="font-semibold">{opt.label}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      )}
+
+      <div id="progress-card" class="grid-card !bg-white text-slate-900" style={gate ? 'display:none' : undefined}>
         <div class="flex items-center justify-between text-sm font-semibold">
-          <span id="progress-label">0 of {totalQuestions} answered</span>
+          <span id="progress-label">0 answered</span>
           <span id="progress-pct" class="tabular-nums">0%</span>
         </div>
         <div class="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
@@ -72,31 +104,40 @@ const maxScore = totalQuestions * 3;
         </div>
       </div>
 
-      {pillars.map((pillar) => (
-        <fieldset>
-          <legend class="kicker mb-4">{pillar.name}</legend>
-          <div class="space-y-6">
-            {pillar.questions.map((q, qIdx) => {
-              const name = `${pillar.key}-${qIdx}`;
-              return (
-                <div class="grid-card">
-                  <p class="font-medium">{q}</p>
-                  <div class="mt-3 grid sm:grid-cols-2 gap-2">
-                    {options.map((opt) => (
-                      <label class="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm cursor-pointer hover:bg-white/10">
-                        <input type="radio" name={name} value={opt.value} class="assessment-input" required />
-                        {opt.label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </fieldset>
+      {trackKeys.map((trackKey) => (
+        <div class="track-questions space-y-10" data-track={trackKey} style={gate ? 'display:none' : undefined}>
+          {gate && (
+            <button type="button" id={`change-track-${trackKey}`} class="change-track-btn text-sm underline text-brand-light">
+              ← Change your starting point
+            </button>
+          )}
+          {tracks[trackKey].pillars.map((pillar) => (
+            <fieldset>
+              <legend class="kicker mb-4">{pillar.name}</legend>
+              <div class="space-y-6">
+                {pillar.questions.map((q, qIdx) => {
+                  const name = `${trackKey}__${pillar.key}-${qIdx}`;
+                  return (
+                    <div class="grid-card">
+                      <p class="font-medium">{q}</p>
+                      <div class="mt-3 grid sm:grid-cols-2 gap-2">
+                        {options.map((opt) => (
+                          <label class="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm cursor-pointer hover:bg-white/10">
+                            <input type="radio" name={name} value={opt.value} class="assessment-input" data-track={trackKey} />
+                            {opt.label}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </fieldset>
+          ))}
+        </div>
       ))}
 
-      <button type="submit" class="btn w-full sm:w-auto">See my result</button>
+      <button type="submit" id="submit-btn" class="btn w-full sm:w-auto" style={gate ? 'display:none' : undefined}>See my result</button>
     </form>
 
     <div id="results" class="hidden">
@@ -110,7 +151,7 @@ const maxScore = totalQuestions * 3;
               <canvas id="result-gauge" aria-hidden="true" style="display:block;width:100%;height:100%;"></canvas>
               <div class="absolute inset-0 flex flex-col items-center justify-center">
                 <span id="result-pct" class="text-3xl font-extrabold tabular-nums" style="color:#0D1B2A;">0%</span>
-                <span id="result-score" class="text-xs text-slate-500 mt-1 tabular-nums">{`0/${maxScore} points`}</span>
+                <span id="result-score" class="text-xs text-slate-500 mt-1 tabular-nums">0 points</span>
               </div>
             </div>
             <h2 id="result-band" class="mt-4 text-xl font-bold text-center" style="color:#0D1B2A;"></h2>
@@ -164,29 +205,77 @@ const maxScore = totalQuestions * 3;
 
   <Fragment slot="footer"><Footer /></Fragment>
 
-  <script type="application/json" id="assessment-data" set:html={JSON.stringify({ pillars: pillars.map(p => ({ key: p.key, name: p.name, count: p.questions.length })), bands, base, maxScore })} />
+  <script
+    type="application/json"
+    id="assessment-data"
+    set:html={JSON.stringify({
+      hasGate: Boolean(gate),
+      tracks: Object.fromEntries(
+        trackKeys.map((k) => [
+          k,
+          {
+            pillars: tracks[k].pillars.map((p) => ({ key: p.key, name: p.name, count: p.questions.length })),
+            bands: tracks[k].bands,
+            maxScore: maxScoreByTrack[k]
+          }
+        ])
+      ),
+      base
+    })}
+  />
 
   <script is:inline>
     const data = JSON.parse(document.getElementById('assessment-data').textContent);
     const form = document.getElementById('assessment-form');
-    const inputs = () => Array.from(form.querySelectorAll('.assessment-input'));
+    const progressCard = document.getElementById('progress-card');
     const progressLabel = document.getElementById('progress-label');
     const progressPct = document.getElementById('progress-pct');
     const progressBar = document.getElementById('progress-bar');
-
-    const totalQuestions = data.pillars.reduce((n, p) => n + p.count, 0);
+    const submitBtn = document.getElementById('submit-btn');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    let activeTrack = data.hasGate ? null : Object.keys(data.tracks)[0];
+
+    function trackInputs(trackKey) {
+      return Array.from(form.querySelectorAll(`.assessment-input[data-track="${trackKey}"]`));
+    }
+
     function updateProgress() {
-      const answeredNames = new Set(
-        inputs().filter(i => i.checked).map(i => i.name)
-      );
-      const answered = answeredNames.size;
-      const pct = Math.round((answered / totalQuestions) * 100);
-      progressLabel.textContent = `${answered} of ${totalQuestions} answered`;
+      if (!activeTrack) return;
+      const total = data.tracks[activeTrack].pillars.reduce((n, p) => n + p.count, 0);
+      const answered = new Set(trackInputs(activeTrack).filter(i => i.checked).map(i => i.name)).size;
+      const pct = Math.round((answered / total) * 100);
+      progressLabel.textContent = `${answered} of ${total} answered`;
       progressPct.textContent = `${pct}%`;
       progressBar.style.width = `${pct}%`;
     }
+
+    function selectTrack(trackKey) {
+      activeTrack = trackKey;
+      document.getElementById('gate-fieldset')?.style.setProperty('display', 'none');
+      document.querySelectorAll('.track-questions').forEach(el => {
+        el.style.display = el.dataset.track === trackKey ? '' : 'none';
+      });
+      progressCard.style.display = '';
+      submitBtn.style.display = '';
+      updateProgress();
+      progressCard.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    document.querySelectorAll('.gate-option').forEach(btn => {
+      btn.addEventListener('click', () => selectTrack(btn.dataset.track));
+    });
+
+    document.querySelectorAll('.change-track-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeTrack = null;
+        document.querySelectorAll('.track-questions').forEach(el => { el.style.display = 'none'; });
+        progressCard.style.display = 'none';
+        submitBtn.style.display = 'none';
+        document.getElementById('gate-fieldset')?.style.setProperty('display', '');
+        document.getElementById('gate-fieldset')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+      });
+    });
 
     form.addEventListener('change', updateProgress);
     updateProgress();
@@ -339,14 +428,16 @@ const maxScore = totalQuestions * 3;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!activeTrack) return;
 
+      const track = data.tracks[activeTrack];
       const perPillar = {};
-      data.pillars.forEach(p => { perPillar[p.key] = { score: 0, max: p.count * 3 }; });
+      track.pillars.forEach(p => { perPillar[p.key] = { score: 0, max: p.count * 3 }; });
 
       let total = 0;
-      data.pillars.forEach(p => {
+      track.pillars.forEach(p => {
         for (let i = 0; i < p.count; i++) {
-          const name = `${p.key}-${i}`;
+          const name = `${activeTrack}__${p.key}-${i}`;
           const checked = form.querySelector(`input[name="${name}"]:checked`);
           const val = checked ? parseInt(checked.value, 10) : 0;
           perPillar[p.key].score += val;
@@ -354,22 +445,22 @@ const maxScore = totalQuestions * 3;
         }
       });
 
-      const band = data.bands.find(b => total >= b.min && total <= b.max) || data.bands[0];
-      const overallPct = Math.round((total / data.maxScore) * 100);
+      const band = track.bands.find(b => total >= b.min && total <= b.max) || track.bands[0];
+      const overallPct = Math.round((total / track.maxScore) * 100);
 
       document.getElementById('result-pct').textContent = `${overallPct}%`;
-      document.getElementById('result-score').textContent = `${total}/${data.maxScore} points`;
+      document.getElementById('result-score').textContent = `${total}/${track.maxScore} points`;
       document.getElementById('result-band').textContent = band.name;
       document.getElementById('result-blurb').textContent = band.blurb;
       document.getElementById('result-cta').href = `${data.base}${band.cta}`;
       document.getElementById('result-cta').textContent = 'Explore the recommended next step';
 
       drawGauge(document.getElementById('result-gauge'), overallPct);
-      drawRadar(document.getElementById('result-radar'), data.pillars, perPillar);
+      drawRadar(document.getElementById('result-radar'), track.pillars, perPillar);
 
       const breakdown = document.getElementById('result-breakdown');
       breakdown.innerHTML = '';
-      data.pillars.forEach(p => {
+      track.pillars.forEach(p => {
         const { score, max } = perPillar[p.key];
         const cell = document.createElement('div');
         cell.innerHTML = `
@@ -379,7 +470,7 @@ const maxScore = totalQuestions * 3;
         breakdown.appendChild(cell);
       });
 
-      document.getElementById('email-score-field').value = `${total}/${data.maxScore}`;
+      document.getElementById('email-score-field').value = `${total}/${track.maxScore}`;
       document.getElementById('email-band-field').value = band.name;
 
       form.classList.add('hidden');
@@ -389,9 +480,17 @@ const maxScore = totalQuestions * 3;
 
     document.getElementById('retake-btn')?.addEventListener('click', () => {
       form.reset();
-      updateProgress();
       document.getElementById('results').classList.add('hidden');
       form.classList.remove('hidden');
+      if (data.hasGate) {
+        activeTrack = null;
+        document.querySelectorAll('.track-questions').forEach(el => { el.style.display = 'none'; });
+        progressCard.style.display = 'none';
+        submitBtn.style.display = 'none';
+        document.getElementById('gate-fieldset')?.style.setProperty('display', '');
+      } else {
+        updateProgress();
+      }
       form.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
 
