@@ -1,0 +1,41 @@
+---
+import { SITE } from '../config/site';
+
+// Renders a breadcrumb trail and emits matching BreadcrumbList schema, which
+// is what produces the breadcrumb path shown under a result in Google rather
+// than a bare URL. `items` excludes Home — it's prepended automatically.
+export interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const base = import.meta.env.BASE_URL;
+const { items } = Astro.props;
+
+const trail = [{ label: 'Home', href: '' }, ...items];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: trail.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href !== undefined ? { item: `${SITE.url}/${item.href}` } : {})
+  }))
+};
+---
+<nav aria-label="Breadcrumb" class="text-sm text-white/60">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {trail.map((item, i) => (
+      <li class="flex items-center gap-2">
+        {i > 0 && <span aria-hidden="true" class="text-white/30">/</span>}
+        {item.href !== undefined && i < trail.length - 1 ? (
+          <a href={`${base}${item.href}`} class="hover:underline">{item.label}</a>
+        ) : (
+          <span class="text-white/90" aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

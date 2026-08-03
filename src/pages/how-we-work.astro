@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CTASection from '../components/CTASection.astro';
+import { SITE } from '../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const principles = [
+  {
+    icon: 'users',
+    title: 'Indigenous-led, not Indigenous-consulted',
+    body: 'Cultural guidance comes from lived experience rather than desk research. That changes what gets recommended, what gets challenged, and what we will tell you is not a good idea.'
+  },
+  {
+    icon: 'handshake',
+    title: 'Relationships, not consultations',
+    body: 'Community engagement is not a box to be completed before drafting begins. We help you build relationships that continue after we leave, because that is what your commitments will depend on.'
+  },
+  {
+    icon: 'check',
+    title: 'Specific over aspirational',
+    body: 'A commitment without an owner, a deliverable and a date is a sentence, not an action. We push for specificity even when general language would be easier to agree on internally.'
+  },
+  {
+    icon: 'chart',
+    title: 'Evidence from day one',
+    body: 'We set up how progress will be captured before delivery starts. Organisations that leave this until reporting is due almost always find the evidence was never collected.'
+  },
+  {
+    icon: 'shield',
+    title: 'Honest about what is achievable',
+    body: 'If your organisation is not ready for the RAP type it wants, we will say so. Over-committing damages credibility with staff and community far more than starting at the right level.'
+  },
+  {
+    icon: 'spark',
+    title: 'Built to outlast us',
+    body: 'The goal is capability inside your organisation, not dependence on ours. Governance, ownership and process are designed so the work continues when the engagement ends.'
+  }
+];
+
+const steps = [
+  {
+    title: 'Discovery call',
+    meta: 'Free',
+    body: 'A conversation about where your organisation is, what has prompted this, and what you are hoping to achieve. We will give you an honest view on which RAP type fits and roughly what it would involve. No cost, no obligation.'
+  },
+  {
+    title: 'Scoping and proposal',
+    meta: 'Week 1',
+    body: 'We set out scope, deliverables, timeline and cost in writing so there are no surprises. If the honest answer is that you need something smaller — or something other than a RAP — we will tell you that here.'
+  },
+  {
+    title: 'Discovery and stakeholder mapping',
+    meta: 'Weeks 1–3',
+    body: 'We work out how your organisation genuinely operates and where it actually has influence, and identify the internal and external stakeholders the plan will need behind it.'
+  },
+  {
+    title: 'Engagement and facilitation',
+    meta: 'Weeks 2–8',
+    body: 'Respectful engagement with Traditional Owners and relevant Aboriginal and Torres Strait Islander organisations, alongside internal workshops that bring your people into the plan rather than presenting it to them.'
+  },
+  {
+    title: 'Drafting and internal review',
+    meta: 'Weeks 6–12',
+    body: 'We draft commitments with owners, deliverables, timeframes and measures, then test them with the people who will have to deliver them. This is deliberately iterative — the first draft is never the one that gets submitted.'
+  },
+  {
+    title: 'Submission and endorsement',
+    meta: 'Weeks 12–16',
+    body: 'We review against what Reconciliation Australia expects, close gaps before submission, and support you through endorsement and any feedback that comes back.'
+  },
+  {
+    title: 'Implementation and review',
+    meta: 'Across the term',
+    body: 'Optional ongoing support: keeping delivery on track, making sure evidence is captured as you go, and preparing you for renewal well before it is due.'
+  }
+];
+
+const weAsk = [
+  'An executive sponsor with the authority to unblock things',
+  'A working group that can meet regularly and make decisions',
+  'Honesty about what has and has not worked previously',
+  'Willingness to commit to fewer, more specific actions rather than many general ones',
+  'Realistic internal resourcing to deliver what gets committed to'
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How 2Ways Consultancy develops a Reconciliation Action Plan',
+  description:
+    'The stages involved in developing a Reconciliation Action Plan with 2Ways Consultancy, from a free discovery call through to Reconciliation Australia endorsement and implementation support.',
+  step: steps.map((s, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name: s.title,
+    text: s.body
+  }))
+};
+---
+<BaseLayout
+  title={`How We Work | ${SITE.name}`}
+  description="Our approach to Reconciliation Action Plan consulting — the principles behind the work, our step-by-step process from discovery call to endorsement, and what we ask of the organisations we work with."
+  canonical={`${SITE.url}/how-we-work/`}
+  schema={schema}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Our approach"
+    title="How we work"
+    intro="Reconciliation work fails in predictable ways: vague commitments, engagement treated as a formality, and evidence nobody captured. Our process is built around avoiding those specific failures."
+    breadcrumbs={[{ label: 'How we work' }]}
+  />
+
+  <!-- PRINCIPLES -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Principles</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">What guides the work</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      {principles.map((p) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={p.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg leading-snug">{p.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section max-w-4xl">
+    <div class="max-w-2xl">
+      <p class="kicker">The process</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">From first conversation to endorsed plan</h2>
+      <p class="mt-3 text-white/75">
+        Timings are indicative for a Reflect or Innovate RAP with a mid-sized organisation. Larger organisations and
+        higher RAP types run longer, mostly because engagement and evidence requirements grow.
+      </p>
+    </div>
+    <ProcessSteps steps={steps} />
+  </section>
+
+  <!-- WHAT WE ASK -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">What we ask of you</h2>
+      <p class="mt-4 text-slate-700 leading-relaxed">
+        The engagements that go well have a few things in common, and they are worth being upfront about. None of
+        these require a large team — but without them, a RAP tends to become a document rather than a plan.
+      </p>
+      <ul class="mt-6 grid gap-3">
+        {weAsk.map((item) => (
+          <li class="flex items-start gap-3 text-slate-700">
+            <span class="mt-0.5 shrink-0" style="color:#8a6a1f;"><Icon name="check" size={18} /></span>
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Every engagement</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">What's always included</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+      {[
+        { t: 'Indigenous-led delivery', b: 'The people guiding your plan are Aboriginal and Torres Strait Islander practitioners.' },
+        { t: 'A named point of contact', b: 'One person who knows your organisation, throughout the engagement.' },
+        { t: 'Progress tracking', b: 'Clear reporting on where the work is up to, not just at milestones.' },
+        { t: 'Post-engagement support', b: 'We stay reachable after handover — questions come up, and that is normal.' }
+      ].map((item) => (
+        <div class="grid-card">
+          <h3 class="font-semibold">{item.t}</h3>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{item.b}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection
+    title="Start with a conversation"
+    body="A free discovery call will tell you which RAP type fits your organisation, roughly what it would involve, and whether we're the right fit to help."
+    primaryLabel="Book a discovery call"
+    primaryHref="contact/"
+    secondaryLabel="Take the free readiness assessment"
+    secondaryHref="assessment/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

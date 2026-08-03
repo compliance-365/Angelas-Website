@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Icon from '../../../components/Icon.astro';
+import CTASection from '../../../components/CTASection.astro';
+import { SITE } from '../../../config/site';
+import { RAP_TYPES, RAP_TYPE_BY_SLUG, type RapType } from '../../../data/rapTypes';
+
+export function getStaticPaths() {
+  return RAP_TYPES.map((t) => ({ params: { type: t.slug }, props: { rap: t } }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { rap } = Astro.props as { rap: RapType };
+
+const nextType = rap.next ? RAP_TYPE_BY_SLUG[rap.next] : null;
+const others = RAP_TYPES.filter((t) => t.slug !== rap.slug);
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `${rap.name} development`,
+  serviceType: 'Reconciliation Action Plan consulting',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description: rap.metaDescription,
+  isPartOf: { '@type': 'Service', name: 'Reconciliation Action Plan (RAP) Consulting' }
+};
+---
+<BaseLayout
+  title={`${rap.name}: What It Involves & Who It's For | ${SITE.name}`}
+  description={rap.metaDescription}
+  canonical={`${SITE.url}/services/rap/${rap.slug}/`}
+  schema={serviceSchema}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker={`${rap.stage} · ${rap.duration}`}
+    title={rap.name}
+    intro={rap.intro}
+    breadcrumbs={[
+      { label: 'Services', href: 'services/rap/' },
+      { label: 'Reconciliation Action Plans', href: 'services/rap/' },
+      { label: rap.name }
+    ]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}assessment/`} class="btn">Check your readiness</a>
+      <a href={`${base}contact/`} class="btn-outline">Talk to us about a {rap.name}</a>
+    </div>
+  </PageHero>
+
+  <!-- AT A GLANCE -->
+  <section class="section">
+    <div class="grid sm:grid-cols-3 gap-5">
+      <div class="grid-card">
+        <span class="icon-soft"><Icon name="clock" size={20} /></span>
+        <p class="mt-4 text-xs uppercase tracking-wide text-white/50 font-semibold">Term</p>
+        <p class="mt-1 text-lg font-semibold">{rap.duration}</p>
+      </div>
+      <div class="grid-card">
+        <span class="icon-soft"><Icon name="compass" size={20} /></span>
+        <p class="mt-4 text-xs uppercase tracking-wide text-white/50 font-semibold">Stage</p>
+        <p class="mt-1 text-lg font-semibold">{rap.stage}</p>
+      </div>
+      <div class="grid-card">
+        <span class="icon-soft"><Icon name="arrow" size={20} /></span>
+        <p class="mt-4 text-xs uppercase tracking-wide text-white/50 font-semibold">Typically leads to</p>
+        <p class="mt-1 text-lg font-semibold">{nextType ? nextType.name : 'Renewal at Elevate'}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="section max-w-3xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">Who a {rap.name} suits</h2>
+    <ul class="mt-6 grid gap-3">
+      {rap.bestFor.map((item) => (
+        <li class="flex items-start gap-3 text-white/80">
+          <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={18} /></span>
+          <span class="leading-relaxed">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- FOCUS AREAS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">What it involves</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Where a {rap.name} focuses</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6 mt-8">
+      {rap.focus.map((f, i) => (
+        <div class="grid-card">
+          <span class="text-sm font-semibold text-brand-light tabular-nums">0{i + 1}</span>
+          <h3 class="mt-2 font-semibold text-lg leading-snug">{f.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{f.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PITFALLS -->
+  <section class="section max-w-3xl">
+    <div class="grid-card border-brand-light/20">
+      <p class="kicker">Learn from others</p>
+      <h2 class="mt-2 text-xl md:text-2xl font-semibold">Common pitfalls at this stage</h2>
+      <ul class="mt-5 grid gap-3">
+        {rap.pitfalls.map((item) => (
+          <li class="flex items-start gap-3 text-sm text-white/75">
+            <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-light"></span>
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW WE HELP -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">How we help with a {rap.name}</h2>
+      <ul class="mt-6 grid gap-3">
+        {rap.howWeHelp.map((item) => (
+          <li class="flex items-start gap-3 text-slate-700">
+            <span class="mt-0.5 shrink-0" style="color:#8a6a1f;"><Icon name="check" size={18} /></span>
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+      <a href={`${base}contact/`} class="btn mt-7">Discuss your {rap.name}</a>
+    </div>
+  </section>
+
+  <!-- OTHER TYPES -->
+  <section class="section">
+    <h2 class="text-xl md:text-2xl font-semibold">Other RAP types</h2>
+    <div class="grid sm:grid-cols-3 gap-5 mt-6">
+      {others.map((t) => (
+        <a href={`${base}services/rap/${t.slug}/`} class="grid-card card-raise flex flex-col">
+          <div class="flex items-baseline justify-between gap-2">
+            <h3 class="font-semibold">{t.name}</h3>
+            <span class="text-xs text-white/50 whitespace-nowrap">{t.duration}</span>
+          </div>
+          <p class="mt-2 text-sm text-white/70 flex-1 leading-relaxed">{t.shortFor}</p>
+          <span class="link-arrow mt-4">Learn more <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
+    </div>
+    <div class="mt-6">
+      <a href={`${base}services/rap/`} class="link-arrow">Back to RAP consulting overview <span data-arrow>&rarr;</span></a>
+    </div>
+  </section>
+
+  <CTASection
+    title={`Thinking about a ${rap.name}?`}
+    body="A short discovery call will tell you whether this is the right level for your organisation right now — and what delivering it would realistically involve."
+    primaryLabel="Book a discovery call"
+    primaryHref="contact/"
+    secondaryLabel="Take the free readiness assessment"
+    secondaryHref="assessment/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

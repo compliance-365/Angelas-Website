@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Icon from '../../../components/Icon.astro';
+import FAQ from '../../../components/FAQ.astro';
+import ProcessSteps from '../../../components/ProcessSteps.astro';
+import CTASection from '../../../components/CTASection.astro';
+import { SITE } from '../../../config/site';
+import { RAP_TYPES } from '../../../data/rapTypes';
+
+const base = import.meta.env.BASE_URL;
+
+// The four pillars of Reconciliation Australia's RAP framework.
+const pillars = [
+  {
+    icon: 'handshake',
+    name: 'Relationships',
+    body: 'Building and sustaining genuine, respectful relationships with Aboriginal and Torres Strait Islander peoples, communities and organisations — the foundation everything else rests on.'
+  },
+  {
+    icon: 'shield',
+    name: 'Respect',
+    body: 'Growing understanding of Aboriginal and Torres Strait Islander cultures, histories, knowledge and rights, and embedding cultural protocols into everyday organisational practice.'
+  },
+  {
+    icon: 'target',
+    name: 'Opportunities',
+    body: 'Creating real economic and social opportunity through employment pathways, Indigenous procurement, and progression into leadership.'
+  },
+  {
+    icon: 'scale',
+    name: 'Governance',
+    body: 'The accountability layer: a working group with authority, executive sponsorship, tracking against commitments, and honest reporting on progress.'
+  }
+];
+
+const processSteps = [
+  {
+    title: 'Discovery and honest scoping',
+    meta: 'Weeks 1–2',
+    body: 'We start by understanding how your organisation actually operates — your workforce, supply chain, clients and footprint — and where you genuinely have influence. This is also where we work out which RAP type is the right one to pursue, which is not always the one an organisation expects.'
+  },
+  {
+    title: 'Stakeholder and community engagement',
+    meta: 'Weeks 2–6',
+    body: 'We help identify and engage the Traditional Owners and Aboriginal and Torres Strait Islander organisations relevant to where you operate, and facilitate those conversations respectfully. Internally, we bring together the people whose buy-in the plan will depend on.'
+  },
+  {
+    title: 'Governance setup',
+    meta: 'Weeks 3–6',
+    body: 'Establishing or strengthening your RAP Working Group with real terms of reference, an executive sponsor, and clear decision-making authority — so the plan has somewhere to live once we hand it over.'
+  },
+  {
+    title: 'Drafting the plan',
+    meta: 'Weeks 6–12',
+    body: 'We draft commitments that are specific enough to be delivered and evidenced: each with a named owner, a deliverable, a timeframe and a way of being measured. This is the step where most RAPs are won or lost.'
+  },
+  {
+    title: 'Review and submission',
+    meta: 'Weeks 12–16',
+    body: 'We review the draft against what Reconciliation Australia expects, address gaps before submission rather than after, and support you through the endorsement process and any feedback that comes back.'
+  },
+  {
+    title: 'Implementation support',
+    meta: 'Ongoing',
+    body: 'A RAP that sits in a drawer helps nobody. We can stay involved through the term — supporting delivery, keeping evidence capture on track, and preparing you for what comes at renewal.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is a Reconciliation Action Plan?',
+    a: 'A Reconciliation Action Plan (RAP) is a formal framework administered by Reconciliation Australia through which an organisation commits to specific, measurable actions advancing reconciliation. RAPs are structured around four pillars — Relationships, Respect, Opportunities and Governance — and come in four types (Reflect, Innovate, Stretch and Elevate) suited to different stages of an organisation’s journey.'
+  },
+  {
+    q: 'How long does a RAP take to develop?',
+    a: 'Developing the plan itself typically takes around three to four months, though this depends heavily on how much stakeholder engagement is needed and how quickly your working group can meet and make decisions. Once endorsed, the RAP then runs for its own term: approximately 12 months for a Reflect RAP, two years for an Innovate RAP, and three years each for Stretch and Elevate RAPs.'
+  },
+  {
+    q: 'How much does a RAP cost?',
+    a: 'Cost scales with your organisation’s size and which RAP type you are developing — a Reflect RAP is a considerably smaller engagement than a Stretch or Elevate RAP, which involve deeper governance, broader stakeholder engagement and heavier evidence requirements. Our pricing page sets out indicative starting figures, and we confirm exact scope after a free discovery call.'
+  },
+  {
+    q: 'Does Reconciliation Australia have to approve our RAP?',
+    a: 'Yes. Reconciliation Australia administers the RAP framework and reviews submissions, and your RAP needs their endorsement to be a formally recognised RAP. This is why the drafting stage matters so much — commitments that are vague, unresourced or unmeasurable are the most common reason a plan comes back with feedback.'
+  },
+  {
+    q: 'Can we develop a RAP without a consultant?',
+    a: 'Yes. Reconciliation Australia publishes guidance and templates, and organisations do develop RAPs directly. Organisations engage us when they want Indigenous-led guidance on what commitments are genuine and achievable, support facilitating community engagement respectfully, and help avoiding the pitfalls that cause RAPs to stall in delivery or come back at review.'
+  },
+  {
+    q: 'What happens when our RAP expires?',
+    a: 'You either develop a new RAP — often progressing to the next type — or repeat the same type if that is more appropriate for where the organisation genuinely is. Organisations are permitted to repeat a RAP type, and doing so honestly is far better than progressing to a level you cannot deliver on.'
+  },
+  {
+    q: 'Why work with an Indigenous-owned consultancy?',
+    a: 'Two reasons. The cultural guidance in your plan comes from lived experience rather than desk research, which materially changes the quality of the commitments you make. And engaging a Supply Nation registered, 100% Indigenous-owned business contributes to your own Indigenous procurement outcomes — which are themselves usually a commitment inside your RAP.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Reconciliation Action Plan (RAP) Consulting',
+  serviceType: 'Reconciliation Action Plan consulting',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description:
+    'End-to-end Reconciliation Action Plan consulting — scoping, stakeholder engagement, governance, drafting, Reconciliation Australia submission and implementation support. Delivered by Indigenous consultants.',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'RAP types',
+    itemListElement: RAP_TYPES.map((t) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: t.name, description: t.shortFor }
+    }))
+  }
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`Reconciliation Action Plan (RAP) Consultants | ${SITE.name}`}
+  description="Indigenous-led Reconciliation Action Plan consulting. We help Australian organisations scope, draft, submit and deliver Reflect, Innovate, Stretch and Elevate RAPs. Supply Nation registered."
+  canonical={`${SITE.url}/services/rap/`}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Core service"
+    title="Reconciliation Action Plan consulting"
+    intro="We help Australian organisations develop Reconciliation Action Plans that get endorsed, get delivered, and stand up to scrutiny — from first scoping conversation through to implementation support across the term."
+    breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'Reconciliation Action Plans' }]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}assessment/`} class="btn">Find your RAP starting point</a>
+      <a href={`${base}contact/`} class="btn-outline">Book a discovery call</a>
+    </div>
+  </PageHero>
+
+  <!-- WHAT IS A RAP -->
+  <section class="section max-w-3xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">What is a Reconciliation Action Plan?</h2>
+    <div class="prose mt-4">
+      <p>
+        A Reconciliation Action Plan is a formal framework, administered by
+        <a href="https://www.reconciliation.org.au/reconciliation-action-plans/" target="_blank" rel="noopener">Reconciliation Australia</a>,
+        through which an organisation commits to specific and measurable actions that advance reconciliation. It is
+        not a statement of values or a public pledge — it is a plan with owners, deliverables, timeframes and
+        reporting obligations.
+      </p>
+      <p>
+        That distinction is the reason organisations come to us. Writing a document that expresses good intent is
+        straightforward. Writing one that Reconciliation Australia will endorse, that your business units will
+        actually deliver, and that you can evidence at renewal, is a different exercise entirely.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOUR PILLARS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">The framework</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Every RAP is built on four pillars</h2>
+      <p class="mt-3 text-white/75">
+        Whichever type you pursue, your commitments are organised under the same four headings. Governance is the one
+        organisations most often underestimate — and the one that most often determines whether the rest gets delivered.
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6 mt-8">
+      {pillars.map((p) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={p.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg">{p.name}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- RAP TYPES COMPARISON -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Choosing a type</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">The four RAP types compared</h2>
+      <p class="mt-3 text-white/75">
+        Organisations can also repeat a RAP type rather than progressing, and sometimes that is the honest choice.
+        Starting at the wrong level is one of the most common and most costly mistakes.
+      </p>
+    </div>
+
+    <div class="mt-8 overflow-x-auto">
+      <table class="w-full min-w-[640px] border-separate border-spacing-0 rounded-2xl overflow-hidden text-sm">
+        <thead>
+          <tr>
+            <th class="text-left p-4 bg-surface font-semibold text-brand-light">RAP type</th>
+            <th class="text-left p-4 bg-surface font-semibold text-brand-light">Term</th>
+            <th class="text-left p-4 bg-surface font-semibold text-brand-light">Stage</th>
+            <th class="text-left p-4 bg-surface font-semibold text-brand-light">Best suited to</th>
+          </tr>
+        </thead>
+        <tbody>
+          {RAP_TYPES.map((t, i) => (
+            <tr class={i % 2 === 0 ? 'bg-white/5' : 'bg-white/[0.02]'}>
+              <td class="p-4 font-semibold align-top whitespace-nowrap">
+                <a href={`${base}services/rap/${t.slug}/`} class="text-brand-light hover:underline">{t.name}</a>
+              </td>
+              <td class="p-4 align-top whitespace-nowrap text-white/75">{t.duration}</td>
+              <td class="p-4 align-top whitespace-nowrap text-white/75">{t.stage}</td>
+              <td class="p-4 align-top text-white/75">{t.shortFor}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+      {RAP_TYPES.map((t) => (
+        <a href={`${base}services/rap/${t.slug}/`} class="stage-card card-raise p-6 flex flex-col">
+          <h3 class="font-semibold text-lg">{t.name}</h3>
+          <p class="mt-2 text-sm text-white/75 flex-1 leading-relaxed">{t.shortFor}</p>
+          <span class="link-arrow mt-4">Read the full guide <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-8 grid-card border-brand-light/25">
+      <h3 class="font-semibold text-lg">Not sure which type applies to you?</h3>
+      <p class="mt-2 text-sm text-white/75 max-w-2xl">
+        Our free RAP Readiness Assessment asks a different set of questions depending on whether you are starting out
+        or already hold a Reflect, Innovate, Stretch or Elevate RAP, then gives you a personalised read on the
+        sensible next step.
+      </p>
+      <a href={`${base}assessment/`} class="btn mt-5">Take the free assessment</a>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section max-w-4xl">
+    <div class="max-w-2xl">
+      <p class="kicker">How we work</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Our RAP development process</h2>
+      <p class="mt-3 text-white/75">
+        Timings below are indicative for a Reflect or Innovate RAP. Larger organisations and higher RAP types
+        generally run longer, mostly because engagement and evidence requirements grow.
+      </p>
+    </div>
+    <ProcessSteps steps={processSteps} />
+  </section>
+
+  <!-- WHY INDIGENOUS-LED -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">Why it matters that we're Indigenous-owned</h2>
+      <p class="mt-4 text-slate-700 leading-relaxed">
+        A RAP asks your organisation to make commitments about Aboriginal and Torres Strait Islander peoples,
+        communities and cultures. The quality of those commitments depends enormously on whose judgement shaped them.
+      </p>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        2Ways Consultancy is 100% Indigenous-owned and Supply Nation registered. The cultural guidance in your plan
+        comes from lived experience, and community engagement is approached as relationship-building rather than
+        consultation to be completed. There is also a practical benefit worth naming: engaging a registered
+        Indigenous business contributes to the Indigenous procurement outcomes that are usually a commitment inside
+        your RAP.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <span class="pill-strong">100% Indigenous-owned</span>
+        <span class="pill">Supply Nation registered</span>
+        <span class="pill">ABN {SITE.abn}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Questions</p>
+    <FAQ faqs={faqs} heading="RAP questions we get asked most" emitSchema={false} />
+  </section>
+
+  <CTASection
+    title="Ready to talk about your RAP?"
+    body="Whether you're scoping a first Reflect RAP or preparing an Elevate submission, a short conversation will tell you what's realistic and what it would involve."
+    primaryLabel="Book a discovery call"
+    primaryHref="contact/"
+    secondaryLabel="See indicative pricing"
+    secondaryHref="pricing/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
