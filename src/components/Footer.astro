@@ -47,6 +47,7 @@ const base = import.meta.env.BASE_URL;
       </ul>
       <h3 class="font-semibold mb-3 mt-6 text-brand-light">Resources</h3>
       <ul class="space-y-1 text-sm text-white/80">
+        <li><a href={`${base}rap-templates/`} class="hover:underline">Free RAP templates</a></li>
         <li><a href={`${base}rap-delivery-framework/`} class="hover:underline">RAP Delivery Framework</a></li>
         <li><a href={`${base}case-studies/`} class="hover:underline">Case studies</a></li>
         <li><a href={`${base}insights/`} class="hover:underline">Insights</a></li>
@@ -69,7 +70,12 @@ const base = import.meta.env.BASE_URL;
     <div>
       <h3 class="font-semibold mb-3 text-brand-light">Our Newsletter</h3>
       <p class="text-sm text-white/80">Subscribe for the latest news about our services.</p>
-      <form action="https://formspree.io/f/xvgpzgoz" method="POST" class="mt-3 flex gap-2">
+      <form
+        id="newsletter-form"
+        action="https://formspree.io/f/xvgpzgoz"
+        method="POST"
+        class="mt-3 flex gap-2"
+      >
         <input type="email" name="email" required placeholder="Your email" class="min-w-0 flex-1 rounded-lg px-3 py-2 text-sm text-slate-900" />
         <button type="submit" class="btn px-4 py-2 text-sm">Subscribe</button>
       </form>
@@ -80,3 +86,9 @@ const base = import.meta.env.BASE_URL;
     <p>&copy; {new Date().getFullYear()} 2Ways Consultancy. ABN {SITE.abn}. Supply Nation Registered.</p>
   </div>
 </footer>
+
+<script is:inline>
+  document.getElementById('newsletter-form')?.addEventListener('submit', () => {
+    window.__2ways?.track('lead_email_submit', { source: 'newsletter' });
+  });
+</script>

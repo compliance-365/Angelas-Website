@@ -1,0 +1,76 @@
+---
+// Consent-gated analytics.
+//
+// Previously GA4 and the Apollo visitor tracker were loaded unconditionally in
+// BaseLayout while the cookie notice merely recorded a preference in
+// localStorage — so choosing "Essential only" changed nothing. That made the
+// banner misleading, which matters commercially here: Apollo is a B2B visitor
+// de-anonymisation tracker, and this business sells to government and
+// enterprise procurement teams who ask about this in tenders.
+//
+// Now: nothing loads until consent === 'all'. Accepting loads the trackers
+// immediately without needing a page reload.
+//
+// Events fired before consent are deliberately dropped rather than queued and
+// replayed — replaying pre-consent activity after the fact would defeat the
+// point of asking.
+const GA4_ID = 'G-19R2JCRJ9Y';
+const APOLLO_APP_ID = '6909a2cbe5d2c0001134df57';
+---
+<script is:inline define:vars={{ GA4_ID, APOLLO_APP_ID }}>
+  (function () {
+    const CONSENT_KEY = '2ways-cookie-consent';
+    let loaded = false;
+
+    function hasConsent() {
+      return localStorage.getItem(CONSENT_KEY) === 'all';
+    }
+
+    function loadGA4() {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA4_ID);
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+      document.head.appendChild(s);
+    }
+
+    function loadApollo() {
+      const s = document.createElement('script');
+      s.src =
+        'https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=' +
+        Math.random().toString(36).substring(7);
+      s.async = true;
+      s.defer = true;
+      s.onload = function () {
+        window.trackingFunctions && window.trackingFunctions.onLoad({ appId: APOLLO_APP_ID });
+      };
+      document.head.appendChild(s);
+    }
+
+    function loadTrackers() {
+      if (loaded || !hasConsent()) return;
+      loaded = true;
+      loadGA4();
+      loadApollo();
+    }
+
+    // Public surface used by CookieNotice and by page-level tracking calls.
+    window.__2ways = {
+      hasConsent,
+      loadTrackers,
+      /**
+       * Record a conversion event. No-ops entirely without consent, so call
+       * sites don't each need to check.
+       */
+      track: function (name, params) {
+        if (!hasConsent() || typeof window.gtag !== 'function') return;
+        window.gtag('event', name, params || {});
+      }
+    };
+
+    loadTrackers();
+  })();
+</script>

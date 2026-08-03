@@ -1,0 +1,175 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+// Internal links must be prefixed with BASE_URL — the site is served from a
+// subpath, so a bare "/services/..." resolves outside the site.
+const base = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    q: 'What is the difference between a Welcome to Country and an Acknowledgement of Country?',
+    a: 'A Welcome to Country can only be delivered by Traditional Owners, or by Aboriginal and Torres Strait Islander people who have been given permission by Traditional Owners, to welcome visitors to their Country. An Acknowledgement of Country can be offered by anyone, Indigenous or non-Indigenous, and is a way of showing respect for the Traditional Owners of the land you are meeting on. The simplest way to think about it: a Welcome is offered by the host, an Acknowledgement is offered by a guest.'
+  },
+  {
+    q: 'Who can perform a Welcome to Country?',
+    a: 'Only Traditional Owners of the Country you are on, or Aboriginal and Torres Strait Islander people who have been given permission by those Traditional Owners. It cannot be delivered by an Aboriginal or Torres Strait Islander person from another Country simply because they are Indigenous, and it cannot be delivered by a non-Indigenous person.'
+  },
+  {
+    q: 'Can a non-Indigenous person give an Acknowledgement of Country?',
+    a: 'Yes. An Acknowledgement of Country can be offered by any person, Indigenous or non-Indigenous. It is often the most practical and appropriate option for regular internal meetings, where arranging a Welcome to Country would not be feasible or appropriate.'
+  },
+  {
+    q: 'Is there set wording for an Acknowledgement of Country?',
+    a: 'No. There are no set protocols or required wording. You are encouraged to make it personal and specific to the place you are on, and sincere rather than recited. An Acknowledgement can be spoken, written, or signed in Auslan.'
+  },
+  {
+    q: 'Should we pay for a Welcome to Country?',
+    a: 'Yes. A Welcome to Country is a professional and cultural service delivered by a Traditional Owner, often involving preparation, travel and cultural knowledge held over a lifetime. It should be paid at a fair rate, arranged in advance, and budgeted for like any other component of your event.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Acknowledgement of Country vs Welcome to Country: what’s the difference?',
+  datePublished: '2026-08-03',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="acknowledgement-vs-welcome-to-country"
+  title="Acknowledgement of Country vs Welcome to Country: what's the difference?"
+  metaDescription="A Welcome to Country can only be delivered by Traditional Owners. An Acknowledgement of Country can be offered by anyone. Here's the difference, who can deliver each, and how to get it right."
+  kicker="Cultural protocol"
+  publishedDate="August 2026"
+  readTime="5 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    These two are confused constantly, including by organisations who genuinely mean well. Getting them mixed up is
+    the kind of mistake that undermines an otherwise sincere commitment — so it is worth understanding the
+    distinction properly rather than approximately.
+  </p>
+
+  <h2>The short answer</h2>
+  <p>
+    A <strong>Welcome to Country</strong> is delivered by Traditional Owners — or by Aboriginal and Torres Strait
+    Islander people who have been given permission by Traditional Owners — welcoming visitors onto their Country.
+  </p>
+  <p>
+    An <strong>Acknowledgement of Country</strong> can be offered by anyone, Indigenous or non-Indigenous, showing
+    respect for the Traditional Owners of the land you are meeting on.
+  </p>
+  <p>
+    Reconciliation Australia frames the difference well: a Welcome to Country is like hosting people in your home and
+    saying thank you for coming. An Acknowledgement of Country is being a guest and saying thank you for having me.
+    One is offered by the host. The other is offered by the visitor.
+  </p>
+
+  <h2>Welcome to Country</h2>
+  <p>
+    A Welcome to Country occurs at the beginning of a formal event and can take many forms — a speech, singing,
+    dancing, or a smoking ceremony. It is a cultural practice with a long history, and it carries real authority:
+    only Traditional Owners of that particular Country can extend it.
+  </p>
+  <p>
+    That last point is where organisations most often go wrong. An Aboriginal or Torres Strait Islander person from
+    a different Country cannot deliver a Welcome simply because they are Indigenous. Nor can a long-standing
+    Aboriginal employee, unless they are a Traditional Owner of that Country or have been given permission by those
+    Traditional Owners.
+  </p>
+
+  <h3>Getting it right in practice</h3>
+  <ul>
+    <li><strong>Identify the right people.</strong> Work out whose Country your event is on and approach the relevant Traditional Owner group or Land Council.</li>
+    <li><strong>Ask early.</strong> Traditional Owners are frequently asked and often booked well ahead, particularly around National Reconciliation Week and NAIDOC Week.</li>
+    <li><strong>Pay properly.</strong> This is a professional and cultural service. Budget for it as you would any other part of your event, and pay a fair rate.</li>
+    <li><strong>Never substitute.</strong> If a Welcome cannot be arranged, offer an Acknowledgement instead. Do not ask someone unconnected to that Country to stand in.</li>
+  </ul>
+
+  <h2>Acknowledgement of Country</h2>
+  <p>
+    An Acknowledgement of Country is also given at the beginning of a meeting, speech or event, but can be offered by
+    any person. This makes it the appropriate option for the vast majority of organisational settings — regular
+    internal meetings, project kick-offs, email signatures, reports and websites.
+  </p>
+  <p>
+    There is <strong>no set wording</strong>. That surprises people who are looking for an official script, but it is
+    the point: an Acknowledgement is meant to be sincere and specific to place, not recited. It can be spoken,
+    written, or signed in Auslan.
+  </p>
+
+  <h3>What makes an Acknowledgement land</h3>
+  <ul>
+    <li><strong>Name the Country.</strong> "The Traditional Owners of this land" is generic. Naming the specific Country and people shows you did the work.</li>
+    <li><strong>Say it like you mean it.</strong> A rushed recitation communicates the opposite of respect. If someone is uncomfortable delivering one, support them rather than making it mandatory and hollow.</li>
+    <li><strong>Make it yours.</strong> Adding a sentence about why it matters to your organisation, or to you, is more meaningful than a longer formal version.</li>
+    <li><strong>Do not stop there.</strong> An Acknowledgement at the start of a meeting where nothing else about the organisation has changed is exactly the tokenism people are alert to.</li>
+  </ul>
+
+  <h2>Which one do we need?</h2>
+  <div class="not-prose my-6 overflow-x-auto">
+    <table class="w-full min-w-[520px] border-separate border-spacing-0 rounded-2xl overflow-hidden text-sm">
+      <thead>
+        <tr>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">Situation</th>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">Usually appropriate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75">Major public event, conference, launch, official opening</td>
+          <td class="p-4 align-top text-white/75">Welcome to Country</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 align-top text-white/75">Regular internal meetings and team meetings</td>
+          <td class="p-4 align-top text-white/75">Acknowledgement of Country</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75">Board meetings, AGMs</td>
+          <td class="p-4 align-top text-white/75">Acknowledgement, or Welcome for significant occasions</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 align-top text-white/75">Websites, reports, email signatures</td>
+          <td class="p-4 align-top text-white/75">Written Acknowledgement</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75">Events on Country of particular significance</td>
+          <td class="p-4 align-top text-white/75">Welcome to Country</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Where this fits in a RAP</h2>
+  <p>
+    Cultural protocols sit under the <strong>Respect</strong> pillar, and almost every RAP includes a commitment
+    about them. What separates a strong commitment from a weak one is specificity: not "we will acknowledge Country
+    at meetings", but a documented protocol stating which events warrant a Welcome, who is responsible for arranging
+    it, what the budget is, and how staff are supported to deliver an Acknowledgement well.
+  </p>
+  <p>
+    If your organisation is developing or renewing a RAP, our free
+    <a href={`${base}assessment/`}>RAP Readiness Assessment</a> covers where cultural protocols sit alongside the
+    other three pillars, and our <a href={`${base}services/cultural-awareness-training/`}>cultural awareness training</a>
+    covers protocols in the context of the Country your organisation actually operates on.
+  </p>
+
+  <p class="text-sm text-white/50 mt-6">
+    Protocols can vary between Countries and communities. Where a local protocol differs from general guidance,
+    follow the local protocol — and if you are unsure, ask the relevant Traditional Owner group directly.
+    General references: <a href="https://www.reconciliation.org.au/reconciliation/acknowledgement-of-country-and-welcome-to-country/" target="_blank" rel="noopener">Reconciliation Australia</a>
+    and <a href="https://aiatsis.gov.au/explore/welcome-country" target="_blank" rel="noopener">AIATSIS</a>.
+  </p>
+</ArticleLayout>

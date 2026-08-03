@@ -1,0 +1,159 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+// Internal links must be prefixed with BASE_URL — the site is served from a
+// subpath, so a bare "/rap-templates/" resolves outside the site.
+const base = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    q: 'What is a RAP Working Group?',
+    a: 'A RAP Working Group is the internal group responsible for developing a Reconciliation Action Plan and overseeing its delivery. It is a core part of the Governance pillar of the RAP framework. An effective working group has genuine decision-making authority, an executive sponsor, Aboriginal and Torres Strait Islander representation or formal cultural advice, and representation from the business areas that will actually deliver the commitments.'
+  },
+  {
+    q: 'Who should be on a RAP Working Group?',
+    a: 'Aim for the people who will have to deliver actions, not only those interested in the topic. That typically means representatives from People/HR, procurement, communications and operational business units, plus an executive sponsor, a chair, a secretariat, and Aboriginal and Torres Strait Islander representation or formal cultural advice. A group with no procurement or HR representation will write commitments those areas never agreed to.'
+  },
+  {
+    q: 'How often should a RAP Working Group meet?',
+    a: 'Monthly or six-weekly during RAP development, and at minimum quarterly through delivery. The pattern to avoid is a group that meets intensively while writing the plan and then stops once it is launched — which is the most common way a RAP quietly stalls.'
+  },
+  {
+    q: 'Do Aboriginal and Torres Strait Islander members need to be on the working group?',
+    a: 'The framework expects Aboriginal and Torres Strait Islander representation or formal cultural advice. What matters is that participation is genuine and appropriately supported: external community representatives should be remunerated for their time and expertise, internal staff should have participation reflected in their workload rather than added on top of it, and no individual should be expected to speak on behalf of all Aboriginal and Torres Strait Islander peoples.'
+  },
+  {
+    q: 'What authority should a RAP Working Group have?',
+    a: 'Enough to act without escalating every decision. At minimum: authority over the content and prioritisation of RAP actions, direction of an allocated RAP budget, the ability to require progress updates from any action owner, and a direct escalation path to a named executive when an action is blocked. A group that can only make recommendations will stall the first time an action meets a competing business priority.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'What is a RAP Working Group, and what makes one actually work?',
+  datePublished: '2026-08-03',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="what-is-a-rap-working-group"
+  title="What is a RAP Working Group, and what makes one actually work?"
+  metaDescription="A RAP Working Group governs the development and delivery of your Reconciliation Action Plan. Who should be on it, what authority it needs, how often it should meet, and why most of them stall."
+  kicker="Governance"
+  publishedDate="August 2026"
+  readTime="6 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    Almost every Reconciliation Action Plan has a working group. A large share of them stop meeting within eighteen
+    months, and the RAP quietly stalls with them. The difference between the two outcomes is rarely enthusiasm — it
+    is nearly always structural, and it is decided when the group is set up.
+  </p>
+
+  <h2>What it is</h2>
+  <p>
+    A RAP Working Group is the internal group responsible for developing your RAP and overseeing its delivery. It
+    sits under the <strong>Governance</strong> pillar of the framework, which is the pillar organisations most often
+    underestimate and the one that most determines whether the other three get delivered.
+  </p>
+
+  <h2>The four things that decide whether it works</h2>
+
+  <h3>1. Real authority</h3>
+  <p>
+    This is the one most often left vague, and it is the single biggest predictor of delivery. A group that can only
+    make recommendations — with no budget and no escalation path — will stall the first time a RAP action meets a
+    competing business priority. And it always meets one.
+  </p>
+  <p>At minimum, the group should be able to:</p>
+  <ul>
+    <li>Decide the content, sequencing and prioritisation of RAP actions</li>
+    <li>Direct an allocated RAP budget, with an actual figure attached</li>
+    <li>Require progress updates from any action owner across the organisation</li>
+    <li>Escalate blocked actions directly to a named executive, without intermediate approval</li>
+  </ul>
+
+  <h3>2. An executive sponsor who turns up</h3>
+  <p>
+    Name a person, not a function. The most common way a RAP stalls after launch is losing its sponsor to a
+    restructure and nobody formally replacing them — the group keeps meeting for a while, then does not.
+  </p>
+  <p>
+    The strongest version of this has RAP delivery written into the sponsor's performance measures. It is a small
+    administrative act that changes behaviour considerably, because it survives the point at which goodwill runs into
+    a busy quarter.
+  </p>
+
+  <h3>3. The people who will actually deliver</h3>
+  <p>
+    Working groups tend to attract people who are interested in reconciliation. That is a good thing, but interest is
+    not the same as the ability to deliver. If your RAP will include Indigenous employment and procurement
+    commitments, HR and procurement need to be in the room when those are written — otherwise you get commitments
+    those functions never agreed to and cannot resource.
+  </p>
+  <p>A workable composition usually includes:</p>
+  <ul>
+    <li>A chair, and a secretariat who actually keeps records</li>
+    <li>Aboriginal and Torres Strait Islander representation and/or formal cultural advice</li>
+    <li>People/HR, procurement and communications representatives</li>
+    <li>Operational business unit representatives from the areas that will deliver</li>
+    <li>The executive sponsor</li>
+  </ul>
+
+  <h3>4. Genuine and supported Indigenous participation</h3>
+  <p>
+    Representation matters, but so do the conditions of it. Three things are worth being explicit about in your terms
+    of reference:
+  </p>
+  <ul>
+    <li><strong>Pay external community representatives.</strong> Cultural knowledge and lived experience are expertise. Asking for them unpaid, as a favour, is a pattern worth breaking.</li>
+    <li><strong>Reflect internal participation in workload.</strong> Aboriginal and Torres Strait Islander staff are frequently asked to carry this work on top of a full job. That is how burnout happens, and how you lose the people you most need.</li>
+    <li><strong>Do not expect anyone to represent everyone.</strong> No individual speaks for all Aboriginal and Torres Strait Islander peoples, and no one should be positioned as though they do.</li>
+  </ul>
+
+  <h2>How working groups actually stall</h2>
+  <p>The failure pattern is consistent enough to be worth naming:</p>
+  <ol>
+    <li>The RAP launches with strong visibility and genuine enthusiasm.</li>
+    <li>Meetings continue for a few months, mostly reporting rather than deciding.</li>
+    <li>The executive sponsor moves roles in a restructure. Nobody formally replaces them.</li>
+    <li>Attendance thins. Meetings get rescheduled, then skipped.</li>
+    <li>Twelve months later, nobody can say what has been delivered, because nothing was recorded as it happened.</li>
+  </ol>
+  <p>
+    Notice that no one decided to stop. That is the point — this happens by drift, not by decision, which is exactly
+    why the structural safeguards have to be in place from the start.
+  </p>
+
+  <h2>Practical safeguards</h2>
+  <ul>
+    <li><strong>Make the action register a standing agenda item.</strong> Every meeting, status against every commitment. It is the most boring and most effective habit available.</li>
+    <li><strong>Set a quorum that requires the sponsor or chair, plus at least one Aboriginal or Torres Strait Islander member.</strong> This prevents decisions being made without the people who should be making them.</li>
+    <li><strong>Update the terms of reference when the sponsor changes.</strong> Same week. Treat it as the trigger it is.</li>
+    <li><strong>Capture evidence as work is delivered.</strong> Reconstructing it at renewal is possible, expensive, and usually incomplete.</li>
+  </ul>
+
+  <h2>Templates</h2>
+  <p>
+    We publish a free <a href={`${base}rap-templates/`}>RAP Working Group Terms of Reference template</a> that forces
+    the three things most working groups leave vague — actual delegated authority, a named sponsor with
+    accountability, and a real budget figure — alongside an action register and evidence tracker. No email required.
+  </p>
+  <p>
+    If your working group has already stalled, our <a href={`${base}services/rap-health-check/`}>RAP Health Check</a>
+    establishes what has genuinely been delivered and what can still be evidenced, which is the necessary first step
+    before deciding what to do next.
+  </p>
+</ArticleLayout>
