@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const drivers = [
+  {
+    icon: 'scale',
+    title: 'The target keeps rising',
+    body: 'The Commonwealth procurement target reached 3% in 2025–26 and increases 0.25% each year to 4% by 2029–30. A spend level that met expectations last year will not next year.'
+  },
+  {
+    icon: 'shield',
+    title: 'The ownership threshold changes in 2026',
+    body: 'From 1 July 2026, a business must be at least 51% First Nations-owned and controlled — or ORIC-registered — to count toward IPP targets, up from 50%. Suppliers verified under the old threshold may no longer qualify.'
+  },
+  {
+    icon: 'doc',
+    title: 'Tender panels are asking harder questions',
+    body: 'Demonstrable Indigenous procurement performance increasingly appears in tender evaluation. A single annual spend figure is no longer a sufficient answer.'
+  }
+];
+
+const services = [
+  {
+    name: 'Procurement strategy and targets',
+    body: 'Setting targets that are ambitious and achievable given your actual spend profile and category mix, rather than numbers borrowed from a peer organisation.'
+  },
+  {
+    name: 'Supplier verification process',
+    body: 'Establishing how you verify Indigenous ownership, and a re-verification cycle so eligibility is checked periodically rather than assumed to hold indefinitely.'
+  },
+  {
+    name: 'Spend tracking and reporting',
+    body: 'Building reporting that shows spend by category, business unit and contract — the level of detail needed to manage against a rising target and answer tender questions.'
+  },
+  {
+    name: 'Supplier relationship development',
+    body: 'Building relationships with Aboriginal and Torres Strait Islander businesses ahead of tenders, rather than searching for suppliers once a requirement lands.'
+  },
+  {
+    name: 'Category and buyer capability',
+    body: 'Making sure procurement and category teams understand eligibility rules, verification, and culturally safe supplier engagement.'
+  },
+  {
+    name: 'Embedding into process',
+    body: 'Building Indigenous supplier consideration into the standard tender process, so it operates by default rather than as a parallel initiative someone has to remember.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is the Indigenous Procurement Policy?',
+    a: 'The Indigenous Procurement Policy (IPP) is a Commonwealth Government policy that sets targets for how much government contracting spend goes to Aboriginal and Torres Strait Islander-owned businesses, alongside mandatory set-asides for certain contracts. It applies directly to Australian Government agencies and indirectly to any business supplying them.'
+  },
+  {
+    q: 'What changes on 1 July 2026?',
+    a: 'From 1 July 2026, a business must be at least 51% First Nations-owned and controlled — or registered with the Office of the Registrar of Indigenous Corporations — to count toward IPP targets. This replaces the previous 50% threshold. Businesses verified under the old threshold should be re-checked, since some may no longer qualify.'
+  },
+  {
+    q: 'Does the IPP apply to us if we are not a government agency?',
+    a: 'Not directly, but it affects you if you supply government, since your own Indigenous procurement performance may form part of tender evaluation. Many corporates and state bodies also model their supplier diversity commitments on the Commonwealth framework, usually as part of a RAP.'
+  },
+  {
+    q: 'How do we verify a supplier is genuinely Indigenous-owned?',
+    a: 'Use a verified directory rather than supplier self-declaration. Supply Nation maintains the most widely used registry of verified Aboriginal and Torres Strait Islander-owned businesses in Australia. Given the 2026 threshold change, it is also worth establishing a periodic re-verification cycle rather than treating verification as one-off.'
+  },
+  {
+    q: 'How does this relate to our RAP?',
+    a: 'Indigenous procurement commitments sit under the Opportunities pillar and appear in most RAPs. In practice the two pieces of work are closely linked — procurement targets in a RAP are only credible if the verification and tracking underneath them actually function.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Indigenous Procurement Advisory',
+  serviceType: 'Indigenous procurement consulting',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description:
+    'Indigenous procurement strategy, supplier verification, spend tracking and reporting for Australian organisations, aligned to the Commonwealth Indigenous Procurement Policy including the 2026 ownership threshold change.'
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`Indigenous Procurement Advisory | ${SITE.name}`}
+  description="Indigenous procurement strategy, supplier verification and spend reporting — aligned to the Commonwealth Indigenous Procurement Policy, including the 51% ownership threshold taking effect 1 July 2026."
+  canonical={`${SITE.url}/services/indigenous-procurement/`}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Advisory"
+    title="Indigenous procurement advisory"
+    intro="Turning a procurement commitment into a practice that works — verified suppliers, spend you can actually report on, and readiness for the 2026 ownership threshold change."
+    breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'Indigenous procurement' }]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}procurement-readiness/`} class="btn">Free procurement readiness check</a>
+      <a href={`${base}contact/`} class="btn-outline">Talk to us</a>
+    </div>
+  </PageHero>
+
+  <!-- WHY NOW -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Why now</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Three things converging</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      {drivers.map((d) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={d.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg leading-snug">{d.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{d.body}</p>
+        </div>
+      ))}
+    </div>
+    <div class="mt-6">
+      <a href={`${base}insights/indigenous-procurement-policy-changes/`} class="link-arrow">
+        Read our explainer on the IPP changes <span data-arrow>&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- THE GAP -->
+  <section class="section max-w-3xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">The usual gap</h2>
+    <div class="prose mt-4">
+      <p>
+        Most organisations we speak with have a stated commitment to Indigenous procurement and a figure they report
+        annually. Fewer have supplier verification that would survive scrutiny, spend visibility below the total, or
+        a process that operates without someone remembering to apply it.
+      </p>
+      <p>
+        That gap is manageable while targets are static and nobody looks closely. It becomes a problem when the
+        target rises every year, the eligibility rules change underneath your existing supplier list, and a tender
+        panel asks you to break the number down.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">What we do</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">From commitment to working practice</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+      {services.map((s) => (
+        <div class="grid-card">
+          <h3 class="font-semibold">{s.name}</h3>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{s.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FREE TOOL -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">Start with the free readiness check</h2>
+      <p class="mt-4 text-slate-700 leading-relaxed">
+        Twelve questions across policy and targets, supplier verification, tracking and reporting, and relationships
+        and capability. It takes about five minutes and gives you a personalised read on where your procurement
+        practice actually stands — including against the 2026 threshold change.
+      </p>
+      <a href={`${base}procurement-readiness/`} class="btn mt-6">Take the free check</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Questions</p>
+    <FAQ faqs={faqs} heading="Indigenous procurement FAQs" emitSchema={false} />
+  </section>
+
+  <CTASection
+    title="Get ahead of the 2026 change"
+    body="Re-verifying suppliers and rebuilding spend reporting takes time. Doing it before July 2026 is considerably easier than doing it after."
+    primaryLabel="Book a discovery call"
+    primaryHref="contact/"
+    secondaryLabel="Free procurement readiness check"
+    secondaryHref="procurement-readiness/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

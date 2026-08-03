@@ -1,0 +1,23 @@
+---
+import { DISCLAIMER } from '../data/caseStudies';
+
+// Deliberately visually prominent rather than fine print. These case studies
+// are composites, and a reader should register that before reading the
+// content, not after.
+export interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+<div
+  class={`rounded-xl border border-brand-light/30 bg-brand-light/[0.07] ${compact ? 'p-4' : 'p-5'}`}
+  role="note"
+>
+  <p class="flex items-start gap-2.5">
+    <span aria-hidden="true" class="mt-0.5 shrink-0 font-bold text-brand-light">&#9432;</span>
+    <span class={`${compact ? 'text-xs' : 'text-sm'} text-white/80 leading-relaxed`}>
+      <strong class="text-brand-light font-semibold">Illustrative example.</strong>
+      {' '}{DISCLAIMER.replace('Illustrative example. ', '')}
+    </span>
+  </p>
+</div>

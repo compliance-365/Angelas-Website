@@ -1,6 +1,10 @@
 ---
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
+// Internal links must be prefixed with BASE_URL — the site is served from a
+// subpath, so a bare "/assessment/" resolves outside the site and 404s.
+const base = import.meta.env.BASE_URL;
+
 const faqs = [
   {
     q: 'How much does a Reconciliation Action Plan cost in Australia?',
@@ -127,8 +131,8 @@ const articleSchema = {
   <p>
     Before requesting quotes, it is worth knowing which RAP type is actually appropriate for your organisation —
     quotes for the wrong type will not help you budget. Our free
-    <a href="/assessment/">RAP Readiness Assessment</a> gives you a personalised read in about five minutes, and our
-    <a href="/pricing/">pricing page</a> sets out indicative starting figures by organisation size and RAP type.
+    <a href={`${base}assessment/`}>RAP Readiness Assessment</a> gives you a personalised read in about five minutes, and our
+    <a href={`${base}pricing/`}>pricing page</a> sets out indicative starting figures by organisation size and RAP type.
   </p>
 
   <p class="text-sm text-white/50 mt-6">

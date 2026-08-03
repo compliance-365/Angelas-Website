@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import IllustrativeNotice from '../../components/IllustrativeNotice.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+import { CASE_STUDIES } from '../../data/caseStudies';
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout
+  title={`Case Studies: What a RAP Engagement Involves | ${SITE.name}`}
+  description="Illustrative examples of Reconciliation Action Plan engagements — a first Reflect RAP, recovering a stalled Innovate RAP, and a procurement-led Stretch RAP. What each involved and what it taught."
+  canonical={`${SITE.url}/case-studies/`}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Case studies"
+    title="What a RAP engagement actually involves"
+    intro="Three engagement shapes we see most often — starting from nothing, recovering something stalled, and progressing to the next level. What the situation looked like, what the work involved, and what it taught."
+    breadcrumbs={[{ label: 'Case studies' }]}
+  />
+
+  <section class="section max-w-3xl">
+    <IllustrativeNotice />
+
+    <div class="grid gap-6 mt-8">
+      {CASE_STUDIES.map((c) => (
+        <a href={`${base}case-studies/${c.slug}/`} class="grid-card card-raise block">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="pill">{c.scenario}</span>
+            <span class="text-xs text-white/50">{c.client} &middot; {c.size}</span>
+          </div>
+          <h2 class="mt-3 text-xl font-semibold leading-snug">{c.title}</h2>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{c.summary}</p>
+          <span class="link-arrow mt-4">Read the full example <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-10 grid-card">
+      <h2 class="text-lg font-semibold">Why these aren't named clients</h2>
+      <p class="mt-2 text-sm text-white/75 leading-relaxed">
+        RAP work involves commercially sensitive information and, more importantly, community relationships that
+        aren't ours to publicise. We publish named client work only with written permission, and we'd rather show you
+        honestly-labelled examples than imply engagements we can't evidence.
+      </p>
+      <p class="mt-3 text-sm text-white/75 leading-relaxed">
+        If you'd like to speak with a reference client about their experience directly, ask us — that's a
+        conversation we can usually arrange.
+      </p>
+      <a href={`${base}contact/`} class="btn mt-5">Ask about references</a>
+    </div>
+  </section>
+
+  <CTASection />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
