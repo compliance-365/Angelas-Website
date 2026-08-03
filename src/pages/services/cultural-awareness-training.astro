@@ -1,0 +1,251 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const programs = [
+  {
+    icon: 'compass',
+    name: 'Cultural awareness',
+    audience: 'All staff',
+    format: 'Half day, or two shorter sessions',
+    body: 'Foundational grounding in Aboriginal and Torres Strait Islander histories, cultures and contemporary realities, and what respectful engagement looks like in an everyday work context.',
+    covers: [
+      'Local histories and the Traditional Owners of where you operate',
+      'Impacts of colonisation and why they remain present',
+      'Cultural protocols including Acknowledgement and Welcome to Country',
+      'Practical guidance for respectful everyday interaction'
+    ]
+  },
+  {
+    icon: 'users',
+    name: 'Cultural capability',
+    audience: 'Client-facing and community-facing teams',
+    format: 'Full day, or a short series',
+    body: 'Goes beyond awareness into applied skill — for teams whose work brings them into direct contact with Aboriginal and Torres Strait Islander clients, communities or stakeholders.',
+    covers: [
+      'Communication styles and common points of misunderstanding',
+      'Building trust where institutional trust is limited',
+      'Culturally safe service delivery and consultation practice',
+      'Working through scenarios drawn from your actual operating context'
+    ]
+  },
+  {
+    icon: 'target',
+    name: 'Cultural safety for leaders',
+    audience: 'Executives, managers, boards',
+    format: 'Half day',
+    body: 'What cultural safety requires of people with authority — recruitment, retention, escalation, and the decisions that determine whether commitments in a RAP survive contact with the organisation.',
+    covers: [
+      'What cultural safety means in practice, beyond a stated value',
+      'Recognising and responding to racism in the workplace',
+      'Recruitment and retention of Aboriginal and Torres Strait Islander staff',
+      'Leadership accountability for reconciliation commitments'
+    ]
+  },
+  {
+    icon: 'doc',
+    name: 'RAP working group intensive',
+    audience: 'RAP Working Group members',
+    format: 'Half day',
+    body: 'Targeted session for the people carrying the plan — what the framework expects, what good commitments look like, and how to keep delivery moving between meetings.',
+    covers: [
+      'The four pillars and what Reconciliation Australia looks for',
+      'Writing commitments that can be delivered and evidenced',
+      'Running effective working group cycles',
+      'Common reasons RAPs stall, and early warning signs'
+    ]
+  }
+];
+
+const differentiators = [
+  {
+    title: 'Delivered by Aboriginal and Torres Strait Islander facilitators',
+    body: 'Cultural learning delivered by people with lived experience lands differently, and participants ask different questions. This is not a course licensed from elsewhere and read out.'
+  },
+  {
+    title: 'Grounded in where you actually operate',
+    body: 'Content is adapted to the Traditional Owners and histories of your locations, not delivered as a generic national overview.'
+  },
+  {
+    title: 'Built for your context',
+    body: 'Scenarios are drawn from your industry and the situations your teams genuinely encounter, so the learning transfers to Monday morning.'
+  },
+  {
+    title: 'Counts toward your RAP and procurement commitments',
+    body: 'Cultural learning is a Respect-pillar commitment in nearly every RAP. Engaging a Supply Nation registered Indigenous business also contributes to your Indigenous procurement outcomes.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'How long is a cultural awareness training session?',
+    a: 'Our foundational cultural awareness session runs as a half day, and can be split into two shorter sessions where releasing staff for a half day at once is difficult. Cultural capability training typically runs a full day or as a short series, and leadership and RAP working group sessions run as half days.'
+  },
+  {
+    q: 'Can training be delivered online?',
+    a: 'Yes. We deliver in person and online, and for organisations spread across multiple sites a mix usually works best — in-person sessions at major locations, online for smaller or remote teams. In-person delivery generally produces richer discussion, so we recommend it where it is practical.'
+  },
+  {
+    q: 'Is cultural awareness training a RAP requirement?',
+    a: 'Cultural learning commitments sit under the Respect pillar and appear in the overwhelming majority of RAPs at every level. What changes with RAP type is depth and reach: a Reflect RAP might commit to introducing training, while Stretch and Elevate RAPs are expected to show it is mandatory, ongoing and reaching the whole organisation.'
+  },
+  {
+    q: 'How many people can attend a session?',
+    a: 'Group size depends on the session type. Foundational awareness sessions work well with larger groups, while cultural capability and leadership sessions are deliberately smaller because they depend on discussion and scenario work. We will recommend a group size when we understand your audience.'
+  },
+  {
+    q: 'Do you deliver training outside Brisbane?',
+    a: 'Yes. We are Brisbane-based and deliver Australia-wide, both in person and online. For multi-site organisations we can design a rollout that covers all locations over an agreed period.'
+  },
+  {
+    q: 'Can training be tailored to our industry?',
+    a: 'Yes, and we recommend it. Generic training is the most common reason cultural learning fails to stick. Scenarios drawn from your actual operating context — the situations your teams really encounter — make the difference between an interesting session and a change in practice.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Cultural Awareness and Cultural Capability Training',
+  serviceType: 'Cultural awareness training',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description:
+    'Aboriginal and Torres Strait Islander cultural awareness, cultural capability and cultural safety training for Australian organisations, delivered in person and online by Indigenous facilitators.',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Training programs',
+    itemListElement: programs.map((p) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: p.name, description: p.body }
+    }))
+  }
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`Cultural Awareness Training for Workplaces | ${SITE.name}`}
+  description="Aboriginal and Torres Strait Islander cultural awareness, cultural capability and cultural safety training — delivered in person and online across Australia by Indigenous facilitators. Supports RAP Respect-pillar commitments."
+  canonical={`${SITE.url}/services/cultural-awareness-training/`}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Training"
+    title="Cultural awareness and capability training"
+    intro="Aboriginal and Torres Strait Islander cultural learning delivered by Indigenous facilitators — adapted to where you operate and the situations your teams actually encounter. In person and online, Australia-wide."
+    breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'Cultural awareness training' }]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}contact/`} class="btn">Discuss a training program</a>
+      <a href={`${base}services/rap/`} class="btn-outline">See RAP consulting</a>
+    </div>
+  </PageHero>
+
+  <!-- WHY -->
+  <section class="section max-w-3xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">Why most cultural training doesn't stick</h2>
+    <div class="prose mt-4">
+      <p>
+        Nearly every organisation with a Reconciliation Action Plan commits to cultural learning. A great many of
+        those commitments are met by putting staff through a generic online module once, recording the completion
+        rate, and moving on.
+      </p>
+      <p>
+        That satisfies the reporting line. It rarely changes anything — because it is not connected to the country
+        the organisation operates on, not delivered by anyone with lived experience of what is being taught, and not
+        grounded in the situations staff genuinely encounter.
+      </p>
+      <p>
+        We have delivered over <strong>210 workshops</strong> to organisations of all sizes. The sessions that change
+        practice have three things in common: they are led by Aboriginal and Torres Strait Islander facilitators, they
+        are specific to place, and they work through real scenarios rather than abstractions.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Programs</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Four programs, matched to audience</h2>
+      <p class="mt-3 text-white/75">
+        Most organisations start with foundational awareness across all staff, then add depth for the teams and
+        leaders where it matters most. All programs can be tailored.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6 mt-8">
+      {programs.map((p) => (
+        <div class="grid-card flex flex-col">
+          <span class="icon-soft"><Icon name={p.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg">{p.name}</h3>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="pill">{p.audience}</span>
+            <span class="text-xs text-white/50 self-center">{p.format}</span>
+          </div>
+          <p class="mt-3 text-sm text-white/75 leading-relaxed">{p.body}</p>
+          <ul class="mt-4 grid gap-2 pt-4 border-t border-white/10">
+            {p.covers.map((c) => (
+              <li class="flex items-start gap-2.5 text-sm text-white/70">
+                <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={16} /></span>
+                <span class="leading-relaxed">{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATORS -->
+  <section class="light-section">
+    <div class="section">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">What makes this different</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mt-8">
+        {differentiators.map((d) => (
+          <div class="grid-card !bg-white text-slate-900">
+            <h3 class="font-semibold" style="color:#0D1B2A;">{d.title}</h3>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed">{d.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Questions</p>
+    <FAQ faqs={faqs} heading="Training FAQs" emitSchema={false} />
+  </section>
+
+  <CTASection
+    title="Plan your training rollout"
+    body="Tell us who needs to be reached and over what period, and we'll recommend a program mix and a realistic rollout schedule."
+    primaryLabel="Discuss a training program"
+    primaryHref="contact/"
+    secondaryLabel="See indicative pricing"
+    secondaryHref="pricing/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

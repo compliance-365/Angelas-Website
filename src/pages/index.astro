@@ -7,6 +7,8 @@ import FAQ from '../components/FAQ.astro';
 import CTASection from '../components/CTASection.astro';
 import { SITE } from '../config/site';
 import { RAP_TYPES } from '../data/rapTypes';
+import { SERVICES } from '../data/services';
+import { CASE_STUDIES } from '../data/caseStudies';
 
 const base = import.meta.env.BASE_URL;
 
@@ -30,39 +32,7 @@ const problems = [
   }
 ];
 
-const services = [
-  {
-    icon: 'doc',
-    name: 'Reconciliation Action Plans',
-    blurb: 'End-to-end RAP development, from scoping through to Reconciliation Australia submission and implementation support.',
-    href: 'services/rap/',
-    featured: true
-  },
-  {
-    icon: 'users',
-    name: 'Employment & Workplace',
-    blurb: 'Building culturally safe workplaces that attract, support and retain Aboriginal and Torres Strait Islander staff.',
-    href: 'services/employment-workplace/'
-  },
-  {
-    icon: 'chart',
-    name: 'Monitoring & Evaluation',
-    blurb: 'Evidence frameworks that show whether your commitments are actually delivering measurable change.',
-    href: 'services/monitoring-evaluation/'
-  },
-  {
-    icon: 'target',
-    name: 'Business & Strategic Planning',
-    blurb: 'Strategic support to align reconciliation commitments with how your organisation actually operates.',
-    href: 'services/business-strategic/'
-  },
-  {
-    icon: 'spark',
-    name: 'Diversity & Inclusion Programs',
-    blurb: 'Targeted initiatives that move inclusion from an aspiration to embedded, everyday practice.',
-    href: 'services/diversity-inclusion/'
-  }
-];
+const services = SERVICES;
 
 // Ported from the live site (2waysconsultancy.com.au) — real figures, not
 // invented. Keep in sync if the business updates them.
@@ -311,6 +281,18 @@ const faqSchema = {
         </a>
       ))}
     </div>
+    <div class="mt-8 grid-card border-brand-light/25">
+      <div class="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+        <div>
+          <h3 class="font-semibold text-lg">We publish our full delivery methodology</h3>
+          <p class="mt-2 text-sm text-white/75 max-w-2xl">
+            Six phases, the artefacts produced at each one, and the specific way each phase tends to fail. Use it
+            yourself if you have the internal capacity — we'd rather that than a RAP delivered badly.
+          </p>
+        </div>
+        <a href={`${base}rap-delivery-framework/`} class="btn-outline shrink-0">See the framework</a>
+      </div>
+    </div>
   </section>
 
   <!-- STATS -->
@@ -325,6 +307,28 @@ const faqSchema = {
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Engagement examples</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">What a RAP engagement actually involves</h2>
+      <p class="mt-3 text-white/75">
+        Three shapes we see most often. These are illustrative examples rather than named client work — we publish
+        client case studies only with written permission.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      {CASE_STUDIES.map((c) => (
+        <a href={`${base}case-studies/${c.slug}/`} class="grid-card card-raise flex flex-col">
+          <span class="pill w-max">{c.scenario}</span>
+          <h3 class="mt-3 font-semibold text-lg leading-snug">{c.title}</h3>
+          <p class="mt-2 text-sm text-white/75 flex-1 leading-relaxed">{c.summary}</p>
+          <span class="link-arrow mt-4">Read the example <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
     </div>
   </section>
 

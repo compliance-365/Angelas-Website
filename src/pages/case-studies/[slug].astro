@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import IllustrativeNotice from '../../components/IllustrativeNotice.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+import { CASE_STUDIES, type CaseStudy } from '../../data/caseStudies';
+
+export function getStaticPaths() {
+  return CASE_STUDIES.map((c) => ({ params: { slug: c.slug }, props: { study: c } }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { study } = Astro.props as { study: CaseStudy };
+const others = CASE_STUDIES.filter((c) => c.slug !== study.slug);
+---
+<BaseLayout
+  title={`${study.title} | ${SITE.name}`}
+  description={study.metaDescription}
+  canonical={`${SITE.url}/case-studies/${study.slug}/`}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker={study.scenario}
+    title={study.title}
+    intro={study.summary}
+    breadcrumbs={[{ label: 'Case studies', href: 'case-studies/' }, { label: study.title }]}
+    width="narrow"
+  >
+    <p class="mt-5 text-sm text-white/50">{study.client} &middot; {study.size}</p>
+  </PageHero>
+
+  <section class="section max-w-3xl">
+    <IllustrativeNotice />
+
+    <!-- SITUATION -->
+    <div class="mt-10">
+      <h2 class="text-2xl font-semibold">The situation</h2>
+      <ul class="mt-5 grid gap-3">
+        {study.situation.map((s) => (
+          <li class="flex items-start gap-3 text-white/80">
+            <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-light"></span>
+            <span class="leading-relaxed">{s}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- APPROACH -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-semibold">The approach</h2>
+      <ol class="mt-6 grid gap-0">
+        {study.approach.map((a, i) => (
+          <li class="relative grid grid-cols-[auto_1fr] gap-5 pb-7 last:pb-0">
+            <div class="relative flex flex-col items-center">
+              <span class="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-light/40 bg-surface text-sm font-semibold text-brand-light tabular-nums">
+                {i + 1}
+              </span>
+              {i < study.approach.length - 1 && (
+                <span aria-hidden="true" class="absolute top-9 bottom-0 w-px bg-gradient-to-b from-brand-light/40 to-white/5"></span>
+              )}
+            </div>
+            <div class="pt-1">
+              <h3 class="font-semibold">{a.phase}</h3>
+              <p class="mt-1.5 text-white/75 leading-relaxed">{a.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="mt-12 grid-card border-brand-light/25">
+      <h2 class="text-xl font-semibold">Where it landed</h2>
+      <ul class="mt-5 grid gap-3">
+        {study.outcomes.map((o) => (
+          <li class="flex items-start gap-3 text-sm text-white/80">
+            <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={18} /></span>
+            <span class="leading-relaxed">{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- LESSONS -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-semibold">What this shape of engagement teaches</h2>
+      <div class="mt-5 grid gap-4">
+        {study.lessons.map((l) => (
+          <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-sm text-white/80 leading-relaxed">{l}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <a href={`${base}${study.relatedService.href}`} class="link-arrow">
+        Read more about {study.relatedService.label} <span data-arrow>&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- OTHER CASE STUDIES -->
+  <section class="section max-w-3xl">
+    <h2 class="text-xl font-semibold">Other examples</h2>
+    <div class="grid sm:grid-cols-2 gap-5 mt-6">
+      {others.map((c) => (
+        <a href={`${base}case-studies/${c.slug}/`} class="grid-card card-raise flex flex-col">
+          <span class="pill w-max">{c.scenario}</span>
+          <h3 class="mt-3 font-semibold leading-snug">{c.title}</h3>
+          <p class="mt-2 text-sm text-white/70 flex-1 leading-relaxed">{c.summary}</p>
+          <span class="link-arrow mt-4">Read <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CTASection
+    title="Recognise your situation?"
+    body="If any of this sounds like where your organisation is, a free discovery call will tell you what the realistic next step looks like."
+    primaryLabel="Book a discovery call"
+    primaryHref="contact/"
+    secondaryLabel="Take the free readiness assessment"
+    secondaryHref="assessment/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

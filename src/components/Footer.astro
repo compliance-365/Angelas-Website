@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../config/site';
 import { RAP_TYPES } from '../data/rapTypes';
+import { RELATED_SERVICES } from '../data/services';
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -32,10 +33,9 @@ const base = import.meta.env.BASE_URL;
       </ul>
       <h3 class="font-semibold mb-3 mt-6 text-brand-light">Other services</h3>
       <ul class="space-y-1 text-sm text-white/80">
-        <li><a href={`${base}services/employment-workplace/`} class="hover:underline">Employment & Workplace</a></li>
-        <li><a href={`${base}services/monitoring-evaluation/`} class="hover:underline">Monitoring & Evaluation</a></li>
-        <li><a href={`${base}services/business-strategic/`} class="hover:underline">Business & Strategic Planning</a></li>
-        <li><a href={`${base}services/diversity-inclusion/`} class="hover:underline">Diversity & Inclusion Programs</a></li>
+        {RELATED_SERVICES.map((s) => (
+          <li><a href={`${base}${s.href}`} class="hover:underline">{s.navLabel}</a></li>
+        ))}
       </ul>
     </div>
 
@@ -45,13 +45,18 @@ const base = import.meta.env.BASE_URL;
         <li><a href={`${base}assessment/`} class="hover:underline">RAP Readiness Assessment</a></li>
         <li><a href={`${base}procurement-readiness/`} class="hover:underline">Procurement Readiness Check</a></li>
       </ul>
+      <h3 class="font-semibold mb-3 mt-6 text-brand-light">Resources</h3>
+      <ul class="space-y-1 text-sm text-white/80">
+        <li><a href={`${base}rap-delivery-framework/`} class="hover:underline">RAP Delivery Framework</a></li>
+        <li><a href={`${base}case-studies/`} class="hover:underline">Case studies</a></li>
+        <li><a href={`${base}insights/`} class="hover:underline">Insights</a></li>
+        <li><a href={`${base}faq/`} class="hover:underline">FAQ</a></li>
+      </ul>
       <h3 class="font-semibold mb-3 mt-6 text-brand-light">Company</h3>
       <ul class="space-y-1 text-sm text-white/80">
         <li><a href={`${base}about/`} class="hover:underline">About Us</a></li>
         <li><a href={`${base}how-we-work/`} class="hover:underline">How we work</a></li>
         <li><a href={`${base}pricing/`} class="hover:underline">Pricing</a></li>
-        <li><a href={`${base}insights/`} class="hover:underline">Insights</a></li>
-        <li><a href={`${base}faq/`} class="hover:underline">FAQ</a></li>
         <li><a href={`${base}contact/`} class="hover:underline">Contact</a></li>
       </ul>
       <h3 class="font-semibold mb-3 mt-6 text-brand-light">Legal</h3>

@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import FAQ from '../../components/FAQ.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const symptoms = [
+  {
+    icon: 'clock',
+    title: 'Your working group has stopped meeting',
+    body: 'Meetings became irregular, then stopped. Nobody formally decided to stop — it just drifted, usually after a restructure or a sponsor leaving.'
+  },
+  {
+    icon: 'doc',
+    title: 'Renewal is coming and you cannot report',
+    body: 'The term is ending and nobody can say with confidence what was delivered, because evidence was never captured as the work happened.'
+  },
+  {
+    icon: 'users',
+    title: 'You have inherited a RAP',
+    body: 'You are new to the role, the plan predates you, and you need an honest baseline before you commit to anything in front of an executive.'
+  },
+  {
+    icon: 'scale',
+    title: 'You need to know if you can progress',
+    body: 'There is internal appetite to move up a RAP type, and you need an independent view on whether the delivery record actually supports it.'
+  }
+];
+
+const covers = [
+  {
+    area: 'Commitment-by-commitment status',
+    body: 'Every action in your current RAP assessed as delivered, partially delivered, not started, or quietly lapsed — with what can still be evidenced for each.'
+  },
+  {
+    area: 'Evidence position',
+    body: 'What proof exists for delivered commitments, what could still be reconstructed, and what is realistically unrecoverable.'
+  },
+  {
+    area: 'Governance health',
+    body: 'Whether your working group has authority, sponsorship, attendance and decision rights — the four things that determine whether delivery continues.'
+  },
+  {
+    area: 'Relationship status',
+    body: 'The current state of engagement with Aboriginal and Torres Strait Islander stakeholders, including where contact has lapsed and what repair would involve.'
+  },
+  {
+    area: 'Renewal readiness',
+    body: 'An honest assessment of whether you should progress a RAP type, repeat your current one, or consolidate before deciding.'
+  },
+  {
+    area: 'Prioritised recovery plan',
+    body: 'What to do first, sequenced by impact — including what to stop doing, which is often the more useful half.'
+  }
+];
+
+const steps = [
+  {
+    title: 'Document review',
+    meta: 'Week 1',
+    body: 'We review your current RAP, working group minutes, any progress reporting, and whatever evidence exists. This usually reveals the gap between what is assumed to have happened and what is documented.'
+  },
+  {
+    title: 'Interviews',
+    meta: 'Weeks 1–2',
+    body: 'Short conversations with your executive sponsor, working group members and a sample of action owners. Action owners are frequently the most useful, because they know what was actually delivered.'
+  },
+  {
+    title: 'Assessment and findings',
+    meta: 'Week 2',
+    body: 'We assess status against every commitment and produce a clear picture of where things genuinely stand — including where the news is not good.'
+  },
+  {
+    title: 'Report and recommendations',
+    meta: 'Weeks 2–3',
+    body: 'A written report with commitment-level status, governance findings, and a prioritised recovery plan, plus a session walking your team through it.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is a RAP health check?',
+    a: 'A short, independent assessment of where your Reconciliation Action Plan actually stands — commitment by commitment. It covers what has been delivered, what can be evidenced, whether governance is functioning, the state of your stakeholder relationships, and whether you are positioned to renew or progress. It typically takes two to three weeks.'
+  },
+  {
+    q: 'How long does a health check take?',
+    a: 'Usually two to three weeks from start to written report, depending on how many people we need to speak with and how readily available your existing documentation is.'
+  },
+  {
+    q: 'Do we need a health check if our RAP is going well?',
+    a: 'If delivery is on track and evidence is being captured as you go, probably not. Health checks are most valuable when something has drifted, when renewal is approaching and reporting looks uncertain, when leadership has changed, or when you need an independent view before committing to a higher RAP type.'
+  },
+  {
+    q: 'What if the findings are bad?',
+    a: 'That is genuinely useful, and it is better to know now than at submission. Most stalled RAPs are recoverable — the common outcome is a period of consolidation and repeating the current RAP type rather than progressing, which is permitted and is usually the more credible path.'
+  },
+  {
+    q: 'Can a health check lead into full RAP support?',
+    a: 'Often, but there is no obligation. Some organisations take the report and run recovery internally, which is a perfectly good outcome. The report is written to be usable either way.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'RAP Health Check',
+  serviceType: 'Reconciliation Action Plan review',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description:
+    'An independent two to three week assessment of an existing Reconciliation Action Plan — commitment-level delivery status, evidence position, governance health, stakeholder relationships and renewal readiness, with a prioritised recovery plan.'
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`RAP Health Check: Independent RAP Review | ${SITE.name}`}
+  description="An independent two to three week review of your existing Reconciliation Action Plan — what has actually been delivered, what can be evidenced, whether governance is working, and whether you are ready to renew or progress."
+  canonical={`${SITE.url}/services/rap-health-check/`}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Two to three weeks · Fixed scope"
+    title="RAP Health Check"
+    intro="An independent read on where your Reconciliation Action Plan actually stands — commitment by commitment. For organisations whose RAP has drifted, whose renewal is approaching, or who need an honest baseline before committing to anything."
+    breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'RAP Health Check' }]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}contact/`} class="btn">Request a health check</a>
+      <a href={`${base}assessment/`} class="btn-outline">Try the free self-assessment first</a>
+    </div>
+  </PageHero>
+
+  <!-- SYMPTOMS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">When this helps</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Four situations this is built for</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6 mt-8">
+      {symptoms.map((s) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={s.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg leading-snug">{s.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{s.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-8 text-white/70 max-w-2xl">
+      None of these mean the RAP has failed. They are the normal ways plans drift in organisations that are busy —
+      and almost all of it is recoverable if you know what you are actually dealing with.
+    </p>
+  </section>
+
+  <!-- WHAT IT COVERS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Scope</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">What the health check covers</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+      {covers.map((c) => (
+        <div class="grid-card">
+          <h3 class="font-semibold">{c.area}</h3>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section max-w-4xl">
+    <div class="max-w-2xl">
+      <p class="kicker">Process</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">How it runs</h2>
+    </div>
+    <ProcessSteps steps={steps} />
+  </section>
+
+  <!-- DELIVERABLE -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">What you get</h2>
+      <p class="mt-4 text-slate-700 leading-relaxed">
+        A written report you can take to your executive or board without editing, containing:
+      </p>
+      <ul class="mt-5 grid gap-3">
+        {[
+          'A commitment-level status table covering every action in your current RAP',
+          'An evidence position statement — what can be substantiated and what cannot',
+          'Governance findings, stated plainly',
+          'Stakeholder relationship status, including where contact has lapsed',
+          'A clear recommendation on renewal: progress, repeat, or consolidate',
+          'A prioritised recovery plan sequenced by impact',
+          'A walkthrough session with your team'
+        ].map((item) => (
+          <li class="flex items-start gap-3 text-slate-700">
+            <span class="mt-0.5 shrink-0" style="color:#8a6a1f;"><Icon name="check" size={18} /></span>
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 text-slate-700 leading-relaxed">
+        The report is written to be useful whether or not you engage us further. Plenty of organisations take it and
+        run the recovery themselves.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Questions</p>
+    <FAQ faqs={faqs} heading="Health check FAQs" emitSchema={false} />
+  </section>
+
+  <CTASection
+    title="Find out where you actually stand"
+    body="If your RAP has drifted or renewal is approaching, an honest baseline is the cheapest thing you can buy. Start with a free conversation."
+    primaryLabel="Request a health check"
+    primaryHref="contact/"
+    secondaryLabel="Try the free self-assessment"
+    secondaryHref="assessment/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

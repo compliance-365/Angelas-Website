@@ -1,6 +1,10 @@
 ---
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
+// Internal links must be prefixed with BASE_URL — the site is served from a
+// subpath, so a bare "/assessment/" resolves outside the site and 404s.
+const base = import.meta.env.BASE_URL;
+
 const faqs = [
   {
     q: 'Should we start with a Reflect RAP or an Innovate RAP?',
@@ -142,10 +146,10 @@ const articleSchema = {
 
   <h2>Working out where you actually sit</h2>
   <p>
-    Our free <a href="/assessment/">RAP Readiness Assessment</a> scores your organisation across all four pillars and
+    Our free <a href={`${base}assessment/`}>RAP Readiness Assessment</a> scores your organisation across all four pillars and
     gives a personalised read on which type fits — with different questions depending on whether you are starting out
     or already hold a RAP. You can also read the full guides to the
-    <a href="/services/rap/reflect/">Reflect RAP</a> and <a href="/services/rap/innovate/">Innovate RAP</a>.
+    <a href={`${base}services/rap/reflect/`}>Reflect RAP</a> and <a href={`${base}services/rap/innovate/`}>Innovate RAP</a>.
   </p>
 
   <p class="text-sm text-white/50 mt-6">

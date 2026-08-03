@@ -1,27 +1,26 @@
 ---
 import { RAP_TYPES } from '../data/rapTypes';
+import { RELATED_SERVICES } from '../data/services';
 
 const base = import.meta.env.BASE_URL; // "/" locally, "/Angelas-Website/" on Pages
 
-// Nav is grouped rather than flat: RAP is the core service and now has five
+// Nav is grouped rather than flat: RAP is the core service and now has several
 // pages of its own, so Services is a two-column menu, and the lead-gen tools
 // sit with the other content under Resources. Keeps the top level to six
 // items, which fits comfortably at 1280px alongside the logo and CTA.
 const rapLinks = [
   { label: 'RAP consulting overview', href: 'services/rap/', strong: true },
-  ...RAP_TYPES.map((t) => ({ label: t.name, href: `services/rap/${t.slug}/`, strong: false }))
+  ...RAP_TYPES.map((t) => ({ label: t.name, href: `services/rap/${t.slug}/`, strong: false })),
+  { label: 'RAP Health Check', href: 'services/rap-health-check/', strong: false }
 ];
 
-const otherServices = [
-  { label: 'Employment & Workplace', href: 'services/employment-workplace/' },
-  { label: 'Monitoring & Evaluation', href: 'services/monitoring-evaluation/' },
-  { label: 'Business & Strategic Planning', href: 'services/business-strategic/' },
-  { label: 'Diversity & Inclusion Programs', href: 'services/diversity-inclusion/' }
-];
+const otherServices = RELATED_SERVICES.map((s) => ({ label: s.navLabel, href: s.href }));
 
 const resources = [
   { label: 'Free RAP Readiness Assessment', href: 'assessment/' },
   { label: 'Free Procurement Readiness Check', href: 'procurement-readiness/' },
+  { label: 'RAP Delivery Framework', href: 'rap-delivery-framework/' },
+  { label: 'Case studies', href: 'case-studies/' },
   { label: 'Insights', href: 'insights/' },
   { label: 'FAQ', href: 'faq/' }
 ];
