@@ -3,6 +3,7 @@ import '../styles/global.css';  // <-- THIS makes Tailwind apply globally
 import { SITE } from '../config/site';
 import AcknowledgementOfCountry from '../components/AcknowledgementOfCountry.astro';
 import CookieNotice from '../components/CookieNotice.astro';
+import Analytics from '../components/Analytics.astro';
 
 const {
   title = SITE.title,
@@ -43,27 +44,8 @@ const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
     {schemaList.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19R2JCRJ9Y"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-19R2JCRJ9Y');
-    </script>
-
-    <!-- Apollo website visitor tracker -->
-    <script is:inline>
-      function initApollo(){
-        var n = Math.random().toString(36).substring(7),
-            o = document.createElement('script');
-        o.src = 'https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=' + n;
-        o.async = true; o.defer = true;
-        o.onload = function(){ window.trackingFunctions.onLoad({ appId: '6909a2cbe5d2c0001134df57' }); };
-        document.head.appendChild(o);
-      }
-      initApollo();
-    </script>
+    <!-- Analytics and visitor tracking, gated behind cookie consent. -->
+    <Analytics />
   </head>
   <body class="min-h-full antialiased bg-brand text-ink font-sans">
     <slot name="header" />

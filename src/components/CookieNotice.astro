@@ -3,6 +3,9 @@
 // preference form (essential/analytics/marketing/performance); this is a
 // deliberately simplified two-choice version — flagged in the migration PR
 // as a follow-up if full granular consent categories are needed.
+//
+// The choice made here genuinely gates loading: see components/Analytics.astro.
+// "Essential only" means GA4 and the Apollo visitor tracker are never loaded.
 ---
 <div id="cookie-notice" class="fixed inset-x-0 bottom-0 z-[90] hidden p-4">
   <div class="mx-auto max-w-3xl rounded-2xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 shadow-lg" style="background:#1B263B;color:#EDEDED;">
@@ -26,6 +29,8 @@
   document.getElementById('cookie-accept')?.addEventListener('click', () => {
     localStorage.setItem(COOKIE_KEY, 'all');
     notice?.classList.add('hidden');
+    // Load immediately rather than waiting for the next page view.
+    window.__2ways?.loadTrackers();
   });
   document.getElementById('cookie-essential')?.addEventListener('click', () => {
     localStorage.setItem(COOKIE_KEY, 'essential');

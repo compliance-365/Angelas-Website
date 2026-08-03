@@ -209,6 +209,7 @@ const options = [
     type="application/json"
     id="assessment-data"
     set:html={JSON.stringify({
+      slug,
       hasGate: Boolean(gate),
       tracks: Object.fromEntries(
         trackKeys.map((k) => [
@@ -252,6 +253,7 @@ const options = [
 
     function selectTrack(trackKey) {
       activeTrack = trackKey;
+      window.__2ways?.track('assessment_start', { tool: data.slug, track: trackKey });
       document.getElementById('gate-fieldset')?.style.setProperty('display', 'none');
       document.querySelectorAll('.track-questions').forEach(el => {
         el.style.display = el.dataset.track === trackKey ? '' : 'none';
@@ -473,6 +475,13 @@ const options = [
       document.getElementById('email-score-field').value = `${total}/${track.maxScore}`;
       document.getElementById('email-band-field').value = band.name;
 
+      window.__2ways?.track('assessment_complete', {
+        tool: data.slug,
+        track: activeTrack,
+        band: band.name,
+        score_pct: overallPct
+      });
+
       form.classList.add('hidden');
       document.getElementById('results').classList.remove('hidden');
       document.getElementById('results').scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
@@ -506,6 +515,8 @@ const options = [
           body: new FormData(emailForm),
           headers: { Accept: 'application/json' }
         });
+        // The actual lead event — an identifiable contact, not just a visit.
+        window.__2ways?.track('lead_email_submit', { source: 'assessment', tool: data.slug });
         emailForm.classList.add('hidden');
         document.getElementById('email-sent-msg').classList.remove('hidden');
       } catch (err) {

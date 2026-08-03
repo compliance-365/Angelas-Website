@@ -1,0 +1,168 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+// Internal links must be prefixed with BASE_URL — the site is served from a
+// subpath, so a bare "/services/..." resolves outside the site.
+const base = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    q: 'When is National Reconciliation Week?',
+    a: 'National Reconciliation Week runs on the same dates every year: 27 May to 3 June. Those dates are not arbitrary — they mark the anniversaries of the 1967 referendum and the 1992 Mabo decision. Because the dates never change, there is no excuse for it arriving unplanned.'
+  },
+  {
+    q: 'When is NAIDOC Week?',
+    a: 'NAIDOC Week is typically held in the first full week of July, running Sunday to Sunday. Exact dates and the annual theme are announced by the National NAIDOC Committee, so confirm each year at naidoc.org.au rather than assuming.'
+  },
+  {
+    q: 'When should we start planning for National Reconciliation Week?',
+    a: 'Around six months ahead, which means starting in November or December for the following May. The binding constraint is not your internal planning — it is the availability of Aboriginal and Torres Strait Islander speakers, facilitators and Traditional Owners, who are heavily booked during both weeks and are often committed months in advance.'
+  },
+  {
+    q: 'What should organisations actually do during National Reconciliation Week?',
+    a: 'Something connected to your RAP commitments rather than a standalone event. The most common failure is a well-attended morning tea in one week of the year with nothing behind it. Better activity ties into work already underway — launching a commitment, reporting honestly on progress, or deepening a relationship you already have.'
+  },
+  {
+    q: 'Should we pay Aboriginal and Torres Strait Islander speakers?',
+    a: 'Yes, always, and at a professional rate. Requests to speak for free spike enormously during these two weeks. Cultural knowledge and lived experience are expertise, and budgeting for them properly is a basic test of whether an organisation means what its RAP says.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Planning for National Reconciliation Week and NAIDOC Week',
+  datePublished: '2026-08-03',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="planning-national-reconciliation-week-naidoc"
+  title="Planning for National Reconciliation Week and NAIDOC Week"
+  metaDescription="National Reconciliation Week is always 27 May to 3 June. NAIDOC Week is typically the first full week of July. A practical planning timeline, and how to avoid the morning-tea trap."
+  kicker="Planning guide"
+  publishedDate="August 2026"
+  readTime="6 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    If you are reading this in the second half of the year, you are at close to the ideal moment to think about next
+    year's National Reconciliation Week — which is the opposite of when most organisations start.
+  </p>
+
+  <h2>The dates</h2>
+  <p>
+    <strong>National Reconciliation Week runs 27 May to 3 June every year.</strong> The dates never move, because
+    they mark the anniversaries of the 1967 referendum and the 1992 Mabo decision. There is genuinely no reason for
+    it to arrive as a surprise.
+  </p>
+  <p>
+    <strong>NAIDOC Week is typically the first full week of July</strong>, running Sunday to Sunday. Exact dates and
+    the annual theme are announced by the National NAIDOC Committee, so confirm each year at
+    <a href="https://www.naidoc.org.au/" target="_blank" rel="noopener">naidoc.org.au</a> rather than assuming.
+  </p>
+
+  <h2>Why planning in advance actually matters</h2>
+  <p>
+    Not because your internal approvals take six months. Because <strong>the people you will want to involve are
+    booked</strong>.
+  </p>
+  <p>
+    Demand for Aboriginal and Torres Strait Islander speakers, facilitators, performers and Traditional Owners
+    concentrates into two weeks of the year. Requests spike enormously, and many people are committed months ahead.
+    An organisation that starts looking in April is choosing from whoever remains, and often ends up either paying a
+    premium or quietly scaling the plan back to something internal.
+  </p>
+  <p>
+    Starting early is also the difference between engaging people you already have a relationship with and
+    cold-calling strangers because a date is approaching. The second is noticeable from the outside.
+  </p>
+
+  <h2>A working timeline</h2>
+  <div class="not-prose my-6 overflow-x-auto">
+    <table class="w-full min-w-[560px] border-separate border-spacing-0 rounded-2xl overflow-hidden text-sm">
+      <thead>
+        <tr>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">When</th>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">What</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">6 months out</td>
+          <td class="p-4 align-top text-white/75">Decide what you are trying to achieve and how it connects to your RAP. Set a budget. Identify who you want to involve.</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">5 months out</td>
+          <td class="p-4 align-top text-white/75">Approach speakers, facilitators and Traditional Owners. This is the step that fails if left late.</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">3 months out</td>
+          <td class="p-4 align-top text-white/75">Confirm bookings and fees in writing. Lock venues. Brief your executive on what they will be asked to say.</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">6 weeks out</td>
+          <td class="p-4 align-top text-white/75">Internal communications begin. Confirm whether a Welcome to Country is required and that it is arranged and budgeted.</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">2 weeks out</td>
+          <td class="p-4 align-top text-white/75">Final briefings. Make sure whoever opens each event knows the difference between a Welcome and an Acknowledgement.</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 align-top text-white/75 whitespace-nowrap">The week after</td>
+          <td class="p-4 align-top text-white/75">Pay every invoice promptly. Capture evidence for your RAP register. Write down what you would change.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The morning-tea trap</h2>
+  <p>
+    The most common version of these weeks is a well-attended morning tea, a guest speaker, a photo for the intranet,
+    and nothing else for the remaining fifty weeks. Nobody involved intends it as tokenism, but that is how it reads
+    to Aboriginal and Torres Strait Islander staff — and it is precisely what the framework's Respect pillar is
+    trying to move organisations beyond.
+  </p>
+  <p>The activity that lands tends to have one of three qualities:</p>
+  <ul>
+    <li><strong>It connects to a real commitment.</strong> Launching something in your RAP, or reporting genuinely on progress — including where you have fallen short — is far stronger than a standalone event.</li>
+    <li><strong>It deepens an existing relationship.</strong> Doing something jointly with an organisation you already work with beats sourcing a speaker you will never contact again.</li>
+    <li><strong>It asks something of the organisation.</strong> Sessions where leaders answer questions about progress land differently from sessions where staff passively receive content.</li>
+  </ul>
+
+  <h2>Practical points that get missed</h2>
+  <ul>
+    <li><strong>Pay people, properly and promptly.</strong> Requests to contribute for free spike during these weeks. Budget for speakers as you would any professional service, and pay the invoice quickly.</li>
+    <li><strong>Know which protocol applies.</strong> A Welcome to Country can only be delivered by Traditional Owners; an Acknowledgement can be offered by anyone. Getting this wrong at your own reconciliation event is a bad look — see our <a href={`${base}insights/acknowledgement-vs-welcome-to-country/`}>guide to the difference</a>.</li>
+    <li><strong>Check the load on your Indigenous staff.</strong> These two weeks are when Aboriginal and Torres Strait Islander employees are most often asked to organise, speak, advise and represent — usually on top of their actual jobs. Ask, do not assume, and reflect it in workload.</li>
+    <li><strong>Capture the evidence.</strong> If NAIDOC or NRW activity relates to a RAP commitment, log it in your evidence tracker while it is happening. Nobody remembers the details ten months later at reporting time.</li>
+  </ul>
+
+  <h2>Making it part of the plan</h2>
+  <p>
+    The organisations that do these weeks well are generally not the ones with the largest event budget. They are the
+    ones where the week is an expression of work already underway rather than a substitute for it.
+  </p>
+  <p>
+    Our free <a href={`${base}rap-templates/`}>RAP templates</a> include an evidence tracker for logging activity as
+    it happens, and our <a href={`${base}services/cultural-awareness-training/`}>cultural awareness training</a> is
+    frequently scheduled around these weeks — though it works considerably better as part of an ongoing program than
+    as an annual one-off.
+  </p>
+
+  <p class="text-sm text-white/50 mt-6">
+    Confirm current NAIDOC Week dates and themes at <a href="https://www.naidoc.org.au/" target="_blank" rel="noopener">naidoc.org.au</a>,
+    and National Reconciliation Week resources at <a href="https://www.reconciliation.org.au/our-work/national-reconciliation-week/" target="_blank" rel="noopener">Reconciliation Australia</a>.
+  </p>
+</ArticleLayout>

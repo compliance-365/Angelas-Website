@@ -134,6 +134,7 @@ const isSuccess = params.get('success') === '1';
     const form = document.getElementById('contact-form');
     if (form) {
       form.addEventListener('submit', () => {
+        window.__2ways?.track('contact_form_submit', { source: 'contact_page' });
         const btn = document.getElementById('submitBtn');
         const txt = document.getElementById('btnText');
         const spin = document.getElementById('spinner');
