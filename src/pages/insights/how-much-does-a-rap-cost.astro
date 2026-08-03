@@ -1,0 +1,138 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+const faqs = [
+  {
+    q: 'How much does a Reconciliation Action Plan cost in Australia?',
+    a: 'There is no fixed market rate. Cost is driven mainly by two factors: your organisation’s size, and which RAP type you are developing. A Reflect RAP for a small organisation is a substantially smaller engagement than a Stretch or Elevate RAP for an enterprise, which involve deeper governance, broader stakeholder engagement and heavier evidence requirements. Most consultancies quote after a scoping conversation rather than publishing fixed prices.'
+  },
+  {
+    q: 'What makes one RAP more expensive than another?',
+    a: 'The main cost drivers are organisational size and complexity, the RAP type, how much community and stakeholder engagement is required, whether facilitation needs to happen across multiple sites, how much internal capability already exists, and whether you need implementation support across the term or just the plan itself.'
+  },
+  {
+    q: 'Is it cheaper to develop a RAP in-house?',
+    a: 'In direct cost, usually yes — Reconciliation Australia publishes guidance and templates at no charge. The real costs of doing it in-house are internal time, and the risk of committing to actions the organisation cannot deliver, which is expensive to unwind later. Many organisations use a hybrid approach: internal ownership with external support at the points where getting it wrong is costly.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How much does a Reconciliation Action Plan cost?',
+  datePublished: '2026-08-03',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="how-much-does-a-rap-cost"
+  title="How much does a Reconciliation Action Plan cost?"
+  metaDescription="What actually drives the cost of a Reconciliation Action Plan — organisation size, RAP type, engagement depth and implementation support — and how to budget realistically for one."
+  kicker="Buyer's guide"
+  publishedDate="August 2026"
+  readTime="6 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    It is the question we get asked earliest and answered least usefully elsewhere. Most consultancies will not
+    publish a number, which is frustrating when you are trying to get budget approved. Here is an honest explanation
+    of what actually drives the cost, so you can build a realistic budget before you talk to anyone.
+  </p>
+
+  <h2>Why nobody publishes a flat price</h2>
+  <p>
+    A RAP is not a product with a fixed specification. Two organisations asking for "a Reflect RAP" can require
+    genuinely different amounts of work: one has an engaged executive, an existing relationship with a local
+    Aboriginal organisation, and a functioning working group; the other has a board mandate, no relationships, and
+    nobody with capacity to own it. The document at the end may look similar. Getting there does not.
+  </p>
+
+  <h2>The five things that actually move the price</h2>
+
+  <h3>1. Which RAP type you are developing</h3>
+  <p>
+    This is the single largest factor. A <strong>Reflect RAP</strong> runs around twelve months and is focused on
+    preparation — scoping, first relationships, governance setup. A <strong>Stretch</strong> or
+    <strong>Elevate RAP</strong> spans three years, requires defined measurable targets, deeper governance, and
+    substantially more evidence. Elevate additionally requires independent assessment of your activities. Each step
+    up the framework is a meaningfully larger engagement.
+  </p>
+
+  <h3>2. Your organisation's size and complexity</h3>
+  <p>
+    A hundred-person organisation on one site and a five-thousand-person organisation across six states are not
+    comparable engagements, even at the same RAP type. More business units means more stakeholders to bring along,
+    more places for commitments to need tailoring, and more work to make governance function across the whole
+    organisation rather than just at head office.
+  </p>
+
+  <h3>3. How much engagement is required</h3>
+  <p>
+    Community and stakeholder engagement is often the largest variable line. If you operate across several regions,
+    meaningful engagement means relationships with the Traditional Owners and Aboriginal and Torres Strait Islander
+    organisations relevant to each — not one conversation generalised across all of them. Travel, facilitation time
+    and the pace of relationship-building all sit here.
+  </p>
+
+  <h3>4. What already exists internally</h3>
+  <p>
+    Organisations that already have cultural learning underway, some supplier relationships, and an executive sponsor
+    with genuine authority need less external input. Organisations starting from zero need more. This is worth being
+    honest with yourself about during scoping, because overstating internal readiness tends to surface later as
+    slipped timelines rather than saved money.
+  </p>
+
+  <h3>5. Whether you need implementation support</h3>
+  <p>
+    Developing the plan and delivering it are separable. Some organisations engage a consultant only to produce an
+    endorsed plan, then run delivery internally. Others retain support across the term to keep delivery moving and
+    evidence captured. The second costs more up front and is usually cheaper than discovering at renewal that little
+    was delivered and nothing was documented.
+  </p>
+
+  <h2>How to budget sensibly</h2>
+  <ul>
+    <li><strong>Budget for the term, not just the document.</strong> The plan is the beginning of the cost, not the end — delivery requires internal time and often some external support.</li>
+    <li><strong>Assume internal cost too.</strong> Working group time, executive time and business unit delivery are real costs even when they do not appear on an invoice.</li>
+    <li><strong>Do not buy the highest RAP type you can afford.</strong> Committing to a Stretch RAP you cannot deliver is far more expensive than a Reflect RAP you deliver well.</li>
+    <li><strong>Ask what happens if it comes back with feedback.</strong> Clarify upfront whether responding to Reconciliation Australia's feedback is included in scope.</li>
+  </ul>
+
+  <h2>Questions worth asking any RAP consultant</h2>
+  <ul>
+    <li>What exactly is included, and what is explicitly out of scope?</li>
+    <li>Is responding to Reconciliation Australia's feedback included?</li>
+    <li>Who will actually be doing the work, and are they Aboriginal or Torres Strait Islander?</li>
+    <li>What do you need from us internally, and how much of our time will it take?</li>
+    <li>What happens after the plan is endorsed?</li>
+  </ul>
+  <p>
+    That last question matters more than it sounds. A plan that gets endorsed and then quietly stalls is the most
+    common outcome in this space, and it is worth knowing whether the person selling to you has a view on preventing
+    it.
+  </p>
+
+  <h2>Where to start</h2>
+  <p>
+    Before requesting quotes, it is worth knowing which RAP type is actually appropriate for your organisation —
+    quotes for the wrong type will not help you budget. Our free
+    <a href="/assessment/">RAP Readiness Assessment</a> gives you a personalised read in about five minutes, and our
+    <a href="/pricing/">pricing page</a> sets out indicative starting figures by organisation size and RAP type.
+  </p>
+
+  <p class="text-sm text-white/50 mt-6">
+    This article is general information to help with budgeting and procurement planning. It is not a quote. For
+    figures specific to your organisation, talk to us — the discovery call is free.
+  </p>
+</ArticleLayout>

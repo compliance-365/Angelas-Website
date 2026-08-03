@@ -1,22 +1,41 @@
 ---
+import { RAP_TYPES } from '../data/rapTypes';
+
 const base = import.meta.env.BASE_URL; // "/" locally, "/Angelas-Website/" on Pages
 
-const services = [
-  { label: 'Reconciliation Action Plans (RAP)', href: 'services/rap/' },
-  { label: 'Business & Strategic Planning', href: 'services/business-strategic/' },
+// Nav is grouped rather than flat: RAP is the core service and now has five
+// pages of its own, so Services is a two-column menu, and the lead-gen tools
+// sit with the other content under Resources. Keeps the top level to six
+// items, which fits comfortably at 1280px alongside the logo and CTA.
+const rapLinks = [
+  { label: 'RAP consulting overview', href: 'services/rap/', strong: true },
+  ...RAP_TYPES.map((t) => ({ label: t.name, href: `services/rap/${t.slug}/`, strong: false }))
+];
+
+const otherServices = [
   { label: 'Employment & Workplace', href: 'services/employment-workplace/' },
   { label: 'Monitoring & Evaluation', href: 'services/monitoring-evaluation/' },
+  { label: 'Business & Strategic Planning', href: 'services/business-strategic/' },
   { label: 'Diversity & Inclusion Programs', href: 'services/diversity-inclusion/' }
 ];
 
-const freeTools = [
-  { label: 'RAP Readiness Assessment', href: 'assessment/' },
-  { label: 'Indigenous Procurement Readiness Check', href: 'procurement-readiness/' }
+const resources = [
+  { label: 'Free RAP Readiness Assessment', href: 'assessment/' },
+  { label: 'Free Procurement Readiness Check', href: 'procurement-readiness/' },
+  { label: 'Insights', href: 'insights/' },
+  { label: 'FAQ', href: 'faq/' }
 ];
+
+const menuPanel =
+  'hidden md:group-hover:block md:group-focus-within:block md:absolute right-0 top-full pt-2 z-50';
+const menuInner = 'rounded-xl border border-white/10 bg-surface p-3 shadow-xl';
 ---
-<header id="site-header" class="sticky top-0 z-50 bg-brand/95 backdrop-blur border-b border-white/10 font-nav transition-shadow">
-  <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-    <a href={`${base}`} class="flex items-center gap-3">
+<header
+  id="site-header"
+  class="sticky top-0 z-50 bg-brand/95 backdrop-blur border-b border-white/10 font-nav transition-shadow"
+>
+  <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-4">
+    <a href={`${base}`} class="flex items-center gap-3 shrink-0">
       <img src={`${base}brand/logo.png`} alt="2Ways Consultancy logo" width="40" height="40" class="rounded-lg" />
       <div class="leading-tight text-white">
         <span class="font-semibold text-lg">2Ways</span><br />
@@ -24,69 +43,110 @@ const freeTools = [
       </div>
     </a>
 
-    <button id="nav-toggle" class="md:hidden p-2 border border-white/20 rounded-lg text-white"
-      aria-label="Toggle menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <button
+      id="nav-toggle"
+      class="md:hidden p-2 border border-white/20 rounded-lg text-white"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="navlinks"
+    >☰</button>
 
-    <ul id="navlinks" class="hidden md:flex items-center gap-6 text-base font-medium">
-      <li><a href={`${base}`}>Home</a></li>
-      <li><a href={`${base}about/`}>About</a></li>
-      <li class="relative group">
-        <button id="services-toggle" class="flex items-center gap-1" aria-expanded="false" aria-controls="services-menu">
+    <ul
+      id="navlinks"
+      class="hidden md:flex flex-col md:flex-row md:items-center gap-1 md:gap-6 text-base font-medium w-full md:w-auto py-4 md:py-0"
+    >
+      <!-- SERVICES -->
+      <li class="relative group md:static">
+        <button
+          class="nav-dd-toggle flex w-full md:w-auto items-center justify-between md:justify-start gap-1 py-2 md:py-0"
+          aria-expanded="false"
+          aria-controls="services-menu"
+        >
           Services
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
         </button>
-        <ul id="services-menu" class="hidden md:group-hover:block md:absolute left-0 top-full mt-2 min-w-[280px] rounded-xl border border-white/10 bg-surface p-2 shadow-lg">
-          {services.map((s) => (
-            <li><a href={`${base}${s.href}`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">{s.label}</a></li>
-          ))}
-        </ul>
+        <div id="services-menu" class={`nav-dd-panel ${menuPanel} md:left-1/2 md:right-auto md:-translate-x-1/2`}>
+          <div class={`${menuInner} md:w-[560px] md:grid md:grid-cols-2 md:gap-5`}>
+            <div>
+              <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-brand-light">Reconciliation Action Plans</p>
+              <ul>
+                {rapLinks.map((l) => (
+                  <li>
+                    <a
+                      href={`${base}${l.href}`}
+                      class={`block rounded-lg px-3 py-2 text-sm hover:bg-white/10 ${l.strong ? 'font-semibold' : 'text-white/80'}`}
+                    >{l.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="mt-3 md:mt-0">
+              <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-brand-light">Other services</p>
+              <ul>
+                {otherServices.map((l) => (
+                  <li><a href={`${base}${l.href}`} class="block rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/10">{l.label}</a></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </li>
+
+      <li><a href={`${base}how-we-work/`} class="block py-2 md:py-0">How we work</a></li>
+
+      <!-- RESOURCES -->
       <li class="relative group">
-        <button id="tools-toggle" class="flex items-center gap-1 text-brand-light" aria-expanded="false" aria-controls="tools-menu">
-          Free Tools
+        <button
+          class="nav-dd-toggle flex w-full md:w-auto items-center justify-between md:justify-start gap-1 py-2 md:py-0 text-brand-light"
+          aria-expanded="false"
+          aria-controls="resources-menu"
+        >
+          Resources
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
         </button>
-        <ul id="tools-menu" class="hidden md:group-hover:block md:absolute left-0 top-full mt-2 min-w-[280px] rounded-xl border border-white/10 bg-surface p-2 shadow-lg">
-          {freeTools.map((t) => (
-            <li><a href={`${base}${t.href}`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">{t.label}</a></li>
-          ))}
-        </ul>
+        <div id="resources-menu" class={`nav-dd-panel ${menuPanel}`}>
+          <ul class={`${menuInner} md:min-w-[280px]`}>
+            {resources.map((l) => (
+              <li><a href={`${base}${l.href}`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
       </li>
-      <li><a href={`${base}pricing/`}>Pricing</a></li>
-      <li><a href={`${base}insights/`}>Insights</a></li>
-      <li><a href={`${base}contact/`}>Contact</a></li>
+
+      <li><a href={`${base}pricing/`} class="block py-2 md:py-0">Pricing</a></li>
+      <li><a href={`${base}about/`} class="block py-2 md:py-0">About</a></li>
+      <li><a href={`${base}contact/`} class="block py-2 md:py-0">Contact</a></li>
+      <li class="md:hidden pt-2"><a href={`${base}contact/`} class="btn w-full">Get Started</a></li>
     </ul>
-    <a href={`${base}contact/`} class="hidden md:inline-flex btn">Get Started</a>
+
+    <a href={`${base}contact/`} class="hidden md:inline-flex btn shrink-0">Get Started</a>
   </nav>
 </header>
 
 <script is:inline>
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('navlinks');
-  navToggle?.addEventListener('click', () => {
-    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!expanded));
-    navLinks?.classList.toggle('hidden');
-  });
+  (function () {
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('navlinks');
+    navToggle?.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!expanded));
+      navLinks?.classList.toggle('hidden');
+    });
 
-  const servicesToggle = document.getElementById('services-toggle');
-  const servicesMenu = document.getElementById('services-menu');
-  servicesToggle?.addEventListener('click', () => {
-    const expanded = servicesToggle.getAttribute('aria-expanded') === 'true';
-    servicesToggle.setAttribute('aria-expanded', String(!expanded));
-    servicesMenu?.classList.toggle('hidden');
-  });
+    // Desktop opens these on hover/focus via CSS; the click handler is what
+    // makes them usable on touch devices and via keyboard.
+    document.querySelectorAll('.nav-dd-toggle').forEach((toggle) => {
+      const panel = document.getElementById(toggle.getAttribute('aria-controls'));
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        panel?.classList.toggle('hidden');
+      });
+    });
 
-  const toolsToggle = document.getElementById('tools-toggle');
-  const toolsMenu = document.getElementById('tools-menu');
-  toolsToggle?.addEventListener('click', () => {
-    const expanded = toolsToggle.getAttribute('aria-expanded') === 'true';
-    toolsToggle.setAttribute('aria-expanded', String(!expanded));
-    toolsMenu?.classList.toggle('hidden');
-  });
-
-  const siteHeader = document.getElementById('site-header');
-  const setElevated = () => siteHeader?.classList.toggle('is-elevated', window.scrollY > 8);
-  setElevated();
-  window.addEventListener('scroll', setElevated, { passive: true });
+    const siteHeader = document.getElementById('site-header');
+    const setElevated = () => siteHeader?.classList.toggle('is-elevated', window.scrollY > 8);
+    setElevated();
+    window.addEventListener('scroll', setElevated, { passive: true });
+  })();
 </script>

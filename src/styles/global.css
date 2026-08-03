@@ -40,6 +40,11 @@
   .prose ul, .prose ol { @apply pl-6 mb-3 text-gray-200; }
   .prose ul { @apply list-disc; }
   .prose ol { @apply list-decimal; }
+  .prose li { @apply mb-1.5; }
+  .prose > h2 { @apply mt-10 mb-3; }
+  .prose > h2:first-child { @apply mt-0; }
+  .prose p { @apply leading-relaxed; }
+  .prose strong { @apply text-white font-semibold; }
   /* Excludes .btn/.btn-outline so buttons placed inside a .prose block
      (e.g. service page and about page CTAs) keep their own text colour —
      otherwise this higher-specificity descendant selector overrides .btn's
@@ -118,6 +123,23 @@
 
   /* Icon circle */
   .icon-circle { @apply inline-flex items-center justify-center w-10 h-10 rounded-full; background: var(--brand-aqua); color: var(--brand-dark); }
+
+  /* Subtle icon treatment for feature grids — reads lighter than the solid
+     gold circle, which is reserved for higher-emphasis moments. */
+  .icon-soft {
+    @apply inline-flex items-center justify-center w-11 h-11 rounded-xl border;
+    background: rgba(255,196,81,.10);
+    border-color: rgba(255,196,81,.22);
+    color: var(--brand-aqua);
+  }
+
+  /* Inline "read more" affordance; the arrow slides on hover. */
+  .link-arrow { @apply inline-flex items-center gap-1.5 text-sm font-semibold; color: var(--brand-aqua); }
+  .link-arrow svg, .link-arrow span[data-arrow] { @apply transition-transform; }
+  .link-arrow:hover svg, .link-arrow:hover span[data-arrow] { transform: translateX(3px); }
+
+  /* Large display figure used in stat bands. */
+  .stat-value { @apply text-4xl md:text-5xl font-extrabold tabular-nums leading-none; color: var(--brand-aqua); }
 
   /* CTA banner */
   .cta-banner { @apply rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4; background: var(--brand-aqua); color: var(--brand-dark); }

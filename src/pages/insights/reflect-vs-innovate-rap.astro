@@ -1,0 +1,155 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+const faqs = [
+  {
+    q: 'Should we start with a Reflect RAP or an Innovate RAP?',
+    a: 'Most organisations should start with a Reflect RAP. It runs around 12 months and focuses on scoping, relationship-building and governance — the foundations an Innovate RAP assumes are already in place. Starting at Innovate makes sense only if your organisation already has established relationships with Aboriginal and Torres Strait Islander stakeholders, existing cultural capability, functioning governance, and the ability to set and measure real targets.'
+  },
+  {
+    q: 'Can you skip the Reflect RAP?',
+    a: 'There is no rule requiring every organisation to begin at Reflect, but skipping it is only appropriate where the foundational work has genuinely already been done through other means. The risk of skipping is committing to delivery-stage actions without the relationships or governance to deliver them, which typically surfaces twelve to eighteen months later as stalled commitments.'
+  },
+  {
+    q: 'How long does a Reflect RAP last compared to an Innovate RAP?',
+    a: 'A Reflect RAP runs for approximately 12 months. An Innovate RAP is implemented over two years. The difference reflects their purpose: Reflect is about preparation, while Innovate is about implementing and piloting initiatives, which needs a longer runway to show results.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Reflect or Innovate: which RAP should your organisation start with?',
+  datePublished: '2026-08-03',
+  author: { '@type': 'Organization', name: '2Ways Consultancy' },
+  publisher: { '@type': 'Organization', name: '2Ways Consultancy' }
+};
+---
+<ArticleLayout
+  slug="reflect-vs-innovate-rap"
+  title="Reflect or Innovate: which RAP should your organisation start with?"
+  metaDescription="A practical comparison of Reflect and Innovate RAPs — what each requires, how long they run, who each suits, and the honest test for whether you can skip Reflect."
+  kicker="Decision guide"
+  publishedDate="August 2026"
+  readTime="5 min read"
+  schema={[articleSchema, faqSchema]}
+>
+  <p>
+    This is the first real decision in the RAP framework, and organisations get it wrong in both directions. Some
+    spend a year at Reflect when they were ready to implement. Far more commit to an Innovate RAP on the strength of
+    executive enthusiasm, then spend two years unable to deliver what they promised.
+  </p>
+
+  <h2>The short version</h2>
+  <p>
+    <strong>Reflect</strong> is about preparation: scoping where you genuinely have influence, building first
+    relationships, and establishing governance. It runs around twelve months.
+  </p>
+  <p>
+    <strong>Innovate</strong> is about delivery: implementing and piloting initiatives across employment,
+    procurement, cultural learning and partnership, with measurable targets. It runs two years.
+  </p>
+  <p>
+    Innovate assumes the Reflect work is done. That is the whole distinction. The question is not which one you would
+    prefer to be at — it is whether the foundations Innovate depends on actually exist.
+  </p>
+
+  <h2>Side by side</h2>
+  <div class="not-prose my-6 overflow-x-auto">
+    <table class="w-full min-w-[520px] border-separate border-spacing-0 rounded-2xl overflow-hidden text-sm">
+      <thead>
+        <tr>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light"></th>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">Reflect</th>
+          <th class="text-left p-4 bg-surface font-semibold text-brand-light">Innovate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white/5">
+          <td class="p-4 font-semibold align-top">Term</td>
+          <td class="p-4 align-top text-white/75">~12 months</td>
+          <td class="p-4 align-top text-white/75">2 years</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 font-semibold align-top">Purpose</td>
+          <td class="p-4 align-top text-white/75">Prepare and scope</td>
+          <td class="p-4 align-top text-white/75">Implement and pilot</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 font-semibold align-top">Relationships</td>
+          <td class="p-4 align-top text-white/75">Being established</td>
+          <td class="p-4 align-top text-white/75">Already established, being formalised</td>
+        </tr>
+        <tr class="bg-white/[0.02]">
+          <td class="p-4 font-semibold align-top">Targets</td>
+          <td class="p-4 align-top text-white/75">Foundational actions</td>
+          <td class="p-4 align-top text-white/75">Specific, measurable commitments</td>
+        </tr>
+        <tr class="bg-white/5">
+          <td class="p-4 font-semibold align-top">Evidence</td>
+          <td class="p-4 align-top text-white/75">Light</td>
+          <td class="p-4 align-top text-white/75">Systematic tracking required</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The honest test for skipping Reflect</h2>
+  <p>
+    If you can answer yes to all of the following without needing to check, an Innovate RAP may be a reasonable
+    starting point:
+  </p>
+  <ul>
+    <li>You can name the specific Aboriginal and Torres Strait Islander organisations and Traditional Owner groups relevant to where you operate — and you already have a relationship with them, not just their contact details.</li>
+    <li>Cultural learning has already reached most of your staff, not a pilot group.</li>
+    <li>You have a working group with decision-making authority and an executive sponsor who reliably shows up.</li>
+    <li>You can already measure Indigenous employment and procurement spend, or you know precisely how you would start.</li>
+    <li>You could name three specific initiatives you would commit to, with an owner for each.</li>
+  </ul>
+  <p>
+    Any hesitation on those is a signal, not a failure. Reflect exists precisely because these foundations take time,
+    and building them properly is what makes the next RAP deliverable.
+  </p>
+
+  <h2>What going too early actually costs</h2>
+  <p>
+    The failure mode is predictable. An organisation commits to an Innovate RAP with employment and procurement
+    targets. Twelve months in, the relationships needed to deliver them do not exist, nobody set up spend tracking,
+    and the working group has quietly stopped meeting. At renewal there is little to report.
+  </p>
+  <p>
+    The cost is not only the wasted cycle. It is credibility — with staff who were told this mattered, and with the
+    Aboriginal and Torres Strait Islander communities and organisations who were approached and then not followed up
+    with. That damage takes considerably longer to repair than a twelve-month Reflect RAP would have taken.
+  </p>
+
+  <h2>Repeating a type is allowed, and sometimes right</h2>
+  <p>
+    Organisations are able to repeat a RAP type rather than progressing. After a leadership change, a restructure, or
+    a term where delivery fell short, repeating is often the honest and more effective choice. The framework is not a
+    ladder you are penalised for not climbing fast enough.
+  </p>
+
+  <h2>Working out where you actually sit</h2>
+  <p>
+    Our free <a href="/assessment/">RAP Readiness Assessment</a> scores your organisation across all four pillars and
+    gives a personalised read on which type fits — with different questions depending on whether you are starting out
+    or already hold a RAP. You can also read the full guides to the
+    <a href="/services/rap/reflect/">Reflect RAP</a> and <a href="/services/rap/innovate/">Innovate RAP</a>.
+  </p>
+
+  <p class="text-sm text-white/50 mt-6">
+    Reconciliation Australia administers the RAP framework and endorses RAP submissions. This article is general
+    guidance to support your planning, not a determination of which RAP type your organisation will be endorsed for.
+  </p>
+</ArticleLayout>

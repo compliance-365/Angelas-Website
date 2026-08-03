@@ -2,66 +2,140 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
 import { SITE } from '../config/site';
+import { RAP_TYPES } from '../data/rapTypes';
 
 const base = import.meta.env.BASE_URL;
 
+// Problems stated the way buyers actually describe them internally, rather
+// than as service names — this is the section that earns the scroll.
+const problems = [
+  {
+    icon: 'compass',
+    title: '“We want a RAP but don’t know where to start.”',
+    body: 'Leadership has committed, but nobody internally has run a RAP before. You need someone who knows what Reconciliation Australia expects before you spend twelve months finding out.'
+  },
+  {
+    icon: 'clock',
+    title: '“Our RAP has stalled.”',
+    body: 'The document exists. The working group meets. But actions keep slipping, evidence isn’t being captured, and nobody is confident you could show real progress at renewal.'
+  },
+  {
+    icon: 'scale',
+    title: '“We need to meet procurement and tender requirements.”',
+    body: 'Government and enterprise contracts increasingly ask what you’re doing on reconciliation and Indigenous procurement. You need something genuine, not a box-tick that won’t survive scrutiny.'
+  }
+];
+
 const services = [
   {
-    name: 'Reconciliation Action Plans (RAP)',
-    blurb: 'Enhancing cultural awareness and enabling reconciliation within your organisation through strategic and actionable plans.',
-    href: 'services/rap/'
+    icon: 'doc',
+    name: 'Reconciliation Action Plans',
+    blurb: 'End-to-end RAP development, from scoping through to Reconciliation Australia submission and implementation support.',
+    href: 'services/rap/',
+    featured: true
   },
   {
-    name: 'Business and Strategic Planning',
-    blurb: 'Expert guidance and strategic support to help organisations achieve their business objectives and sustainable growth.',
-    href: 'services/business-strategic/'
-  },
-  {
-    name: 'Employment and Workplace',
-    blurb: 'Empowering workplaces to build inclusive, culturally safe environments that attract, support, and retain Aboriginal and Torres Strait Islander peoples.',
+    icon: 'users',
+    name: 'Employment & Workplace',
+    blurb: 'Building culturally safe workplaces that attract, support and retain Aboriginal and Torres Strait Islander staff.',
     href: 'services/employment-workplace/'
   },
   {
-    name: 'Monitoring and Evaluation',
-    blurb: 'Comprehensive analysis and assessment to enhance cultural intelligence and build inclusive practices.',
+    icon: 'chart',
+    name: 'Monitoring & Evaluation',
+    blurb: 'Evidence frameworks that show whether your commitments are actually delivering measurable change.',
     href: 'services/monitoring-evaluation/'
   },
   {
-    name: 'Diversity and Inclusion Programs',
-    blurb: 'Fostering a more inclusive and equitable workplace through targeted initiatives and strategic support.',
+    icon: 'target',
+    name: 'Business & Strategic Planning',
+    blurb: 'Strategic support to align reconciliation commitments with how your organisation actually operates.',
+    href: 'services/business-strategic/'
+  },
+  {
+    icon: 'spark',
+    name: 'Diversity & Inclusion Programs',
+    blurb: 'Targeted initiatives that move inclusion from an aspiration to embedded, everyday practice.',
     href: 'services/diversity-inclusion/'
   }
 ];
 
+// Ported from the live site (2waysconsultancy.com.au) — real figures, not
+// invented. Keep in sync if the business updates them.
 const stats = [
-  { value: '35', label: 'Reconciliation Action Plans', sub: 'guided and supported across diverse sectors' },
-  { value: '210', label: 'Cultural Competence Workshops', sub: 'delivered to organisations of all sizes' },
-  { value: '1,500', label: 'Hours of Consulting Support', sub: 'provided to clients for sustainable outcomes' },
-  { value: '98%', label: 'Client Satisfaction Rate', sub: 'reflecting our commitment to excellence' }
+  { value: '35', label: 'Reconciliation Action Plans', sub: 'guided across diverse sectors' },
+  { value: '210', label: 'Cultural competence workshops', sub: 'delivered to organisations of all sizes' },
+  { value: '1,500', label: 'Hours of consulting support', sub: 'provided to clients for lasting outcomes' },
+  { value: '98%', label: 'Client satisfaction rate', sub: 'reflecting our commitment to excellence' }
 ];
 
 const testimonials = [
-  { quote: 'Working with 2Ways Consulting has been a game-changer for our organisation. Their expertise in cultural awareness training and strategic planning helped us foster a more inclusive and productive workplace.', role: 'HR Manager', org: 'Utilities' },
-  { quote: "The Reconciliation Action Plan developed by 2Ways Consulting has been instrumental in guiding our company's efforts towards reconciliation. Their professional approach and comprehensive support made the entire process seamless.", role: 'Procurement Manager', org: 'Government Agency' },
-  { quote: "The consultancy services provided by 2Ways Consulting have exceeded our expectations. Their team's ability to deliver customised solutions tailored to our specific needs was impressive and highly valuable.", role: 'Project Manager', org: 'Construction' },
-  { quote: "2Ways Consulting's training programs have significantly enhanced my understanding of cultural dynamics in the workplace. Their expert guidance has empowered me to navigate diverse cultural settings with confidence.", role: 'Freelancer', org: 'Creative Industry' },
-  { quote: 'The insights and strategies provided by 2Ways Consulting have been invaluable for my business. Their commitment to promoting cultural awareness and reconciliation is truly commendable.', role: 'Entrepreneur', org: 'Retail' }
+  {
+    quote: 'The Reconciliation Action Plan developed by 2Ways has been instrumental in guiding our company’s efforts towards reconciliation. Their professional approach and comprehensive support made the entire process seamless.',
+    role: 'Procurement Manager',
+    org: 'Government Agency'
+  },
+  {
+    quote: 'Working with 2Ways has been a game-changer for our organisation. Their expertise in cultural awareness training and strategic planning helped us foster a more inclusive and productive workplace.',
+    role: 'HR Manager',
+    org: 'Utilities'
+  },
+  {
+    quote: 'The consultancy services provided by 2Ways have exceeded our expectations. Their team’s ability to deliver customised solutions tailored to our specific needs was impressive and highly valuable.',
+    role: 'Project Manager',
+    org: 'Construction'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is a Reconciliation Action Plan (RAP)?',
+    a: 'A Reconciliation Action Plan is a formal, structured framework — administered by Reconciliation Australia — through which an organisation commits to specific, measurable actions that advance reconciliation. RAPs are built around four pillars: Relationships, Respect, Opportunities and Governance. There are four RAP types (Reflect, Innovate, Stretch and Elevate), each suited to a different stage of an organisation’s reconciliation journey.'
+  },
+  {
+    q: 'Which type of RAP should our organisation start with?',
+    a: 'Most organisations begin with a Reflect RAP, which runs for around 12 months and focuses on building the relationships, understanding and internal governance needed before committing to bigger actions. If your organisation already has strong relationships and internal capability, an Innovate RAP may be the right entry point. Our free RAP Readiness Assessment gives you a personalised indication in about five minutes.'
+  },
+  {
+    q: 'How long does it take to develop a RAP?',
+    a: 'Developing the plan itself typically takes a few months, depending on how much internal consultation and stakeholder engagement is required and how quickly your working group can meet and make decisions. The RAP then runs for its own term once endorsed — a Reflect RAP runs about 12 months, an Innovate RAP two years, and Stretch and Elevate RAPs three years each.'
+  },
+  {
+    q: 'Do we have to use a consultant to develop a RAP?',
+    a: 'No — organisations can develop a RAP directly with Reconciliation Australia’s published guidance and templates. Organisations engage consultants when they want Indigenous-led guidance on what commitments are genuine and achievable, help facilitating community and stakeholder engagement, and support avoiding the common pitfalls that cause RAPs to stall or come back with feedback.'
+  },
+  {
+    q: 'What makes 2Ways Consultancy different?',
+    a: 'We are a 100% Indigenous-owned business and Supply Nation registered. That means the cultural guidance in your RAP comes from lived experience rather than desk research — and that engaging us also contributes to your own Indigenous procurement outcomes.'
+  }
 ];
 
 const orgSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#organization`,
   name: SITE.name,
   url: SITE.url,
   logo: `${SITE.url}/brand/logo.png`,
-  foundingLocation: 'Brisbane, Australia',
-  areaServed: 'AU',
-  sameAs: SITE.sameAs,
+  image: `${SITE.url}${SITE.ogImage}`,
   description: SITE.description,
+  foundingLocation: 'Brisbane, Australia',
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  sameAs: SITE.sameAs,
+  knowsAbout: [
+    'Reconciliation Action Plan',
+    'Indigenous procurement',
+    'Cultural awareness training',
+    'Aboriginal and Torres Strait Islander employment',
+    'Cultural safety'
+  ],
   // Structured NAP (name/address/phone) for local SEO — keep in sync with
-  // SITE.address/phone in site.ts and whatever's entered on Google
-  // Business Profile / Bing Places so the signals match.
+  // SITE.address/phone in site.ts and whatever's entered on Google Business
+  // Profile / Bing Places so the signals match.
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Brisbane',
@@ -70,7 +144,15 @@ const orgSchema = {
     addressCountry: 'AU'
   },
   telephone: `+61${SITE.phone.replace(/^0/, '').replace(/\s/g, '')}`,
-  email: SITE.email
+  email: SITE.email,
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Consultancy services',
+    itemListElement: services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.name, description: s.blurb }
+    }))
+  }
 };
 
 const webSiteSchema = {
@@ -78,95 +160,168 @@ const webSiteSchema = {
   '@type': 'WebSite',
   name: SITE.name,
   url: SITE.url,
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${SITE.url}/?q={search_term_string}`,
-    'query-input': 'required name=search_term_string'
-  }
+  publisher: { '@id': `${SITE.url}/#organization` }
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
 };
 ---
-
 <BaseLayout
   title={SITE.title}
   description={SITE.description}
   canonical={`${SITE.url}/`}
-  schema={[orgSchema, webSiteSchema]}
+  schema={[orgSchema, webSiteSchema, faqSchema]}
 >
   <Fragment slot="header"><Header /></Fragment>
 
   <!-- HERO -->
   <section id="hero" class="relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern"></div>
-    <div class="relative mx-auto max-w-6xl px-4 py-24 md:py-32 text-center">
-      <p class="kicker">Indigenous Australian–led</p>
-      <h1 class="mt-3 text-4xl md:text-6xl font-extrabold leading-[1.1] text-white">
-        Enhance Your Cultural Intelligence with Our Services
-      </h1>
-      <p class="mt-5 max-w-2xl mx-auto text-white/80 md:text-lg">
-        We offer professional consultancy and training to help your organisation excel in reconciliation and
-        culturally diverse settings.
-      </p>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <a href={`${base}contact/`} class="btn">Get Started Today</a>
-        <a href="#services" class="btn-outline">Check our Services</a>
-      </div>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs text-white/80">
-        <span class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
-          <img src={`${base}brand/supply-nation-registered.png`} alt="" class="h-5 w-5 object-contain" />
-          Supply Nation Registered
-        </span>
-        <span class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 backdrop-blur-sm">
-          <span class="h-2 w-2 rounded-full bg-brand-light"></span> Brisbane-based, Australia-wide
-        </span>
+    <div class="relative mx-auto max-w-6xl px-4 py-20 md:py-28">
+      <div class="max-w-3xl">
+        <p class="kicker">100% Indigenous-owned · Supply Nation registered</p>
+        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold leading-[1.08] text-white">
+          Reconciliation Action Plans that hold up in practice
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-white/75 leading-relaxed">
+          2Ways Consultancy helps Australian organisations plan, deliver and measure Reconciliation Action Plans —
+          led by Aboriginal and Torres Strait Islander consultants, so your commitments are grounded in lived
+          experience rather than good intentions.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href={`${base}assessment/`} class="btn">Take the free RAP assessment</a>
+          <a href={`${base}contact/`} class="btn-outline">Book a discovery call</a>
+        </div>
+        <p class="mt-4 text-sm text-white/50">Free · Five minutes · No obligation</p>
       </div>
     </div>
   </section>
 
-  <!-- FREE TOOLS PROMO -->
+  <!-- TRUST BAR -->
+  <section class="border-y border-white/10 bg-surface/40">
+    <div class="mx-auto max-w-6xl px-4 py-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/70">
+      <span class="inline-flex items-center gap-2">
+        <img src={`${base}brand/supply-nation-registered.png`} alt="" class="h-6 w-6 object-contain" />
+        Supply Nation registered
+      </span>
+      <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-brand-light"></span> 100% Indigenous-owned</span>
+      <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-brand-light"></span> Brisbane-based, working Australia-wide</span>
+      <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-brand-light"></span> ABN {SITE.abn}</span>
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
   <section class="section">
-    <p class="text-xs font-semibold uppercase tracking-wide text-brand-light text-center">Free · 5 minutes · No obligation</p>
-    <h2 class="text-2xl font-semibold text-center mt-1">Not sure where to start? Take a free readiness check.</h2>
-    <div class="grid md:grid-cols-2 gap-6 mt-6">
-      <div class="stage-card p-6 flex flex-col">
-        <h3 class="font-semibold text-lg">RAP Readiness Assessment</h3>
-        <p class="mt-2 text-sm text-white/80 flex-1">See where your organisation stands across Relationships, Respect, Opportunities and Governance.</p>
-        <a class="btn mt-4 self-start" href={`${base}assessment/`}>Start the assessment</a>
-      </div>
-      <div class="stage-card p-6 flex flex-col">
-        <h3 class="font-semibold text-lg">Indigenous Procurement Readiness Check</h3>
-        <p class="mt-2 text-sm text-white/80 flex-1">Check your procurement practice against the 2025–26 Indigenous Procurement Policy changes.</p>
-        <a class="btn mt-4 self-start" href={`${base}procurement-readiness/`}>Start the check</a>
+    <div class="max-w-2xl">
+      <p class="kicker">Where organisations get stuck</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">You're probably here for one of three reasons</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      {problems.map((p) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={p.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg leading-snug">{p.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- RAP TYPES -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">The RAP framework</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Four RAP types. Which one fits your organisation?</h2>
+      <p class="mt-3 text-white/75">
+        Reconciliation Australia administers four RAP types, each designed for a different stage of the journey.
+        Starting at the right one matters — aiming too high stalls, aiming too low wastes a cycle.
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+      {RAP_TYPES.map((t) => (
+        <a href={`${base}services/rap/${t.slug}/`} class="stage-card card-raise p-6 flex flex-col">
+          <div class="flex items-baseline justify-between gap-2">
+            <h3 class="font-semibold text-lg">{t.name}</h3>
+            <span class="text-xs text-white/50 whitespace-nowrap">{t.duration}</span>
+          </div>
+          <p class="mt-2 text-sm text-white/75 flex-1 leading-relaxed">{t.shortFor}</p>
+          <span class="link-arrow mt-4">Learn more <span data-arrow>&rarr;</span></span>
+        </a>
+      ))}
+    </div>
+    <div class="mt-6">
+      <a href={`${base}services/rap/`} class="link-arrow">Compare all four RAP types in detail <span data-arrow>&rarr;</span></a>
+    </div>
+  </section>
+
+  <!-- FREE TOOLS -->
+  <section class="light-section">
+    <div class="section">
+      <p class="text-xs font-semibold uppercase tracking-wide" style="color:#8a6a1f;">Free · Five minutes · No obligation</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold text-slate-900">Get an instant read on where you stand</h2>
+      <p class="mt-3 max-w-2xl text-slate-600">
+        Two free self-assessment tools that score your organisation against the frameworks that actually matter, and
+        tell you what the sensible next step is.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div class="grid-card !bg-white text-slate-900 flex flex-col">
+          <h3 class="font-semibold text-lg" style="color:#0D1B2A;">RAP Readiness Assessment</h3>
+          <p class="mt-2 text-sm text-slate-600 flex-1">
+            Scores you across Relationships, Respect, Opportunities and Governance — with different questions
+            depending on whether you're starting out or already hold a Reflect, Innovate, Stretch or Elevate RAP.
+          </p>
+          <a class="btn mt-5 self-start" href={`${base}assessment/`}>Start the assessment</a>
+        </div>
+        <div class="grid-card !bg-white text-slate-900 flex flex-col">
+          <h3 class="font-semibold text-lg" style="color:#0D1B2A;">Indigenous Procurement Readiness Check</h3>
+          <p class="mt-2 text-sm text-slate-600 flex-1">
+            Checks your procurement practice against the 2025–26 Indigenous Procurement Policy changes, including the
+            51% ownership threshold that takes effect from 1 July 2026.
+          </p>
+          <a class="btn mt-5 self-start" href={`${base}procurement-readiness/`}>Start the check</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
-  <section id="services" class="section">
-    <h2 class="text-2xl font-semibold">Our Services</h2>
-    <div class="grid md:grid-cols-3 gap-6 mt-6">
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">What we do</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Reconciliation work, end to end</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
       {services.map((s) => (
-        <a class="stage-card p-6 card-raise" href={`${base}${s.href}`}>
-          <h3 class="font-semibold">{s.name}</h3>
-          <p class="mt-2 text-sm text-white/80">{s.blurb}</p>
+        <a
+          class={`grid-card card-raise flex flex-col ${s.featured ? 'md:col-span-2 lg:col-span-1 border-brand-light/30' : ''}`}
+          href={`${base}${s.href}`}
+        >
+          <span class="icon-soft"><Icon name={s.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg">{s.name}</h3>
+          {s.featured && <span class="pill mt-2 w-max">Core service</span>}
+          <p class="mt-2 text-sm text-white/75 flex-1 leading-relaxed">{s.blurb}</p>
+          <span class="link-arrow mt-4">Learn more <span data-arrow>&rarr;</span></span>
         </a>
       ))}
     </div>
   </section>
 
   <!-- STATS -->
-  <section class="light-section">
-    <div class="section">
-      <h2 class="text-2xl font-semibold">Our Achievements</h2>
-      <p class="mt-2 max-w-2xl text-slate-600">
-        We pride ourselves on delivering exceptional results for our clients. Here are some of our key achievements
-        and statistics that highlight our impact and success.
-      </p>
-      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+  <section class="section">
+    <div class="rounded-2xl border border-white/10 bg-surface p-8 md:p-10">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((s) => (
-          <div class="grid-card !bg-white text-center">
-            <p class="text-3xl font-extrabold" style="color:#0D1B2A;">{s.value}</p>
-            <p class="mt-1 font-semibold text-sm" style="color:#0D1B2A;">{s.label}</p>
-            <p class="mt-1 text-xs text-slate-600">{s.sub}</p>
+          <div>
+            <p class="stat-value">{s.value}</p>
+            <p class="mt-2 font-semibold text-sm">{s.label}</p>
+            <p class="mt-1 text-xs text-white/55 leading-relaxed">{s.sub}</p>
           </div>
         ))}
       </div>
@@ -175,27 +330,34 @@ const webSiteSchema = {
 
   <!-- TESTIMONIALS -->
   <section class="section">
-    <h2 class="text-2xl font-semibold">What Our Clients Say</h2>
-    <div class="grid md:grid-cols-3 gap-6 mt-6">
+    <div class="max-w-2xl">
+      <p class="kicker">What clients say</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Trusted across government, utilities and construction</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
       {testimonials.map((t) => (
-        <blockquote class="stage-card p-6">
-          <p class="text-sm text-white/90">&ldquo;{t.quote}&rdquo;</p>
-          <footer class="mt-3 text-sm text-brand-light">{t.role} &mdash; {t.org}</footer>
-        </blockquote>
+        <figure class="grid-card flex flex-col">
+          <span aria-hidden="true" class="text-4xl leading-none text-brand-light/40 font-serif">&ldquo;</span>
+          <blockquote class="mt-1 text-sm text-white/85 flex-1 leading-relaxed">{t.quote}</blockquote>
+          <figcaption class="mt-4 pt-4 border-t border-white/10 text-sm">
+            <span class="font-semibold text-brand-light">{t.role}</span>
+            <span class="text-white/55"> &mdash; {t.org}</span>
+          </figcaption>
+        </figure>
       ))}
     </div>
   </section>
 
-  <!-- CTA BANNER -->
-  <section class="section">
-    <div class="cta-banner" id="contact">
-      <div>
-        <h3 class="text-xl font-semibold">Take Your First Step Towards Cultural Excellence</h3>
-        <p class="text-sm">Join organisations making a positive impact through cultural awareness and reconciliation.</p>
-      </div>
-      <a class="btn bg-brand text-white hover:opacity-90" href={`${base}contact/`}>Get Started Now</a>
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Common questions</p>
+    <FAQ faqs={faqs} heading="Reconciliation Action Plans, explained" emitSchema={false} />
+    <div class="mt-6">
+      <a href={`${base}faq/`} class="link-arrow">See all frequently asked questions <span data-arrow>&rarr;</span></a>
     </div>
   </section>
+
+  <CTASection />
 
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>

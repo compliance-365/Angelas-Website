@@ -2,6 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTASection from '../components/CTASection.astro';
 import { SITE } from '../config/site';
 
 const base = import.meta.env.BASE_URL;
@@ -46,8 +48,9 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: navTitle,
-  provider: { '@type': 'Organization', name: SITE.name },
-  areaServed: 'AU',
+  serviceType: navTitle,
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
   description: schemaDescription
 };
 ---
@@ -63,9 +66,15 @@ const schema = {
   <section class="relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern"></div>
     <div class="relative mx-auto max-w-6xl px-4 py-16 md:py-20">
-      <nav class="text-sm text-white/60 mb-3"><a href={`${base}`} class="hover:underline">Home</a> / <span class="text-white/90">{navTitle}</span></nav>
-      <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">{navTitle}</h1>
-      <p class="mt-3 max-w-2xl text-white/80">{heroBlurb}</p>
+      <div class="mb-4">
+        <Breadcrumbs items={[{ label: 'Services', href: 'services/rap/' }, { label: navTitle }]} />
+      </div>
+      <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-[1.12]">{navTitle}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/75 leading-relaxed">{heroBlurb}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={`${base}contact/`} class="btn">Book a discovery call</a>
+        <a href={`${base}assessment/`} class="btn-outline">Take the free assessment</a>
+      </div>
     </div>
   </section>
 
@@ -107,9 +116,12 @@ const schema = {
       <div class="grid-card">
         <h3 class="font-semibold text-brand-light mb-2">Have a Question?</h3>
         <a href={`mailto:${SITE.email}`} class="text-sm underline break-all">{SITE.email}</a>
+        <a href={`${base}faq/`} class="link-arrow mt-3">Read our FAQ <span data-arrow>&rarr;</span></a>
       </div>
     </aside>
   </section>
+
+  <CTASection />
 
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>

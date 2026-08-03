@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import { SITE } from '../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+// Grouped for readability on the page; flattened into a single FAQPage schema
+// block below, since one URL should emit exactly one FAQPage.
+//
+// Answers are written to stand alone — an answer engine quoting one of these
+// out of context should still produce something accurate and useful.
+const groups = [
+  {
+    id: 'raps',
+    title: 'Reconciliation Action Plans',
+    faqs: [
+      {
+        q: 'What is a Reconciliation Action Plan (RAP)?',
+        a: 'A Reconciliation Action Plan is a formal framework administered by Reconciliation Australia through which an organisation commits to specific, measurable actions that advance reconciliation with Aboriginal and Torres Strait Islander peoples. RAPs are structured around four pillars — Relationships, Respect, Opportunities and Governance — and each commitment is expected to have a named owner, a deliverable and a timeframe.'
+      },
+      {
+        q: 'What are the four RAP types?',
+        a: 'Reflect, Innovate, Stretch and Elevate. A Reflect RAP runs around 12 months and focuses on preparation and relationship-building. An Innovate RAP runs two years and focuses on implementing and piloting initiatives. A Stretch RAP runs three years and embeds reconciliation into business as usual with defined measurable targets. An Elevate RAP also runs three years and is for organisations with a proven Stretch track record taking on national leadership, with independent assessment of their activities.'
+      },
+      {
+        q: 'Which RAP type should we start with?',
+        a: 'Most organisations start with a Reflect RAP. If your organisation already has established relationships with Aboriginal and Torres Strait Islander stakeholders, internal cultural capability and functioning governance, an Innovate RAP may be the right entry point. Starting at too high a level is a common and costly mistake, because the commitments become undeliverable.'
+      },
+      {
+        q: 'Can an organisation repeat the same RAP type?',
+        a: 'Yes. Organisations are able to repeat a RAP type rather than progressing to the next one, and doing so honestly is generally far better than moving up to a level the organisation cannot deliver on. Repeating a type is often the right call after a leadership change, a restructure, or a term where delivery fell short.'
+      },
+      {
+        q: 'Does Reconciliation Australia need to approve our RAP?',
+        a: 'Yes. Reconciliation Australia administers the RAP framework, reviews submissions and endorses RAPs. A plan is not a formally recognised RAP without going through that process. Vague, unresourced or unmeasurable commitments are the most common reason a submission comes back with feedback.'
+      },
+      {
+        q: 'What are the four pillars of a RAP?',
+        a: 'Relationships (building and sustaining genuine connections with Aboriginal and Torres Strait Islander peoples and organisations), Respect (growing understanding of cultures, histories and rights, and embedding cultural protocols), Opportunities (creating real economic and social opportunity through employment, procurement and progression), and Governance (the accountability layer — working group authority, executive sponsorship, tracking and honest reporting).'
+      },
+      {
+        q: 'What happens when our RAP expires?',
+        a: 'You either develop a new RAP — often progressing to the next type — or repeat the same type if that better reflects where the organisation genuinely is. Either way this involves a fresh submission to Reconciliation Australia. Organisations that have captured evidence throughout the term find this considerably easier than those reconstructing it at the end.'
+      }
+    ]
+  },
+  {
+    id: 'process',
+    title: 'Working with us',
+    faqs: [
+      {
+        q: 'How long does it take to develop a RAP?',
+        a: 'Developing the plan itself typically takes around three to four months. The biggest variables are how much stakeholder and community engagement is required, and how quickly your working group can meet and make decisions. Larger organisations and higher RAP types generally run longer. Once endorsed, the RAP then runs for its own term.'
+      },
+      {
+        q: 'What does the RAP development process involve?',
+        a: 'Six broad stages: discovery and scoping to understand where your organisation genuinely has influence; stakeholder and community engagement; governance setup including your RAP Working Group; drafting the plan with specific, measurable commitments; review and submission to Reconciliation Australia; and implementation support across the term.'
+      },
+      {
+        q: 'Do we need a RAP Working Group?',
+        a: 'Yes — a functioning RAP Working Group with genuine decision-making authority, an executive sponsor, and Aboriginal and Torres Strait Islander representation or advice is central to the framework. A working group with no authority or no executive backing is one of the most reliable predictors that a RAP will stall in delivery.'
+      },
+      {
+        q: 'Can you help with a RAP we have already started?',
+        a: 'Yes. We regularly work with organisations that have a draft that has stalled, a RAP that came back with feedback, or an endorsed RAP where delivery has drifted. In those cases we usually start with an honest assessment of what is genuinely evidenced before deciding what to do next.'
+      },
+      {
+        q: 'Do you work outside Brisbane?',
+        a: 'Yes. We are Brisbane-based and work with organisations Australia-wide. Much of the work is done remotely, with engagement and facilitation arranged to suit your locations and the communities relevant to where you operate.'
+      },
+      {
+        q: 'Can we develop a RAP without a consultant?',
+        a: 'Yes. Reconciliation Australia publishes guidance and templates, and many organisations develop RAPs directly. Organisations engage consultants when they want Indigenous-led judgement on what commitments are genuine and achievable, support facilitating community engagement respectfully, and help avoiding the pitfalls that cause plans to stall or come back at review.'
+      }
+    ]
+  },
+  {
+    id: 'cost',
+    title: 'Cost and scope',
+    faqs: [
+      {
+        q: 'How much does a RAP cost?',
+        a: 'Cost scales with two main factors: your organisation’s size, and which RAP type you are developing. A Reflect RAP is a considerably smaller engagement than a Stretch or Elevate RAP, which involve deeper governance, broader stakeholder engagement and heavier evidence requirements. Our pricing page sets out indicative starting figures, and exact scope is confirmed after a free discovery call.'
+      },
+      {
+        q: 'Is the discovery call free?',
+        a: 'Yes. There is no cost or obligation to talk through your situation, get a view on which RAP type suits you, and receive an indicative quote.'
+      },
+      {
+        q: 'Do you offer payment plans?',
+        a: 'For longer engagements, yes — payments can typically be structured against project milestones rather than a single upfront fee.'
+      },
+      {
+        q: 'What is included in a RAP engagement?',
+        a: 'Every engagement includes Indigenous-led delivery, a named point of contact throughout, progress tracking and reporting, and post-engagement support. The specific deliverables depend on scope, which we confirm in writing before starting.'
+      }
+    ]
+  },
+  {
+    id: 'procurement',
+    title: 'Indigenous procurement',
+    faqs: [
+      {
+        q: 'What is the Indigenous Procurement Policy (IPP)?',
+        a: 'The Indigenous Procurement Policy is a Commonwealth Government policy setting targets for how much government contracting spend goes to Aboriginal and Torres Strait Islander-owned businesses, alongside mandatory set-asides for certain contracts. It applies directly to Australian Government agencies and indirectly to any business supplying them.'
+      },
+      {
+        q: 'What is changing with the Indigenous Procurement Policy?',
+        a: 'Two things. The Commonwealth procurement target rose to 3% in 2025–26 and increases by 0.25% each year to reach 4% by 2029–30. Separately, from 1 July 2026 a business must be at least 51% First Nations-owned and controlled — or registered with the Office of the Registrar of Indigenous Corporations — to count toward IPP targets, up from the previous 50% threshold.'
+      },
+      {
+        q: 'How do we verify that a supplier is genuinely Indigenous-owned?',
+        a: 'Use a verified directory rather than self-declaration. Supply Nation maintains the most widely used registry of verified Aboriginal and Torres Strait Islander-owned businesses in Australia. With the ownership threshold changing from 1 July 2026, it is also worth having a process to periodically re-verify existing suppliers rather than assuming past verification still holds.'
+      },
+      {
+        q: 'Does engaging 2Ways count toward our Indigenous procurement spend?',
+        a: 'Yes. 2Ways Consultancy is a 100% Indigenous-owned business and Supply Nation registered, so engaging us contributes to your Indigenous procurement outcomes — which are themselves usually a commitment inside your RAP.'
+      }
+    ]
+  },
+  {
+    id: 'about',
+    title: 'About 2Ways Consultancy',
+    faqs: [
+      {
+        q: 'Is 2Ways Consultancy Indigenous-owned?',
+        a: 'Yes. 2Ways Consultancy is a 100% Aboriginal and Torres Strait Islander-owned business, registered with Supply Nation, based in Brisbane and working with organisations Australia-wide.'
+      },
+      {
+        q: 'What services does 2Ways Consultancy offer?',
+        a: 'Reconciliation Action Plan consulting is our core service, covering all four RAP types. We also deliver employment and workplace cultural safety work, monitoring and evaluation, business and strategic planning, and diversity and inclusion programs.'
+      },
+      {
+        q: 'What sectors do you work with?',
+        a: 'We work across government, utilities, construction, professional services and the not-for-profit sector, with organisations ranging from small teams to enterprises of over a thousand staff.'
+      }
+    ]
+  }
+];
+
+const allFaqs = groups.flatMap((g) => g.faqs);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: allFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`Reconciliation Action Plan FAQs | ${SITE.name}`}
+  description="Answers to common questions about Reconciliation Action Plans — the four RAP types, how long a RAP takes, what one costs, Reconciliation Australia endorsement, and Indigenous procurement requirements."
+  canonical={`${SITE.url}/faq/`}
+  schema={faqSchema}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Frequently asked questions"
+    title="Reconciliation Action Plans, answered plainly"
+    intro="The questions organisations actually ask us — about RAP types, timeframes, cost, endorsement and Indigenous procurement. If yours isn't here, just ask."
+    breadcrumbs={[{ label: 'FAQ' }]}
+  />
+
+  <section class="section max-w-3xl">
+    <!-- On-page nav doubles as an internal-linking signal for the sections below. -->
+    <nav aria-label="FAQ categories" class="flex flex-wrap gap-2">
+      {groups.map((g) => (
+        <a href={`#${g.id}`} class="pill hover:bg-brand-light/20 transition">{g.title}</a>
+      ))}
+    </nav>
+
+    {groups.map((g) => (
+      <div id={g.id} class="mt-14 scroll-mt-24">
+        <h2 class="text-2xl font-semibold">{g.title}</h2>
+        <FAQ faqs={g.faqs} emitSchema={false} />
+      </div>
+    ))}
+
+    <div class="mt-14 grid-card border-brand-light/25">
+      <h2 class="text-xl font-semibold">Still have a question?</h2>
+      <p class="mt-2 text-sm text-white/75">
+        We'd rather answer it directly than have you guess. There's no cost or obligation to a first conversation.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href={`${base}contact/`} class="btn">Ask us directly</a>
+        <a href={`${base}services/rap/`} class="btn-outline">Read the RAP guide</a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
