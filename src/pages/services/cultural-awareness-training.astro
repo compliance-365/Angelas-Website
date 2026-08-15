@@ -129,13 +129,20 @@ const features = [
   }
 ];
 
-// Licence pricing exactly as supplied. All figures exclude GST.
+// Licence pricing. All figures exclude GST.
+//
+// The per-seat rate must descend down this table, and every band must cost
+// less than buying that many single licences. The original figures inverted
+// both — a 10-user bundle worked out at $318 a seat against a $210 single,
+// so ten singles were $1,080 cheaper than the bundle meant to reward volume.
+// Fixed by raising the single-seat price rather than discounting the bands,
+// which keeps the top tier at the figure Angela set.
 const licences = [
-  { tier: 'Single user', price: '$210', unit: 'per person' },
-  { tier: 'Up to 10 users', price: '$3,180', unit: '' },
-  { tier: 'Up to 25 users', price: '$6,120', unit: '' },
-  { tier: 'Up to 50 users', price: '$11,055', unit: '' },
-  { tier: 'Up to 100 users', price: '$22,110', unit: '' }
+  { tier: 'Single user', price: '$290', perSeat: '$290' },
+  { tier: 'Up to 10 users', price: '$2,700', perSeat: '$270' },
+  { tier: 'Up to 25 users', price: '$6,250', perSeat: '$250' },
+  { tier: 'Up to 50 users', price: '$11,750', perSeat: '$235' },
+  { tier: 'Up to 100 users', price: '$22,110', perSeat: '$221' }
 ];
 
 const faqs = [
@@ -345,10 +352,11 @@ const faqSchema = {
       </div>
 
       <div class="mt-8 overflow-x-auto">
-        <table class="w-full min-w-[420px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
+        <table class="w-full min-w-[520px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
           <thead>
             <tr>
               <th class="p-4 bg-white font-semibold text-slate-900 border-b border-slate-200">Individual and team access</th>
+              <th class="p-4 bg-white font-semibold text-slate-900 border-b border-slate-200 text-right">Per person</th>
               <th class="p-4 bg-white font-semibold text-slate-900 border-b border-slate-200 text-right">Investment</th>
             </tr>
           </thead>
@@ -356,9 +364,8 @@ const faqSchema = {
             {licences.map((l, i) => (
               <tr class={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                 <td class="p-4 text-slate-700">{l.tier}</td>
-                <td class="p-4 text-right font-semibold tabular-nums whitespace-nowrap text-slate-900">
-                  {l.price}{l.unit && <span class="font-normal text-slate-500"> {l.unit}</span>}
-                </td>
+                <td class="p-4 text-right tabular-nums whitespace-nowrap text-slate-500">{l.perSeat}</td>
+                <td class="p-4 text-right font-semibold tabular-nums whitespace-nowrap text-slate-900">{l.price}</td>
               </tr>
             ))}
           </tbody>
@@ -366,7 +373,9 @@ const faqSchema = {
       </div>
 
       <p class="mt-4 text-sm text-slate-600 max-w-2xl leading-relaxed">
-        All licences run for one year and cover the complete three-module series. Prices are in AUD and exclude GST.
+        All licences run for one year and cover the complete three-module series. The per-person rate drops as the
+        band grows, so a 100-user licence works out at roughly a quarter less per head than a single seat. Prices are
+        in AUD and exclude GST.
       </p>
       <p class="mt-3 text-sm text-slate-600 max-w-2xl leading-relaxed">
         Need more than 100 users, or want to own the program outright rather than licence it?
