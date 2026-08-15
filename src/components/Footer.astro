@@ -16,7 +16,6 @@ const base = import.meta.env.BASE_URL;
       <div class="mt-3 text-sm text-white/80 space-y-1">
         <p>{SITE.address}</p>
         <p><a href={`mailto:${SITE.email}`} class="underline hover:text-brand-light">{SITE.email}</a></p>
-        <p><a href={`tel:${SITE.phone.replace(/\s/g, '')}`} class="underline hover:text-brand-light">{SITE.phone}</a></p>
       </div>
       <a href={SITE.supplyNationUrl} target="_blank" rel="noopener" class="mt-4 inline-block">
         <img src={`${base}brand/supply-nation-registered.png`} alt="Supply Nation Registered" class="h-16 w-auto" />

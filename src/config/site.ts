@@ -14,7 +14,6 @@ export const SITE = {
   locale: 'en_AU',
   ogImage: '/og-hero.jpg',
   email: 'twowaysconsultancy@outlook.com',
-  phone: '0423 207 472',
   abn: '62 988 303 719',
   address: 'Brisbane, QLD 4000',
   supplyNationUrl: 'https://www.supplynation.org.au/',

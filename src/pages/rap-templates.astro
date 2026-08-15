@@ -25,13 +25,11 @@ const templates = [
     name: 'RAP Action Register',
     file: 'rap-action-register.xlsx',
     format: 'Excel',
-    phase: 'Phase 4 — Design',
-    body: 'Every commitment with a named owner, deliverable, timeframe, measure and evidence source. Includes a summary tab that calculates delivery status by pillar, and flags any action with no owner named.',
+    body: 'A blank register for recording the commitments in your RAP — one row per action, with columns for owner, deliverable, timeframe, measure and evidence source.',
     contains: [
-      'Action register with dropdown validation for pillar and status',
-      'Auto-calculating summary by status and by pillar',
-      'A count of actions with no owner — the ones that will slip',
-      'A worked example row showing the expected level of specificity'
+      'Thirteen columns covering owner, deliverable, dates, measure and evidence source',
+      'Dropdown validation on the pillar and status columns',
+      'Formatted and ready for up to 120 actions'
     ]
   },
   {
@@ -39,13 +37,11 @@ const templates = [
     name: 'RAP Working Group Terms of Reference',
     file: 'rap-working-group-terms-of-reference.docx',
     format: 'Word',
-    phase: 'Phase 2 — Foundation',
-    body: 'A terms of reference template that forces the three things most working groups leave vague: actual decision-making authority, a named executive sponsor, and a real budget figure.',
+    body: 'A blank terms of reference for a RAP Working Group, laid out with the sections these documents normally carry and a fill-in field for each one.',
     contains: [
-      'Authority section with specific delegated powers, not general aspirations',
-      'Executive sponsor accountability, including whether it sits in their performance measures',
-      'A section on genuine Aboriginal and Torres Strait Islander participation, including remuneration',
-      'Guidance notes explaining why each section matters, which you delete before circulating'
+      'Nine sections, from purpose and authority through to review',
+      'Tables ready to complete for sponsor, membership, meetings and approval',
+      'Bracketed prompts marking every field you need to fill in'
     ]
   },
   {
@@ -53,13 +49,11 @@ const templates = [
     name: 'RAP Evidence Tracker',
     file: 'rap-evidence-tracker.xlsx',
     format: 'Excel',
-    phase: 'Phase 6 — Delivery',
-    body: 'A running log of the proof behind your commitments, captured as work happens. Includes a coverage tab showing which actions currently have no evidence logged at all.',
+    body: 'A blank log for recording the proof behind your commitments, keyed to your action register by Action ID.',
     contains: [
-      'Evidence log linked to your action register by Action ID',
-      'Coverage view flagging commitments you currently cannot prove',
-      'Verification fields, so a second person confirms the evidence supports the claim',
-      'Prompts to store files somewhere durable rather than in an inbox'
+      'Nine columns covering evidence type, description, location and verification',
+      'Dropdown validation on the evidence type column',
+      'Links back to your action register by Action ID'
     ]
   }
 ];
@@ -67,7 +61,7 @@ const templates = [
 const faqs = [
   {
     q: 'Are these templates really free?',
-    a: 'Yes. No email required, no sign-up, no watermark. Download them, adapt them, put your own branding on them. We publish our full delivery methodology for the same reason — an organisation running a RAP well without us is a better outcome than one running it badly with us.'
+    a: 'Yes. No email required, no sign-up, no watermark. They are blank starting structures — download them, adapt them, and put your own branding on them.'
   },
   {
     q: 'Can we adapt these for our organisation?',
@@ -75,11 +69,11 @@ const faqs = [
   },
   {
     q: 'Do these replace working with a consultant?',
-    a: 'For some organisations, genuinely yes. Templates handle structure. What they cannot do is tell you honestly whether the RAP type you have chosen is achievable, facilitate community engagement respectfully, or challenge a commitment that sounds good but cannot be delivered. Those are the three places outside judgement is worth most.'
+    a: 'No. These give you the structure — the columns, the sections, the fields. What a blank template cannot do is tell you whether the RAP type you have chosen is achievable, help you word a commitment so it can actually be delivered and evidenced, facilitate community engagement respectfully, or judge whether what you have written will survive review. That is the work we do with clients.'
   },
   {
-    q: 'Will you review our completed register?',
-    a: 'Yes — get in touch. Reviewing a draft action register is a common small piece of work, and it is usually the cheapest way to find out whether your commitments are specific enough to survive review and delivery.'
+    q: 'Will you help us fill them in?',
+    a: 'Yes — get in touch. Working through a draft action register with you is a common small piece of work, and it is usually the cheapest way to find out whether your commitments are specific enough to survive both review and delivery.'
   }
 ];
 
@@ -113,7 +107,7 @@ const listSchema = {
 ---
 <BaseLayout
   title={`Free RAP Templates: Action Register, Terms of Reference, Evidence Tracker | ${SITE.name}`}
-  description="Three free Reconciliation Action Plan templates — an action register, a working group terms of reference, and an evidence tracker. No email required. Built from the delivery framework we use on real engagements."
+  description="Three free blank Reconciliation Action Plan templates — an action register, a working group terms of reference, and an evidence tracker. No email required."
   canonical={`${SITE.url}/rap-templates/`}
   schema={[listSchema, faqSchema]}
 >
@@ -121,8 +115,8 @@ const listSchema = {
 
   <PageHero
     kicker="Free resources · No email required"
-    title="RAP templates you can actually use"
-    intro="Three working documents from the delivery framework we run engagements on — the action register, the working group terms of reference, and the evidence tracker. Download them, adapt them, keep them."
+    title="Blank RAP templates to start from"
+    intro="Three documents most RAPs need — an action register, a working group terms of reference, and an evidence tracker. Blank and ready to complete. Download them, adapt them, keep them."
     breadcrumbs={[{ label: 'RAP templates' }]}
   />
 
@@ -138,7 +132,7 @@ const listSchema = {
                 <div>
                   <h2 class="font-semibold text-lg">{t.name}</h2>
                   <p class="text-xs text-white/50 mt-0.5">
-                    {t.format} &middot; {fileSize(t.file)} &middot; {t.phase}
+                    {t.format} &middot; {fileSize(t.file)}
                   </p>
                 </div>
               </div>
@@ -171,22 +165,21 @@ const listSchema = {
     <div class="section max-w-3xl">
       <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">Why these are free</h2>
       <p class="mt-4 text-slate-700 leading-relaxed">
-        Most Reconciliation Action Plans do not fail because the organisation lacked a good template. They fail
-        because commitments had no owner, engagement stopped after the first meeting, or evidence was never captured
-        as the work happened.
+        A blank template is structure, and structure is not the hard part of a Reconciliation Action Plan. There is
+        no reason to charge for it or put it behind an email form.
       </p>
       <p class="mt-3 text-slate-700 leading-relaxed">
-        Templates fix the first of those. Structure is genuinely useful, and there is no reason to charge for it or
-        put it behind an email form. If these help your organisation deliver a RAP well without us, that is a better
-        outcome for reconciliation than the alternative.
+        Most RAPs do not fall over because the spreadsheet had the wrong columns. They fall over because a
+        commitment was written in a way nobody could deliver, an action was owned by a team rather than a person, or
+        evidence was left until reporting was due. Those are judgement calls made while the plan is being written,
+        and they are what we work on with clients.
       </p>
       <p class="mt-3 text-slate-700 leading-relaxed">
-        They pair with our <a href={`${base}rap-delivery-framework/`} class="underline" style="color:#8a6a1f;">published delivery framework</a>,
-        which sets out the full six-phase methodology, the artefacts produced at each phase, and the specific way
-        each phase tends to go wrong.
+        If these get you started, use them. If you want a second read on what you have filled in,
+        <a href={`${base}contact/`} class="underline" style="color:#8a6a1f;">talk to us</a>.
       </p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <a href={`${base}rap-delivery-framework/`} class="btn">Read the delivery framework</a>
+        <a href={`${base}how-we-work/`} class="btn">See how we work</a>
         <a href={`${base}assessment/`} class="btn-outline !text-slate-700 !border-slate-300">Take the free assessment</a>
       </div>
     </div>
