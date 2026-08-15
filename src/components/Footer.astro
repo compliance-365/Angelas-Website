@@ -29,6 +29,8 @@ const base = import.meta.env.BASE_URL;
         {RAP_TYPES.map((t) => (
           <li><a href={`${base}services/rap/${t.slug}/`} class="hover:underline">{t.name}</a></li>
         ))}
+        <li><a href={`${base}services/rap-health-check/`} class="hover:underline">RAP Health Check</a></li>
+        <li><a href={`${base}services/rap-working-group-representation/`} class="hover:underline">Working Group Representation</a></li>
       </ul>
       <h3 class="font-semibold mb-3 mt-6 text-brand-light">Other services</h3>
       <ul class="space-y-1 text-sm text-white/80">

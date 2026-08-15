@@ -36,6 +36,15 @@ export const SERVICES: Service[] = [
     group: 'rap'
   },
   {
+    name: 'RAP Working Group Representation',
+    navLabel: 'Working Group Representation',
+    href: 'services/rap-working-group-representation/',
+    icon: 'shield',
+    blurb:
+      'Ongoing representation on your RAP working group, committee or council — an experienced Indigenous advisor providing guidance and consultation as decisions are actually made.',
+    group: 'rap'
+  },
+  {
     name: 'Cultural Awareness Training',
     navLabel: 'Cultural Awareness Training',
     href: 'services/cultural-awareness-training/',

@@ -3,10 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site';
+import { SERVICES } from '../data/services';
 
 const base = import.meta.env.BASE_URL;
 const params = new URLSearchParams(Astro.url.search);
 const isSuccess = params.get('success') === '1';
+
+// Driven by the same SERVICES list as the header, footer and homepage grid,
+// so a service that's added or removed there can't leave this checklist
+// stale — which is exactly what happened to the hardcoded list this
+// replaced: it kept offering a service removed months earlier, and never
+// gained RAP Health Check, Cultural Awareness Training or Indigenous
+// Procurement as they were added.
+const interests = [...SERVICES.map((s) => s.name), 'Other'];
 ---
 <BaseLayout
   title={`Contact | ${SITE.name}`}
@@ -93,12 +102,9 @@ const isSuccess = params.get('success') === '1';
               <h3 class="text-lg font-semibold">What do you need help with?</h3>
               <p class="text-sm text-slate-600">Select all that apply.</p>
               <div class="mt-3 grid md:grid-cols-2 gap-y-2 gap-x-6 text-sm">
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Reconciliation Action Plans (RAP)" /> Reconciliation Action Plans (RAP)</label>
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Business and Strategic Planning" /> Business and Strategic Planning</label>
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Employment and Workplace" /> Employment and Workplace</label>
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Monitoring and Evaluation" /> Monitoring and Evaluation</label>
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Diversity and Inclusion Programs" /> Diversity and Inclusion Programs</label>
-                <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value="Other" /> Other</label>
+                {interests.map((label) => (
+                  <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value={label} /> {label}</label>
+                ))}
               </div>
             </div>
 
