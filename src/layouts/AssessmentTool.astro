@@ -102,6 +102,7 @@ const options = [
         <div class="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
           <div id="progress-bar" class="h-full bg-brand-light" style="width:0%"></div>
         </div>
+        <p class="mt-2 text-xs text-slate-500">Every question needs an answer before we can calculate your result.</p>
       </div>
 
       {trackKeys.map((trackKey) => (
@@ -118,9 +119,14 @@ const options = [
                 {pillar.questions.map((q, qIdx) => {
                   const name = `${trackKey}__${pillar.key}-${qIdx}`;
                   return (
-                    <div class="grid-card">
-                      <p class="font-medium">{q}</p>
-                      <div class="mt-3 grid sm:grid-cols-2 gap-2">
+                    <div class="grid-card question-card" data-question={name}>
+                      <p class="font-medium" id={`${name}__label`}>{q}</p>
+                      <div
+                        class="mt-3 grid sm:grid-cols-2 gap-2"
+                        role="radiogroup"
+                        aria-labelledby={`${name}__label`}
+                        aria-describedby={`${name}__error`}
+                      >
                         {options.map((opt) => (
                           <label class="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm cursor-pointer hover:bg-white/10">
                             <input type="radio" name={name} value={opt.value} class="assessment-input" data-track={trackKey} />
@@ -128,6 +134,9 @@ const options = [
                           </label>
                         ))}
                       </div>
+                      <p id={`${name}__error`} class="question-error hidden mt-3 text-sm font-medium">
+                        Please choose an answer to continue.
+                      </p>
                     </div>
                   );
                 })}
@@ -136,6 +145,8 @@ const options = [
           ))}
         </div>
       ))}
+
+      <p id="form-error" class="form-error hidden text-sm font-medium" role="alert"></p>
 
       <button type="submit" id="submit-btn" class="btn w-full sm:w-auto" style={gate ? 'display:none' : undefined}>See my result</button>
     </form>
@@ -251,8 +262,57 @@ const options = [
       progressBar.style.width = `${pct}%`;
     }
 
+    const formError = document.getElementById('form-error');
+
+    // Every question is mandatory. Native `required` can't be used here: the
+    // form holds all tracks' questions at once and hides the inactive ones,
+    // so the browser would refuse to submit on unanswered hidden controls it
+    // cannot focus. Validation is done against the active track only.
+    function unansweredFor(trackKey) {
+      const missing = [];
+      data.tracks[trackKey].pillars.forEach(p => {
+        for (let i = 0; i < p.count; i++) {
+          const name = `${trackKey}__${p.key}-${i}`;
+          if (!form.querySelector(`input[name="${name}"]:checked`)) missing.push(name);
+        }
+      });
+      return missing;
+    }
+
+    function cardFor(name) {
+      return form.querySelector(`.question-card[data-question="${name}"]`);
+    }
+
+    function setQuestionError(name, invalid) {
+      const card = cardFor(name);
+      if (!card) return;
+      card.classList.toggle('is-invalid', invalid);
+      card.querySelector('.question-error')?.classList.toggle('hidden', !invalid);
+      card.querySelectorAll('.assessment-input').forEach(i => {
+        if (invalid) i.setAttribute('aria-invalid', 'true');
+        else i.removeAttribute('aria-invalid');
+      });
+    }
+
+    function missingMessage(n) {
+      return n === 1
+        ? 'One question still needs an answer before we can show your result.'
+        : `${n} questions still need an answer before we can show your result.`;
+    }
+
+    function clearAllErrors() {
+      form.querySelectorAll('.question-card').forEach(card => {
+        card.classList.remove('is-invalid');
+        card.querySelector('.question-error')?.classList.add('hidden');
+        card.querySelectorAll('.assessment-input').forEach(i => i.removeAttribute('aria-invalid'));
+      });
+      formError.classList.add('hidden');
+      formError.textContent = '';
+    }
+
     function selectTrack(trackKey) {
       activeTrack = trackKey;
+      clearAllErrors();
       window.__2ways?.track('assessment_start', { tool: data.slug, track: trackKey });
       document.getElementById('gate-fieldset')?.style.setProperty('display', 'none');
       document.querySelectorAll('.track-questions').forEach(el => {
@@ -271,6 +331,7 @@ const options = [
     document.querySelectorAll('.change-track-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         activeTrack = null;
+        clearAllErrors();
         document.querySelectorAll('.track-questions').forEach(el => { el.style.display = 'none'; });
         progressCard.style.display = 'none';
         submitBtn.style.display = 'none';
@@ -279,7 +340,24 @@ const options = [
       });
     });
 
-    form.addEventListener('change', updateProgress);
+    // Answering a flagged question clears its error immediately, and the
+    // running total in the summary, rather than making people resubmit to
+    // find out whether they have caught them all.
+    form.addEventListener('change', (e) => {
+      updateProgress();
+      const input = e.target;
+      if (!input || !input.classList?.contains('assessment-input')) return;
+      setQuestionError(input.name, false);
+      if (activeTrack && !formError.classList.contains('hidden')) {
+        const left = unansweredFor(activeTrack).length;
+        if (left === 0) {
+          formError.classList.add('hidden');
+          formError.textContent = '';
+        } else {
+          formError.textContent = missingMessage(left);
+        }
+      }
+    });
     updateProgress();
 
     // ---- Enterprise dashboard rendering: score gauge + pillar radar chart ----
@@ -432,6 +510,21 @@ const options = [
       e.preventDefault();
       if (!activeTrack) return;
 
+      // Gate the result on a complete set of answers. Without this an
+      // unanswered question scored 0, so an abandoned assessment produced a
+      // low score rather than an obvious prompt to finish it.
+      const missing = unansweredFor(activeTrack);
+      if (missing.length) {
+        missing.forEach(name => setQuestionError(name, true));
+        formError.textContent = missingMessage(missing.length);
+        formError.classList.remove('hidden');
+        const firstCard = cardFor(missing[0]);
+        firstCard?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+        firstCard?.querySelector('.assessment-input')?.focus({ preventScroll: true });
+        return;
+      }
+      clearAllErrors();
+
       const track = data.tracks[activeTrack];
       const perPillar = {};
       track.pillars.forEach(p => { perPillar[p.key] = { score: 0, max: p.count * 3 }; });
@@ -489,6 +582,7 @@ const options = [
 
     document.getElementById('retake-btn')?.addEventListener('click', () => {
       form.reset();
+      clearAllErrors();
       document.getElementById('results').classList.add('hidden');
       form.classList.remove('hidden');
       if (data.hasGate) {
@@ -525,4 +619,25 @@ const options = [
       }
     });
   </script>
+
+  <style>
+    /* Validation styling lives here rather than in Tailwind utilities because
+       these classes are toggled from JS — Tailwind only generates classes it
+       can see in the source, so utility names added at runtime never ship. */
+    .question-error,
+    .form-error {
+      color: #fca5a5;
+    }
+
+    .question-card.is-invalid {
+      border-color: rgb(248 113 113 / 0.65);
+      box-shadow: 0 0 0 1px rgb(248 113 113 / 0.3);
+    }
+
+    /* The radios themselves are native controls; tinting their border makes
+       the invalid state visible without relying on the card outline alone. */
+    .question-card.is-invalid label {
+      border-color: rgb(248 113 113 / 0.4);
+    }
+  </style>
 </BaseLayout>
