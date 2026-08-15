@@ -17,15 +17,16 @@ const rapTypes = [
   { name: 'Elevate', duration: '3 years', prices: ['Rarely applicable', 'Rarely applicable', '$100,000–$200,000+'] }
 ];
 
-// Cultural Competence eLearning licence pricing, per Angela's program
-// document. Real figures — keep in sync with the training page, which shows
-// the same table alongside the module detail.
+// Cultural Competence eLearning licence pricing. Real figures — keep in sync
+// with the training page, which shows the same table alongside the module
+// detail. The per-seat rate must descend down the table; see the note on the
+// training page for why the original figures didn't.
 const elearningLicences = [
-  { tier: 'Single user', price: '$210', unit: 'per person' },
-  { tier: 'Up to 10 users', price: '$3,180', unit: '' },
-  { tier: 'Up to 25 users', price: '$6,120', unit: '' },
-  { tier: 'Up to 50 users', price: '$11,055', unit: '' },
-  { tier: 'Up to 100 users', price: '$22,110', unit: '' }
+  { tier: 'Single user', price: '$290', perSeat: '$290' },
+  { tier: 'Up to 10 users', price: '$2,700', perSeat: '$270' },
+  { tier: 'Up to 25 users', price: '$6,250', perSeat: '$250' },
+  { tier: 'Up to 50 users', price: '$11,750', perSeat: '$235' },
+  { tier: 'Up to 100 users', price: '$22,110', perSeat: '$221' }
 ];
 
 // PLACEHOLDER PRICING — the figures in this block are illustrative, not real
@@ -148,10 +149,11 @@ const faqSchema = {
     </p>
 
     <div class="mt-6 overflow-x-auto">
-      <table class="w-full min-w-[420px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
+      <table class="w-full min-w-[520px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
         <thead>
           <tr>
             <th class="p-4 bg-surface font-semibold text-brand-light">Individual and team access</th>
+            <th class="p-4 bg-surface font-semibold text-brand-light text-right">Per person</th>
             <th class="p-4 bg-surface font-semibold text-brand-light text-right">Investment</th>
           </tr>
         </thead>
@@ -159,9 +161,8 @@ const faqSchema = {
           {elearningLicences.map((l, i) => (
             <tr class={i % 2 === 0 ? 'bg-white/5' : 'bg-white/[0.02]'}>
               <td class="p-4">{l.tier}</td>
-              <td class="p-4 text-right tabular-nums whitespace-nowrap">
-                {l.price}{l.unit && <span class="text-white/50"> {l.unit}</span>}
-              </td>
+              <td class="p-4 text-right tabular-nums whitespace-nowrap text-white/50">{l.perSeat}</td>
+              <td class="p-4 text-right font-semibold tabular-nums whitespace-nowrap">{l.price}</td>
             </tr>
           ))}
         </tbody>
