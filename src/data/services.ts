@@ -79,15 +79,6 @@ export const SERVICES: Service[] = [
     blurb:
       'Engagement strategy, cultural policy review and pre-RAP groundwork for organisations not yet using the formal framework.',
     group: 'related'
-  },
-  {
-    name: 'Inclusive Practice & Community Programs',
-    navLabel: 'Inclusive Practice & Community',
-    href: 'services/diversity-inclusion/',
-    icon: 'spark',
-    blurb:
-      'Culturally safe service delivery and community program design, for organisations serving Aboriginal and Torres Strait Islander clients.',
-    group: 'related'
   }
 ];
 
