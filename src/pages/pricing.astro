@@ -17,6 +17,17 @@ const rapTypes = [
   { name: 'Elevate', duration: '3 years', prices: ['Rarely applicable', 'Rarely applicable', '$100,000–$200,000+'] }
 ];
 
+// Cultural Competence eLearning licence pricing, per Angela's program
+// document. Real figures — keep in sync with the training page, which shows
+// the same table alongside the module detail.
+const elearningLicences = [
+  { tier: 'Single user', price: '$210', unit: 'per person' },
+  { tier: 'Up to 10 users', price: '$3,180', unit: '' },
+  { tier: 'Up to 25 users', price: '$6,120', unit: '' },
+  { tier: 'Up to 50 users', price: '$11,055', unit: '' },
+  { tier: 'Up to 100 users', price: '$22,110', unit: '' }
+];
+
 // PLACEHOLDER PRICING — the figures in this block are illustrative, not real
 // costing, and still need confirming. The RAP table above is real.
 const packages = [
@@ -126,6 +137,40 @@ const faqSchema = {
     <p class="mt-3 text-xs text-white/50">All prices in AUD, exclusive of GST.</p>
 
     <a href={`${base}contact/`} class="btn mt-6 inline-flex">Get a tailored RAP quote</a>
+  </section>
+
+  <!-- CULTURAL COMPETENCE ELEARNING -->
+  <section class="section">
+    <h2 class="text-2xl font-semibold">Cultural competence eLearning</h2>
+    <p class="mt-2 text-white/70 max-w-2xl">
+      The three-module series, licensed for a year and priced by how many people need access. Full module breakdown
+      is on the <a href={`${base}services/cultural-awareness-training/`} class="underline">training page</a>.
+    </p>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full min-w-[420px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
+        <thead>
+          <tr>
+            <th class="p-4 bg-surface font-semibold text-brand-light">Individual and team access</th>
+            <th class="p-4 bg-surface font-semibold text-brand-light text-right">Investment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {elearningLicences.map((l, i) => (
+            <tr class={i % 2 === 0 ? 'bg-white/5' : 'bg-white/[0.02]'}>
+              <td class="p-4">{l.tier}</td>
+              <td class="p-4 text-right tabular-nums whitespace-nowrap">
+                {l.price}{l.unit && <span class="text-white/50"> {l.unit}</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-xs text-white/50">
+      One-year licences covering all three modules. AUD, exclusive of GST. For more than 100 users, or to own the
+      program outright, <a href={`${base}contact/`} class="underline">get in touch</a>.
+    </p>
   </section>
 
   <!-- OTHER SERVICES -->

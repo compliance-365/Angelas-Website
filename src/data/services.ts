@@ -41,7 +41,7 @@ export const SERVICES: Service[] = [
     href: 'services/cultural-awareness-training/',
     icon: 'users',
     blurb:
-      'Cultural awareness, capability and safety training delivered by Indigenous facilitators, in person and online across Australia.',
+      'A three-module cultural competence eLearning series written and narrated by Angela Johnson — SCORM-ready for your LMS, licensed per user band or owned outright.',
     group: 'related'
   },
   {

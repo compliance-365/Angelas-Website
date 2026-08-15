@@ -10,146 +10,183 @@ import { SITE } from '../../config/site';
 
 const base = import.meta.env.BASE_URL;
 
-const programs = [
+// The Cultural Competence eLearning Series, per Angela's program document.
+// Module content, learning outcomes, interactive elements, program features
+// and licence pricing all come from that document — do not embellish them
+// here. The title cards in public/training/ are the module splash screens
+// exported from the course itself.
+const modules = [
   {
-    icon: 'compass',
-    name: 'Cultural awareness',
-    audience: 'All staff',
-    format: 'Half day, or two shorter sessions',
-    body: 'Foundational grounding in Aboriginal and Torres Strait Islander histories, cultures and contemporary realities, and what respectful engagement looks like in an everyday work context.',
-    covers: [
-      'Local histories and the Traditional Owners of where you operate',
-      'Impacts of colonisation and why they remain present',
-      'Cultural protocols including Acknowledgement and Welcome to Country',
-      'Practical guidance for respectful everyday interaction'
+    number: '01',
+    name: 'Our Shared Past',
+    subtitle: 'Understanding Indigenous History and Impact',
+    theme: 'Building awareness through truth-telling',
+    image: 'training/module-1-our-shared-past.jpg',
+    body: 'Establishes a foundational understanding of Aboriginal and Torres Strait Islander history, culture, and the legacy of colonisation. Learners are guided through thousands of years of cultural continuity and explore the disruptions caused by colonisation — from frontier violence to the Stolen Generations, and how these experiences continue to shape present-day realities.',
+    sections: [
+      ['Pre-colonial Indigenous societies', 'Sophisticated systems of law, trade, kinship and environmental management across 250+ Nations and 600+ dialects.'],
+      ['Connection to Country', 'Understanding that Country is not just land — it holds identity, spirituality and belonging.'],
+      ['Colonisation and its impacts', 'A visual timeline from 1788 to today, featuring the Stolen Generations, the 1967 Referendum, Mabo, and the Uluru Statement from the Heart.'],
+      ['Intergenerational trauma', 'How loss, grief and disruption have affected communities, while recognising healing and resilience.'],
+      ['Rights movements and activism', 'Leadership and courage through the 1938 Day of Mourning, William Cooper’s Petition, and the National Apology.']
+    ],
+    outcomes: [
+      'Understand how history informs current relationships and inequities',
+      'Recognise the resilience and resistance of Aboriginal and Torres Strait Islander peoples',
+      'Reflect on personal and organisational responsibility in reconciliation'
+    ],
+    interactive: [
+      'Animated timeline of key events',
+      'Click-and-reveal activities on Language, Kinship and Country',
+      'Reflection questions for personal connection to history'
     ]
+  },
+  {
+    number: '02',
+    name: 'Present Realities',
+    subtitle: 'Navigating Contemporary Indigenous Australia',
+    theme: 'Understanding current experiences and systems of inequity',
+    image: 'training/module-2-present-realities.jpg',
+    body: 'Builds on the historical foundation of Module 1 to explore the diversity, strength and contemporary realities of Aboriginal and Torres Strait Islander peoples today.',
+    sections: [
+      ['Diversity of cultures', 'Aboriginal and Torres Strait Islander peoples are not one homogeneous group — exploring cultural variations, languages and identity.'],
+      ['Contemporary challenges', 'A data-driven look at health, education, housing and justice disparities, brought to life through infographics and reflection activities.'],
+      ['Systemic racism and unconscious bias', 'How structural barriers and stereotypes influence workplace and community outcomes.'],
+      ['Strength, resilience and contributions', 'Indigenous excellence across sport, arts, science, business and community leadership.'],
+      ['Indigenous-led organisations and self-determination', 'Key bodies including NACCHO, NATSILS and the National Native Title Council, and the community-driven change they lead.']
+    ],
+    outcomes: [
+      'Appreciate the ongoing diversity and vitality of Indigenous cultures',
+      'Identify and challenge unconscious bias and systemic barriers',
+      'Recognise how Indigenous-led organisations model self-determination',
+      'Learn how facts and lived experience reveal the barriers and strengths in communities today'
+    ],
+    interactive: [
+      'Knowledge quizzes and match-the-meaning activities',
+      'Reflection prompts drawn from the data, not from abstractions',
+      'Infographics visualising gaps in life expectancy, incarceration and education outcomes'
+    ]
+  },
+  {
+    number: '03',
+    name: 'Towards a Shared Future',
+    subtitle: 'Building Cultural Competence and Reconciliation',
+    theme: 'From awareness to action',
+    image: 'training/module-3-towards-a-shared-future.jpg',
+    body: 'Translates knowledge into practice. Learners are equipped to become active participants in reconciliation and cultural safety by embedding respectful engagement, allyship and inclusive behaviours into daily work.',
+    sections: [
+      ['Cultural competence, safety and allyship', 'The distinctions between these concepts, and how they intersect to create culturally safe environments.'],
+      ['Respectful engagement and communication', 'Practical guidance on listening, silence and two-way communication; avoiding assumptions; using respectful language.'],
+      ['Acknowledgement vs Welcome to Country', 'Knowing when and how each should be delivered, with real examples and reflection exercises.'],
+      ['Reconciliation in action', 'Symbolic, practical and relational actions explored through real workplace scenarios.'],
+      ['Creating inclusive workplaces', 'Embedding cultural safety from recruitment through to the celebration of cultural events.'],
+      ['Ongoing learning', 'Encouraging curiosity and continued reflection, with recommended books, podcasts and events.']
+    ],
+    outcomes: [
+      'Build confidence in engaging respectfully across cultures',
+      'Deliver meaningful Acknowledgements of Country',
+      'Translate reconciliation values into tangible workplace actions',
+      'Commit to ongoing learning and allyship beyond the training'
+    ],
+    interactive: [
+      'Scenario-based drag-and-drop activities on competence, safety and allyship',
+      'Personal reflection and action commitment statements',
+      'Practical self-assessment on cultural confidence'
+    ]
+  }
+];
+
+const features = [
+  {
+    icon: 'set',
+    title: 'SCORM-compliant, ready for your LMS',
+    body: 'Interactive modules supplied in SCORM format, so they upload straight into your existing learning management system and report completions the way the rest of your training does.'
   },
   {
     icon: 'users',
-    name: 'Cultural capability',
-    audience: 'Client-facing and community-facing teams',
-    format: 'Full day, or a short series',
-    body: 'Goes beyond awareness into applied skill — for teams whose work brings them into direct contact with Aboriginal and Torres Strait Islander clients, communities or stakeholders.',
-    covers: [
-      'Communication styles and common points of misunderstanding',
-      'Building trust where institutional trust is limited',
-      'Culturally safe service delivery and consultation practice',
-      'Working through scenarios drawn from your actual operating context'
-    ]
-  },
-  {
-    icon: 'target',
-    name: 'Cultural safety for leaders',
-    audience: 'Executives, managers, boards',
-    format: 'Half day',
-    body: 'What cultural safety requires of people with authority — recruitment, retention, escalation, and the decisions that determine whether commitments in a RAP survive contact with the organisation.',
-    covers: [
-      'What cultural safety means in practice, beyond a stated value',
-      'Recognising and responding to racism in the workplace',
-      'Recruitment and retention of Aboriginal and Torres Strait Islander staff',
-      'Leadership accountability for reconciliation commitments'
-    ]
-  },
-  {
-    icon: 'doc',
-    name: 'RAP working group intensive',
-    audience: 'RAP Working Group members',
-    format: 'Half day',
-    body: 'Targeted session for the people carrying the plan — what the framework expects, what good commitments look like, and how to keep delivery moving between meetings.',
-    covers: [
-      'The four pillars and what Reconciliation Australia looks for',
-      'Writing commitments that can be delivered and evidenced',
-      'Running effective working group cycles',
-      'Common reasons RAPs stall, and early warning signs'
-    ]
-  }
-];
-
-// Training is sold as a package only — not as ad-hoc individual sessions.
-// Two purchase options, per Angela. No figures or term lengths are published
-// here; pricing is quoted per organisation.
-const purchaseOptions = [
-  {
-    icon: 'doc',
-    name: 'Outright ownership',
-    body: 'You purchase the training package outright and own it. Your organisation keeps the program and can continue to use it without an ongoing arrangement with us.',
-    suits: 'Organisations with an internal learning function, a rolling onboarding intake, or a multi-year commitment to run the training themselves.'
+    title: 'Narrated by Angela Johnson',
+    body: 'Written and narrated throughout by Angela Johnson, a proud Gooreng Gooreng woman and founder of 2Ways Consultancy. The voice teaching this content is the voice it belongs to.'
   },
   {
     icon: 'compass',
-    name: 'Access for an agreed period',
-    body: 'You purchase access to the training for a set period of time. The package is available to your organisation for the term agreed, rather than owned outright.',
-    suits: 'Organisations delivering training against a defined rollout or a specific RAP commitment, where ownership beyond that period is not needed.'
+    title: 'Accessible on any device',
+    body: 'Designed for desktop, tablet and mobile, so staff without a fixed desk can complete it in the same format as everyone else.'
+  },
+  {
+    icon: 'check',
+    title: 'Knowledge checks and reflection points',
+    body: 'Built-in checks and reflection prompts measure engagement rather than just completion — you can see that people worked through it, not only that they opened it.'
+  },
+  {
+    icon: 'spark',
+    title: 'Visually rich design',
+    body: 'Aboriginal artwork, interactive maps and motion graphics throughout, rather than narrated slides with stock photography.'
+  },
+  {
+    icon: 'doc',
+    title: 'Meets RAP cultural learning commitments',
+    body: 'Suitable for cultural learning deliverables at every RAP level. Engaging a Supply Nation registered Indigenous business also contributes to your Indigenous procurement outcomes.'
   }
 ];
 
-const differentiators = [
-  {
-    title: 'Delivered by Aboriginal and Torres Strait Islander facilitators',
-    body: 'Cultural learning delivered by people with lived experience lands differently, and participants ask different questions. This is not a course licensed from elsewhere and read out.'
-  },
-  {
-    title: 'Grounded in where you actually operate',
-    body: 'Content is adapted to the Traditional Owners and histories of your locations, not delivered as a generic national overview.'
-  },
-  {
-    title: 'Built for your context',
-    body: 'Scenarios are drawn from your industry and the situations your teams genuinely encounter, so the learning transfers to Monday morning.'
-  },
-  {
-    title: 'Counts toward your RAP and procurement commitments',
-    body: 'Cultural learning is a Respect-pillar commitment in nearly every RAP. Engaging a Supply Nation registered Indigenous business also contributes to your Indigenous procurement outcomes.'
-  }
+// Licence pricing exactly as supplied. All figures exclude GST.
+const licences = [
+  { tier: 'Single user', price: '$210', unit: 'per person' },
+  { tier: 'Up to 10 users', price: '$3,180', unit: '' },
+  { tier: 'Up to 25 users', price: '$6,120', unit: '' },
+  { tier: 'Up to 50 users', price: '$11,055', unit: '' },
+  { tier: 'Up to 100 users', price: '$22,110', unit: '' }
 ];
 
 const faqs = [
   {
-    q: 'How long is a cultural awareness training session?',
-    a: 'Our foundational cultural awareness session runs as a half day, and can be split into two shorter sessions where releasing staff for a half day at once is difficult. Cultural capability training typically runs a full day or as a short series, and leadership and RAP working group sessions run as half days.'
-  },
-  {
     q: 'How is the training purchased?',
-    a: 'As a package, in one of two ways: you can purchase it outright and own it, or take access to it for an agreed period of time. We do not sell individual ad-hoc sessions. Which option suits you generally comes down to how many people you need to reach and over what period — tell us both and we will quote accordingly.'
+    a: 'As a package, in one of two ways. Most organisations take a one-year licence for a set number of users, priced by band — from a single user through to 100 users. Alternatively the program can be purchased outright, so your organisation owns it and can keep running it without an ongoing arrangement with us. We do not sell individual ad-hoc sessions. Outright ownership is quoted per organisation; get in touch and we will price it against your numbers.'
   },
   {
-    q: 'Can training be delivered online?',
-    a: 'Yes. We deliver in person and online, and for organisations spread across multiple sites a mix usually works best — in-person sessions at major locations, online for smaller or remote teams. In-person delivery generally produces richer discussion, so we recommend it where it is practical.'
+    q: 'How long does the training take to complete?',
+    a: 'The three modules run to approximately 90 minutes in total. They are designed to be taken in sequence, since each builds on the one before, but learners can complete them across separate sittings rather than in one block.'
   },
   {
-    q: 'Is cultural awareness training a RAP requirement?',
-    a: 'Cultural learning commitments sit under the Respect pillar and appear in the overwhelming majority of RAPs at every level. What changes with RAP type is depth and reach: a Reflect RAP might commit to introducing training, while Stretch and Elevate RAPs are expected to show it is mandatory, ongoing and reaching the whole organisation.'
+    q: 'Can we run it through our own LMS?',
+    a: 'Yes. The modules are SCORM-compliant, so they can be uploaded to your existing learning management system and tracked alongside your other training. If you do not have an LMS, tell us and we will talk through the options.'
   },
   {
-    q: 'How many people can attend a session?',
-    a: 'Group size depends on the session type. Foundational awareness sessions work well with larger groups, while cultural capability and leadership sessions are deliberately smaller because they depend on discussion and scenario work. We will recommend a group size when we understand your audience.'
+    q: 'Does this meet our RAP cultural learning commitment?',
+    a: 'It is built for exactly that purpose and is suitable at every RAP level. What changes with RAP type is depth and reach: a Reflect RAP might commit to introducing cultural learning, while Stretch and Elevate RAPs are expected to show it is mandatory, ongoing and reaching the whole organisation. The reporting your LMS produces is the evidence for that commitment.'
   },
   {
-    q: 'Do you deliver training outside Brisbane?',
-    a: 'Yes. We are Brisbane-based and deliver Australia-wide, both in person and online. For multi-site organisations we can design a rollout that covers all locations over an agreed period.'
+    q: 'Who wrote and narrated the content?',
+    a: 'Angela Johnson, a proud Gooreng Gooreng woman with cultural connections to Country in the Bundaberg and Gladstone regions, and founder of 2Ways Consultancy. The series draws on truth-telling, lived experience and contemporary leadership insight — it is not a course licensed from elsewhere and re-recorded.'
   },
   {
-    q: 'Can training be tailored to our industry?',
-    a: 'Yes, and we recommend it. Generic training is the most common reason cultural learning fails to stick. Scenarios drawn from your actual operating context — the situations your teams really encounter — make the difference between an interesting session and a change in practice.'
+    q: 'What happens when the licence period ends?',
+    a: 'Licences run for one year from activation. At the end of the term you can renew for another year, move to a larger user band if your headcount has grown, or discuss purchasing the program outright if the training has become a permanent part of your onboarding.'
   }
 ];
 
-const serviceSchema = {
+const courseSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'Cultural Awareness and Cultural Capability Training',
-  serviceType: 'Cultural awareness training',
-  provider: { '@id': `${SITE.url}/#organization` },
-  areaServed: { '@type': 'Country', name: 'Australia' },
+  '@type': 'Course',
+  name: 'Cultural Competence eLearning Series',
   description:
-    'Aboriginal and Torres Strait Islander cultural awareness, cultural capability and cultural safety training for Australian organisations, delivered in person and online by Indigenous facilitators.',
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Training programs',
-    itemListElement: programs.map((p) => ({
-      '@type': 'Offer',
-      itemOffered: { '@type': 'Service', name: p.name, description: p.body }
-    }))
-  }
+    'A three-module Aboriginal and Torres Strait Islander cultural competence eLearning series, written and narrated by Angela Johnson of 2Ways Consultancy. Covers Indigenous history and the impacts of colonisation, contemporary realities and systemic inequity, and building cultural competence, allyship and reconciliation in the workplace.',
+  provider: { '@id': `${SITE.url}/#organization` },
+  inLanguage: 'en-AU',
+  educationalCredentialAwarded: 'Certificate of completion',
+  timeRequired: 'PT90M',
+  teaches: modules.flatMap((m) => m.outcomes),
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'online',
+    courseWorkload: 'PT90M'
+  },
+  syllabusSections: modules.map((m, i) => ({
+    '@type': 'Syllabus',
+    position: i + 1,
+    name: `${m.name} — ${m.subtitle}`,
+    description: m.body
+  }))
 };
 
 const faqSchema = {
@@ -163,122 +200,181 @@ const faqSchema = {
 };
 ---
 <BaseLayout
-  title={`Cultural Awareness Training for Workplaces | ${SITE.name}`}
-  description="Aboriginal and Torres Strait Islander cultural awareness, cultural capability and cultural safety training — delivered in person and online across Australia by Indigenous facilitators. Supports RAP Respect-pillar commitments."
+  title={`Cultural Competence eLearning Training | ${SITE.name}`}
+  description="A three-module Aboriginal and Torres Strait Islander cultural competence eLearning series, written and narrated by Angela Johnson. SCORM-compliant for your LMS, approximately 90 minutes, licensed per user band or owned outright."
   canonical={`${SITE.url}/services/cultural-awareness-training/`}
-  schema={[serviceSchema, faqSchema]}
+  schema={[courseSchema, faqSchema]}
 >
   <Fragment slot="header"><Header /></Fragment>
 
   <PageHero
-    kicker="Training"
-    title="Cultural awareness and capability training"
-    intro="Aboriginal and Torres Strait Islander cultural learning delivered by Indigenous facilitators — adapted to where you operate and the situations your teams actually encounter. In person and online, Australia-wide."
+    kicker="Cultural Competence eLearning Series"
+    title="Cultural awareness training your team will actually finish"
+    intro="Three modules. About 90 minutes. Written and narrated by Angela Johnson, a proud Gooreng Gooreng woman — built on truth-telling and lived experience, and delivered as interactive eLearning you can run through your own LMS."
     breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'Cultural awareness training' }]}
   >
     <div class="mt-8 flex flex-wrap gap-3">
-      <a href={`${base}contact/`} class="btn">Discuss a training program</a>
-      <a href={`${base}services/rap/`} class="btn-outline">See RAP consulting</a>
+      <a href={`${base}contact/`} class="btn">Request access</a>
+      <a href="#pricing" class="btn-outline">See licence pricing</a>
     </div>
   </PageHero>
 
-  <!-- WHY -->
+  <!-- OVERVIEW -->
   <section class="section max-w-3xl">
-    <h2 class="text-2xl md:text-3xl font-semibold">Why most cultural training doesn't stick</h2>
+    <h2 class="text-2xl md:text-3xl font-semibold">A learning journey, not a compliance tick</h2>
     <div class="prose mt-4">
       <p>
-        Nearly every organisation with a Reconciliation Action Plan commits to cultural learning. A great many of
-        those commitments are met by putting staff through a generic online module once, recording the completion
-        rate, and moving on.
+        The Cultural Competence eLearning Series is a three-module learning journey that builds understanding,
+        empathy and practical skill for engaging respectfully with Aboriginal and Torres Strait Islander peoples.
       </p>
       <p>
-        That satisfies the reporting line. It rarely changes anything — because it is not connected to the country
-        the organisation operates on, not delivered by anyone with lived experience of what is being taught, and not
-        grounded in the situations staff genuinely encounter.
+        Most online cultural training fails for the same reasons: it is generic, bought off a shelf, and taught by
+        someone with no connection to the content. This series is written and narrated by Angela Johnson, and blends
+        truth-telling, lived experience and contemporary leadership insight. Every module includes interactive
+        activities, reflection exercises and knowledge checks designed to move learners from awareness into action.
       </p>
       <p>
-        We have delivered over <strong>210 workshops</strong> to organisations of all sizes. The sessions that change
-        practice have three things in common: they are led by Aboriginal and Torres Strait Islander facilitators, they
-        are specific to place, and they work through real scenarios rather than abstractions.
+        It is built for organisations meeting cultural learning and workplace inclusion deliverables at
+        <strong>every RAP level</strong> — and because 2Ways Consultancy is a 100% Indigenous-owned, Supply Nation
+        registered business, the spend counts toward your Indigenous procurement outcomes as well.
       </p>
     </div>
   </section>
 
-  <!-- PROGRAMS -->
+  <!-- MODULES -->
   <section class="section">
     <div class="max-w-2xl">
-      <p class="kicker">Programs</p>
-      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Four programs, matched to audience</h2>
+      <p class="kicker">The series</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Three modules, taken in sequence</h2>
       <p class="mt-3 text-white/75">
-        Most organisations start with foundational awareness across all staff, then add depth for the teams and
-        leaders where it matters most. All programs can be tailored.
+        Each module builds on the one before it — history first, then the present it produced, then what to do about
+        it at work on Monday.
       </p>
     </div>
-    <div class="grid md:grid-cols-2 gap-6 mt-8">
-      {programs.map((p) => (
-        <div class="grid-card flex flex-col">
-          <span class="icon-soft"><Icon name={p.icon as any} size={20} /></span>
-          <h3 class="mt-4 font-semibold text-lg">{p.name}</h3>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="pill">{p.audience}</span>
-            <span class="text-xs text-white/50 self-center">{p.format}</span>
+
+    <div class="mt-10 grid gap-10">
+      {modules.map((m) => (
+        <article class="grid-card !p-0 overflow-hidden">
+          <img
+            src={`${base}${m.image}`}
+            alt={`${m.name} — ${m.subtitle}`}
+            width="1120"
+            height="631"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-auto"
+          />
+          <div class="p-6 md:p-8">
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+              <span class="text-3xl font-extrabold tabular-nums text-brand-light/50">{m.number}</span>
+              <h3 class="text-xl md:text-2xl font-semibold">{m.name}</h3>
+            </div>
+            <p class="mt-1 text-white/70">{m.subtitle}</p>
+            <p class="mt-4"><span class="pill">{m.theme}</span></p>
+            <p class="mt-5 text-white/80 leading-relaxed max-w-3xl">{m.body}</p>
+
+            <div class="mt-7">
+              <h4 class="text-xs font-semibold uppercase tracking-wide text-brand-light">What it covers</h4>
+              <dl class="mt-3 grid gap-3 md:grid-cols-2">
+                {m.sections.map(([term, detail]) => (
+                  <div class="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                    <dt class="text-sm font-semibold text-white/90">{term}</dt>
+                    <dd class="mt-1 text-sm text-white/70 leading-relaxed">{detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <div class="mt-7 grid md:grid-cols-2 gap-7">
+              <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wide text-brand-light">Learning outcomes</h4>
+                <ul class="mt-3 grid gap-2">
+                  {m.outcomes.map((o) => (
+                    <li class="flex items-start gap-2.5 text-sm text-white/75">
+                      <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={16} /></span>
+                      <span class="leading-relaxed">{o}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wide text-brand-light">Interactive elements</h4>
+                <ul class="mt-3 grid gap-2">
+                  {m.interactive.map((el) => (
+                    <li class="flex items-start gap-2.5 text-sm text-white/75">
+                      <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-light"></span>
+                      <span class="leading-relaxed">{el}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-          <p class="mt-3 text-sm text-white/75 leading-relaxed">{p.body}</p>
-          <ul class="mt-4 grid gap-2 pt-4 border-t border-white/10">
-            {p.covers.map((c) => (
-              <li class="flex items-start gap-2.5 text-sm text-white/70">
-                <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={16} /></span>
-                <span class="leading-relaxed">{c}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        </article>
       ))}
     </div>
   </section>
 
-  <!-- HOW IT'S PURCHASED -->
+  <!-- FEATURES -->
   <section class="section">
     <div class="max-w-2xl">
-      <p class="kicker">How it's purchased</p>
-      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Available as a package, two ways</h2>
-      <p class="mt-3 text-white/75">
-        Our training is provided as a package rather than as individual ad-hoc sessions. You can either purchase it
-        outright and own it, or take access for an agreed period of time.
-      </p>
+      <p class="kicker">Program features</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Built to drop into how you already train</h2>
     </div>
-    <div class="grid md:grid-cols-2 gap-6 mt-8">
-      {purchaseOptions.map((o) => (
-        <div class="grid-card flex flex-col">
-          <span class="icon-soft"><Icon name={o.icon as any} size={20} /></span>
-          <h3 class="mt-4 font-semibold text-lg">{o.name}</h3>
-          <p class="mt-3 text-sm text-white/75 leading-relaxed">{o.body}</p>
-          <p class="mt-4 pt-4 border-t border-white/10 text-sm text-white/60 leading-relaxed">
-            <span class="font-semibold text-white/80">Tends to suit:</span> {o.suits}
-          </p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      {features.map((f) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={f.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold leading-snug">{f.title}</h3>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{f.body}</p>
         </div>
       ))}
     </div>
-    <p class="mt-6 text-sm text-white/60 max-w-2xl">
-      Which option works out better depends on how many people you need to reach and over what period. Tell us both
-      and we'll quote against the one that makes sense.
-    </p>
   </section>
 
-  <!-- DIFFERENTIATORS -->
-  <section class="light-section">
+  <!-- PRICING -->
+  <section id="pricing" class="light-section scroll-mt-24">
     <div class="section">
       <div class="max-w-2xl">
-        <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">What makes this different</h2>
+        <p class="kicker">Investment</p>
+        <h2 class="mt-2 text-2xl md:text-3xl font-semibold text-slate-900">Licence pricing</h2>
+        <p class="mt-3 text-slate-700">
+          The full series — all three modules — under a one-year licence, priced by the number of people who need
+          access.
+        </p>
       </div>
-      <div class="grid sm:grid-cols-2 gap-6 mt-8">
-        {differentiators.map((d) => (
-          <div class="grid-card !bg-white text-slate-900">
-            <h3 class="font-semibold" style="color:#0D1B2A;">{d.title}</h3>
-            <p class="mt-2 text-sm text-slate-600 leading-relaxed">{d.body}</p>
-          </div>
-        ))}
+
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[420px] max-w-2xl border-separate border-spacing-0 rounded-2xl overflow-hidden text-left">
+          <thead>
+            <tr>
+              <th class="p-4 bg-white font-semibold text-slate-900 border-b border-slate-200">Individual and team access</th>
+              <th class="p-4 bg-white font-semibold text-slate-900 border-b border-slate-200 text-right">Investment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {licences.map((l, i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                <td class="p-4 text-slate-700">{l.tier}</td>
+                <td class="p-4 text-right font-semibold tabular-nums whitespace-nowrap text-slate-900">
+                  {l.price}{l.unit && <span class="font-normal text-slate-500"> {l.unit}</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      <p class="mt-4 text-sm text-slate-600 max-w-2xl leading-relaxed">
+        All licences run for one year and cover the complete three-module series. Prices are in AUD and exclude GST.
+      </p>
+      <p class="mt-3 text-sm text-slate-600 max-w-2xl leading-relaxed">
+        Need more than 100 users, or want to own the program outright rather than licence it?
+        <a href={`${base}contact/`} class="underline" style="color:#8a6a1f;">Get in touch</a> and we will quote against
+        your numbers.
+      </p>
+
+      <a href={`${base}contact/`} class="btn mt-7 inline-flex">Request access</a>
     </div>
   </section>
 
@@ -289,9 +385,9 @@ const faqSchema = {
   </section>
 
   <CTASection
-    title="Plan your training rollout"
-    body="Tell us who needs to be reached and over what period, and we'll recommend a program mix and a realistic rollout schedule."
-    primaryLabel="Discuss a training program"
+    title="Roll it out to your team"
+    body="Tell us how many people need access and when you want them through it, and we'll recommend a licence band and get you set up."
+    primaryLabel="Request access"
     primaryHref="contact/"
     secondaryLabel="See how we work"
     secondaryHref="how-we-work/"
