@@ -3,31 +3,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PageHero from '../components/PageHero.astro';
-import Icon from '../components/Icon.astro';
 import CTASection from '../components/CTASection.astro';
 import { SITE } from '../config/site';
 import { PHASES, PRINCIPLES } from '../data/deliveryFramework';
 
 const base = import.meta.env.BASE_URL;
 
+// Phase names and outcomes only — the underlying method is not published, so
+// there are no HowToDirection steps to emit here. See deliveryFramework.ts.
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
   name: 'The 2Ways RAP Delivery Framework',
   description:
-    'A six-phase methodology for developing and delivering a Reconciliation Action Plan, covering readiness, governance foundation, community engagement, commitment design, Reconciliation Australia endorsement, and delivery with evidence capture.',
+    'A six-phase approach to developing and delivering a Reconciliation Action Plan, covering readiness, governance foundation, community engagement, commitment design, Reconciliation Australia endorsement, and delivery with evidence capture.',
   step: PHASES.map((p, i) => ({
     '@type': 'HowToStep',
     position: i + 1,
     name: p.name,
-    text: p.objective,
-    itemListElement: p.activities.map((a) => ({ '@type': 'HowToDirection', text: a }))
+    text: p.outcome
   }))
 };
 ---
 <BaseLayout
   title={`The RAP Delivery Framework | ${SITE.name}`}
-  description="Our six-phase methodology for delivering a Reconciliation Action Plan — readiness, foundation, engagement, design, endorsement and delivery. Includes the artefacts produced at each phase and the specific way each one tends to fail."
+  description="Our six-phase approach to delivering a Reconciliation Action Plan — readiness, foundation, engagement, design, endorsement and delivery — and what your organisation has at the end of each phase."
   canonical={`${SITE.url}/rap-delivery-framework/`}
   schema={schema}
 >
@@ -36,7 +36,7 @@ const schema = {
   <PageHero
     kicker="Methodology"
     title="The RAP Delivery Framework"
-    intro="Six phases, from honest readiness assessment through to evidence captured across the term. This is the methodology we run engagements on — including what gets produced at each phase, and the specific way each one tends to go wrong."
+    intro="Six phases, from an honest readiness assessment through to evidence captured across the term. This is the shape of how we run engagements, and what you have in hand at the end of each phase."
     breadcrumbs={[{ label: 'RAP Delivery Framework' }]}
   >
     <div class="mt-8 flex flex-wrap gap-3">
@@ -56,12 +56,11 @@ const schema = {
       </p>
       <p>
         Those are not unlucky outcomes — they are <strong>predictable</strong>, and each one traces back to a
-        specific phase where something was skipped. This framework exists to make those points explicit, so they can
-        be checked rather than discovered.
+        specific phase where something was skipped. Working to a defined sequence, with a clear test for whether
+        each phase is actually finished, is what stops a plan drifting into that position.
       </p>
       <p>
-        We publish it in full because we would rather you use it than not. If you run this yourself and deliver a
-        RAP well, that is a better outcome than engaging us and delivering one badly.
+        The outline below is the sequence we work to, and what your organisation has at the end of each phase.
       </p>
     </div>
   </section>
@@ -118,86 +117,37 @@ const schema = {
 
   <!-- PHASE DETAIL -->
   <section class="section">
-    <div class="grid gap-8">
+    <div class="grid gap-6 md:grid-cols-2">
       {PHASES.map((p) => (
         <article id={p.id} class="grid-card scroll-mt-24">
           <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
             <span class="text-3xl font-extrabold tabular-nums text-brand-light/50">{p.number}</span>
-            <h2 class="text-2xl font-semibold">{p.name}</h2>
+            <h2 class="text-xl font-semibold">{p.name}</h2>
             <span class="pill">{p.duration}</span>
           </div>
-          <p class="mt-4 text-white/80 leading-relaxed max-w-3xl">{p.objective}</p>
-
-          <div class="mt-7 grid lg:grid-cols-2 gap-7">
-            <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wide text-brand-light">Key activities</h3>
-              <ul class="mt-3 grid gap-2">
-                {p.activities.map((a) => (
-                  <li class="flex items-start gap-2.5 text-sm text-white/75">
-                    <span class="mt-0.5 shrink-0 text-brand-light"><Icon name="check" size={16} /></span>
-                    <span class="leading-relaxed">{a}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wide text-brand-light">Artefacts produced</h3>
-              <ul class="mt-3 grid gap-2">
-                {p.artefacts.map((a) => (
-                  <li class="flex items-start gap-2.5 text-sm text-white/75">
-                    <span class="mt-0.5 shrink-0 text-white/40"><Icon name="doc" size={16} /></span>
-                    <span class="leading-relaxed">{a}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 class="mt-6 text-xs font-semibold uppercase tracking-wide text-brand-light">Who's involved</h3>
-              <ul class="mt-3 grid gap-2">
-                {p.owners.map((o) => (
-                  <li class="text-sm text-white/75 leading-relaxed">
-                    <span class="font-semibold text-white/90">{o.role}</span> &mdash; {o.involvement}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div class="mt-7 grid md:grid-cols-2 gap-5">
-            <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-              <h3 class="text-xs font-semibold uppercase tracking-wide text-white/50">How this phase fails</h3>
-              <p class="mt-2 text-sm text-white/75 leading-relaxed">{p.failureMode}</p>
-            </div>
-            <div class="rounded-xl border border-brand-light/20 bg-brand-light/[0.05] p-5">
-              <h3 class="text-xs font-semibold uppercase tracking-wide text-brand-light">Done when</h3>
-              <ul class="mt-2 grid gap-1.5">
-                {p.exitCriteria.map((c) => (
-                  <li class="flex items-start gap-2 text-sm text-white/75">
-                    <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-light"></span>
-                    <span class="leading-relaxed">{c}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <p class="mt-4 text-white/80 leading-relaxed">{p.purpose}.</p>
+          <div class="mt-5 rounded-xl border border-brand-light/20 bg-brand-light/[0.05] p-5">
+            <h3 class="text-xs font-semibold uppercase tracking-wide text-brand-light">What you have at the end</h3>
+            <p class="mt-2 text-sm text-white/75 leading-relaxed">{p.outcome}</p>
           </div>
         </article>
       ))}
     </div>
   </section>
 
-  <!-- USING IT YOURSELF -->
+  <!-- WHERE WE COME IN -->
   <section class="light-section">
     <div class="section max-w-3xl">
-      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">Running this yourself</h2>
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">Where we come in</h2>
       <p class="mt-4 text-slate-700 leading-relaxed">
-        Nothing here is proprietary. If your organisation has the internal capacity, use the phase structure, the
-        artefact list and the exit criteria as a checklist and run it yourself — the exit criteria in particular are
-        worth being strict about, because they are the points where skipping ahead causes problems later.
+        The sequence above is the easy part to describe. The work sits in the judgement calls inside each phase —
+        deciding honestly which RAP type is achievable, knowing when a phase is genuinely finished rather than just
+        out of time, facilitating community engagement respectfully, and challenging commitments that sound good but
+        cannot be delivered.
       </p>
       <p class="mt-3 text-slate-700 leading-relaxed">
-        Organisations engage us where the judgement is hardest: deciding honestly which RAP type is achievable,
-        facilitating community engagement respectfully, and challenging commitments that sound good but cannot be
-        delivered. Those are the three places an outside perspective is worth most.
+        That is what we bring to an engagement, alongside the detailed working method behind each phase — the
+        activities, the artefacts, and the specific checks that tell you a phase can be closed.
       </p>
       <div class="mt-6 flex flex-wrap gap-3">
         <a href={`${base}assessment/`} class="btn">Start with the free readiness check</a>

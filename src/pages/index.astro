@@ -103,9 +103,10 @@ const orgSchema = {
     'Aboriginal and Torres Strait Islander employment',
     'Cultural safety'
   ],
-  // Structured NAP (name/address/phone) for local SEO — keep in sync with
-  // SITE.address/phone in site.ts and whatever's entered on Google Business
-  // Profile / Bing Places so the signals match.
+  // Structured name/address for local SEO — keep in sync with SITE.address in
+  // site.ts and whatever's entered on Google Business Profile / Bing Places so
+  // the signals match. No telephone is published, by choice; email is the
+  // contact channel, so don't reintroduce a `telephone` property here.
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Brisbane',
@@ -113,7 +114,6 @@ const orgSchema = {
     postalCode: '4000',
     addressCountry: 'AU'
   },
-  telephone: `+61${SITE.phone.replace(/^0/, '').replace(/\s/g, '')}`,
   email: SITE.email,
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -284,10 +284,10 @@ const faqSchema = {
     <div class="mt-8 grid-card border-brand-light/25">
       <div class="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
         <div>
-          <h3 class="font-semibold text-lg">We publish our full delivery methodology</h3>
+          <h3 class="font-semibold text-lg">How we deliver a RAP</h3>
           <p class="mt-2 text-sm text-white/75 max-w-2xl">
-            Six phases, the artefacts produced at each one, and the specific way each phase tends to fail. Use it
-            yourself if you have the internal capacity — we'd rather that than a RAP delivered badly.
+            Six phases, from an honest readiness assessment through to evidence captured across the term — and what
+            your organisation has in hand at the end of each one.
           </p>
         </div>
         <a href={`${base}rap-delivery-framework/`} class="btn-outline shrink-0">See the framework</a>
