@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import FAQ from '../../components/FAQ.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import CTASection from '../../components/CTASection.astro';
+import { SITE } from '../../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const situations = [
+  {
+    icon: 'users',
+    title: 'No genuine Aboriginal or Torres Strait Islander voice at the table',
+    body: 'Your group meets the letter of the framework, but decisions get made without cultural perspective in the room — or the one person carrying that role is doing it unpaid and unsupported.'
+  },
+  {
+    icon: 'shield',
+    title: 'Governance exists on paper, not in practice',
+    body: 'Terms of reference, a sponsor and a meeting cadence are all set up — but nobody independent is testing whether what the group agrees to can actually be delivered.'
+  },
+  {
+    icon: 'compass',
+    title: 'You built your RAP without us and want ongoing input',
+    body: 'You do not need full RAP consulting, and you are not asking for an audit. You want an experienced, independent voice sitting with the group as it works.'
+  },
+  {
+    icon: 'target',
+    title: 'Your governance runs wider than one working group',
+    body: 'A Reconciliation Committee, a regional council, or several business-unit groups feeding one plan — consistent representation across more than one body is hard to resource internally.'
+  }
+];
+
+const includes = [
+  {
+    area: 'Meeting attendance',
+    body: 'Regular attendance at your working group, committee or council, at whatever cadence the group already runs on.'
+  },
+  {
+    area: 'Commitment-level guidance',
+    body: 'A read on whether what is being drafted or reported is specific enough to actually be delivered and evidenced — before it goes to a sponsor or board.'
+  },
+  {
+    area: 'Cultural safety in the room',
+    body: 'An experienced Indigenous voice in discussions that affect Aboriginal and Torres Strait Islander staff, stakeholders and community relationships.'
+  },
+  {
+    area: 'Consultation between meetings',
+    body: 'A point of contact for the chair or secretariat when a question comes up that cannot wait for the next scheduled meeting.'
+  },
+  {
+    area: 'Escalation and honesty',
+    body: 'A willingness to say plainly when something is not working — a governance gap, a stalled relationship, a commitment nobody can actually own.'
+  },
+  {
+    area: 'Continuity',
+    body: 'The same person across meetings, so context does not have to be rebuilt each time and relationships with community stakeholders stay consistent.'
+  }
+];
+
+const steps = [
+  {
+    title: 'Scoping conversation',
+    meta: 'Before we start',
+    body: 'We talk through how your working group, committee or council is structured, how often it meets, and where independent guidance would actually help — so the role is scoped to what you need, not a generic package.'
+  },
+  {
+    title: 'Sitting in as a guest',
+    meta: 'First meeting',
+    body: 'We attend a meeting as a guest before anything is formalised, so your group can see how the fit works before committing to an ongoing arrangement.'
+  },
+  {
+    title: 'Ongoing attendance and consultation',
+    meta: 'Ongoing',
+    body: 'We attend at the agreed cadence, and are available between meetings for the questions that come up when the group is not in the room together.'
+  },
+  {
+    title: 'A standing check-in with your sponsor',
+    meta: 'Ongoing',
+    body: 'A short, separate conversation with your executive sponsor, so they get an independent read on how governance is actually functioning — not just what reaches them through the group.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is RAP working group representation?',
+    a: 'An ongoing advisory role: attending your RAP working group, committee or council on a regular cadence to provide guidance, challenge and cultural perspective as decisions are actually being made — rather than reviewing the outcome afterwards.'
+  },
+  {
+    q: 'Does this replace our own working group?',
+    a: 'No. Your working group, committee or council stays yours — its authority, its members, its decisions. We join it in an advisory capacity, the same way an external cultural advisor or community representative would.'
+  },
+  {
+    q: 'Do you take part in decisions, or only advise?',
+    a: 'The role is guidance and consultation, not a vote. Decision-making authority stays with your organisation’s own governance. If your group wants to formalise a different arrangement, that is something we would scope with you directly rather than assume.'
+  },
+  {
+    q: 'Can this cover a broader Reconciliation Committee or Council, not just a RAP working group?',
+    a: 'Yes. Some organisations run governance wider than the core RAP working group — a Reconciliation Committee, a regional council, or several business-unit groups. Representation can extend across more than one body where that is where the guidance is actually needed.'
+  },
+  {
+    q: 'Does this satisfy the framework’s expectation of Aboriginal and Torres Strait Islander representation?',
+    a: 'It can be part of it, but it should not be the only part. The framework expects genuine, ongoing relationships with Traditional Owners and community organisations relevant to where you operate, and this role does not replace those. What it adds is continuity, cultural safety and an experienced voice at the table, meeting to meeting.'
+  },
+  {
+    q: 'How is cadence and scope set?',
+    a: 'Around your existing meeting schedule and what the group actually needs — there is no fixed package. A short scoping conversation is the starting point, and where useful we sit in as a guest before anything is formalised.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'RAP Working Group Representation',
+  serviceType: 'Reconciliation governance advisory',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Australia' },
+  description:
+    'Ongoing representation on a Reconciliation Action Plan working group, committee or council — an experienced Indigenous advisor attending meetings on a regular cadence to provide guidance and consultation as governance decisions are actually made.'
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
+<BaseLayout
+  title={`RAP Working Group Representation | ${SITE.name}`}
+  description="Ongoing representation on your RAP working group, committee or council — an experienced Indigenous advisor attending meetings to provide guidance and consultation as decisions are actually made."
+  canonical={`${SITE.url}/services/rap-working-group-representation/`}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <PageHero
+    kicker="Ongoing advisory role"
+    title="Representation on your RAP working group"
+    intro="An experienced Indigenous advisor at the table for your RAP working group, committee or council — attending on an ongoing basis to provide guidance, challenge and cultural perspective as decisions are actually being made, not a report handed over after the fact."
+    breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'RAP Working Group Representation' }]}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`${base}contact/`} class="btn">Discuss representation</a>
+      <a href={`${base}insights/what-is-a-rap-working-group/`} class="btn-outline">What makes a working group effective</a>
+    </div>
+  </PageHero>
+
+  <!-- WHY -->
+  <section class="section max-w-3xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">Guidance in the room, not a report afterwards</h2>
+    <div class="prose mt-4">
+      <p>
+        Most support for a RAP working group arrives at two points: at the start, when the group is being set up,
+        and later, when something has already gone wrong and an independent review gets called in. In between,
+        there is a long stretch where the group is meeting, making decisions and drafting or delivering commitments
+        — with nobody independent in the room to test any of it as it happens.
+      </p>
+      <p>
+        Representation fills that gap. Rather than reviewing outcomes after the fact, an experienced Indigenous
+        advisor sits with your working group, committee or council on an ongoing basis — attending meetings,
+        offering guidance on what is being drafted or reported, and providing the cultural perspective the framework
+        expects but many groups struggle to sustain internally, especially where the one person carrying that role is
+        doing it without support or recognition.
+      </p>
+      <p>
+        This is a narrower, ongoing role rather than full RAP development or an independent audit. If you need
+        either of those, see our <a href={`${base}services/rap/`}>RAP consulting</a> or
+        <a href={`${base}services/rap-health-check/`}>RAP Health Check</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHEN THIS HELPS -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">When this helps</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Four situations this is built for</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6 mt-8">
+      {situations.map((s) => (
+        <div class="grid-card">
+          <span class="icon-soft"><Icon name={s.icon as any} size={20} /></span>
+          <h3 class="mt-4 font-semibold text-lg leading-snug">{s.title}</h3>
+          <p class="mt-2 text-sm text-white/75 leading-relaxed">{s.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHAT IT INCLUDES -->
+  <section class="section">
+    <div class="max-w-2xl">
+      <p class="kicker">Scope</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">What representation includes</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+      {includes.map((c) => (
+        <div class="grid-card">
+          <h3 class="font-semibold">{c.area}</h3>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section max-w-4xl">
+    <div class="max-w-2xl">
+      <p class="kicker">Process</p>
+      <h2 class="mt-2 text-2xl md:text-3xl font-semibold">How it works</h2>
+    </div>
+    <ProcessSteps steps={steps} />
+  </section>
+
+  <!-- WHAT THIS LOOKS LIKE -->
+  <section class="light-section">
+    <div class="section max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-900">What this looks like day to day</h2>
+      <ul class="mt-5 grid gap-3">
+        {[
+          'A seat at the table, not a report delivered after the fact',
+          'Guidance grounded in the same four-pillar framework your RAP is assessed against',
+          'An independent voice your group can test its thinking against before decisions go further',
+          'Continuity across meetings, so nothing has to be re-explained from scratch',
+          'One less thing resting on the shoulders of whoever currently carries cultural voice on your group alone'
+        ].map((item) => (
+          <li class="flex items-start gap-3 text-slate-700">
+            <span class="mt-0.5 shrink-0" style="color:#8a6a1f;"><Icon name="check" size={18} /></span>
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 text-slate-700 leading-relaxed">
+        This is deliberately not a fixed-scope package. Cadence, which bodies are covered, and whether the role
+        extends beyond advice are all agreed with you directly, based on how your governance actually runs.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section max-w-3xl">
+    <p class="kicker">Questions</p>
+    <FAQ faqs={faqs} heading="Representation FAQs" emitSchema={false} />
+  </section>
+
+  <CTASection
+    title="Want an independent voice on your working group?"
+    body="A short conversation is the best way to work out whether ongoing representation is the right fit — and if it is, what cadence and scope would actually help."
+    primaryLabel="Discuss representation"
+    primaryHref="contact/"
+    secondaryLabel="What makes a working group effective"
+    secondaryHref="insights/what-is-a-rap-working-group/"
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
