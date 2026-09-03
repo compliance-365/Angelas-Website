@@ -50,7 +50,7 @@ export const SERVICES: Service[] = [
     href: 'services/cultural-awareness-training/',
     icon: 'users',
     blurb:
-      'A three-module cultural competence eLearning series written and narrated by our founder — SCORM-ready for your LMS, licensed per user band or owned outright.',
+      'A three-module cultural competence eLearning series — SCORM-ready for your LMS, licensed per user band or owned outright.',
     group: 'related'
   },
   {
