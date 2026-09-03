@@ -32,7 +32,7 @@ export const SERVICES: Service[] = [
     href: 'services/rap-health-check/',
     icon: 'compass',
     blurb:
-      'A two to three week independent review of an existing RAP — what has been delivered, what can be evidenced, and whether you are ready to renew.',
+      'An independent review of an existing RAP — what has been delivered, what can be evidenced, and whether you are ready to renew.',
     group: 'rap'
   },
   {
