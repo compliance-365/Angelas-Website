@@ -64,22 +64,18 @@ const covers = [
 const steps = [
   {
     title: 'Document review',
-    meta: 'Week 1',
     body: 'We review your current RAP, working group minutes, any progress reporting, and whatever evidence exists. This usually reveals the gap between what is assumed to have happened and what is documented.'
   },
   {
     title: 'Interviews',
-    meta: 'Weeks 1–2',
     body: 'Short conversations with your executive sponsor, working group members and a sample of action owners. Action owners are frequently the most useful, because they know what was actually delivered.'
   },
   {
     title: 'Assessment and findings',
-    meta: 'Week 2',
     body: 'We assess status against every commitment and produce a clear picture of where things genuinely stand — including where the news is not good.'
   },
   {
     title: 'Report and recommendations',
-    meta: 'Weeks 2–3',
     body: 'A written report with commitment-level status, governance findings, and a prioritised recovery plan, plus a session walking your team through it.'
   }
 ];
@@ -87,11 +83,11 @@ const steps = [
 const faqs = [
   {
     q: 'What is a RAP health check?',
-    a: 'A short, independent assessment of where your Reconciliation Action Plan actually stands — commitment by commitment. It covers what has been delivered, what can be evidenced, whether governance is functioning, the state of your stakeholder relationships, and whether you are positioned to renew or progress. It typically takes two to three weeks.'
+    a: 'A short, independent assessment of where your Reconciliation Action Plan actually stands — commitment by commitment. It covers what has been delivered, what can be evidenced, whether governance is functioning, the state of your stakeholder relationships, and whether you are positioned to renew or progress.'
   },
   {
     q: 'How long does a health check take?',
-    a: 'Usually two to three weeks from start to written report, depending on how many people we need to speak with and how readily available your existing documentation is.'
+    a: 'The time required to complete a health check will vary depending on the number of people we need to speak with, their availability to participate in meetings and respond to surveys, and how readily available the organisation’s existing documentation is.'
   },
   {
     q: 'Do we need a health check if our RAP is going well?',
@@ -115,7 +111,7 @@ const serviceSchema = {
   provider: { '@id': `${SITE.url}/#organization` },
   areaServed: { '@type': 'Country', name: 'Australia' },
   description:
-    'An independent two to three week assessment of an existing Reconciliation Action Plan — commitment-level delivery status, evidence position, governance health, stakeholder relationships and renewal readiness, with a prioritised recovery plan.'
+    'An independent assessment of an existing Reconciliation Action Plan — commitment-level delivery status, evidence position, governance health, stakeholder relationships and renewal readiness, with a prioritised recovery plan.'
 };
 
 const faqSchema = {
@@ -130,14 +126,14 @@ const faqSchema = {
 ---
 <BaseLayout
   title={`RAP Health Check: Independent RAP Review | ${SITE.name}`}
-  description="An independent two to three week review of your existing Reconciliation Action Plan — what has actually been delivered, what can be evidenced, whether governance is working, and whether you are ready to renew or progress."
+  description="An independent review of your existing Reconciliation Action Plan — what has actually been delivered, what can be evidenced, whether governance is working, and whether you are ready to renew or progress."
   canonical={`${SITE.url}/services/rap-health-check/`}
   schema={[serviceSchema, faqSchema]}
 >
   <Fragment slot="header"><Header /></Fragment>
 
   <PageHero
-    kicker="Two to three weeks · Fixed scope"
+    kicker="Independent review · Fixed scope"
     title="RAP Health Check"
     intro="An independent read on where your Reconciliation Action Plan actually stands — commitment by commitment. For organisations whose RAP has drifted, whose renewal is approaching, or who need an honest baseline before committing to anything."
     breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'RAP Health Check' }]}

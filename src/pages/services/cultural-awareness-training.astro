@@ -22,7 +22,7 @@ const modules = [
     subtitle: 'Understanding Indigenous History and Impact',
     theme: 'Building awareness through truth-telling',
     image: 'training/module-1-our-shared-past.jpg',
-    body: 'Establishes a foundational understanding of Aboriginal and Torres Strait Islander history, culture, and the legacy of colonisation. Learners are guided through thousands of years of cultural continuity and explore the disruptions caused by colonisation — from frontier violence to the Stolen Generations, and how these experiences continue to shape present-day realities.',
+    body: 'Establishes a foundational understanding of Aboriginal and Torres Strait Islander history, culture, and colonisation. Learners are guided through thousands of years of cultural continuity and explore the disruptions caused by colonisation — from frontier violence to the Stolen Generations, and how these experiences continue to shape present-day realities.',
     sections: [
       ['Pre-colonial Indigenous societies', 'Sophisticated systems of law, trade, kinship and environmental management across 250+ Nations and 600+ dialects.'],
       ['Connection to Country', 'Understanding that Country is not just land — it holds identity, spirituality and belonging.'],
@@ -103,11 +103,6 @@ const features = [
     body: 'Interactive modules supplied in SCORM format, so they upload straight into your existing learning management system and report completions the way the rest of your training does.'
   },
   {
-    icon: 'users',
-    title: 'Narrated by our founder',
-    body: 'Written and narrated throughout by the founder of 2Ways Consultancy, a proud Gooreng Gooreng woman. The voice teaching this content is the voice it belongs to.'
-  },
-  {
     icon: 'compass',
     title: 'Accessible on any device',
     body: 'Designed for desktop, tablet and mobile, so staff without a fixed desk can complete it in the same format as everyone else.'
@@ -116,11 +111,6 @@ const features = [
     icon: 'check',
     title: 'Knowledge checks and reflection points',
     body: 'Built-in checks and reflection prompts measure engagement rather than just completion — you can see that people worked through it, not only that they opened it.'
-  },
-  {
-    icon: 'spark',
-    title: 'Visually rich design',
-    body: 'Aboriginal artwork, interactive maps and motion graphics throughout, rather than narrated slides with stock photography.'
   },
   {
     icon: 'doc',
@@ -161,10 +151,6 @@ const faqs = [
   {
     q: 'Does this meet our RAP cultural learning commitment?',
     a: 'It is built for exactly that purpose and is suitable at every RAP level. What changes with RAP type is depth and reach: a Reflect RAP might commit to introducing cultural learning, while Stretch and Elevate RAPs are expected to show it is mandatory, ongoing and reaching the whole organisation. The reporting your LMS produces is the evidence for that commitment.'
-  },
-  {
-    q: 'Who wrote and narrated the content?',
-    a: 'Our founder, a proud Gooreng Gooreng woman with cultural connections to Country in the Bundaberg and Gladstone regions. The series draws on truth-telling, lived experience and contemporary leadership insight — it is not a course licensed from elsewhere and re-recorded.'
   },
   {
     q: 'What happens when the licence period ends?',
@@ -208,7 +194,7 @@ const faqSchema = {
 ---
 <BaseLayout
   title={`Cultural Competence eLearning Training | ${SITE.name}`}
-  description="A three-module Aboriginal and Torres Strait Islander cultural competence eLearning series, written and narrated by our founder. SCORM-compliant for your LMS, approximately 90 minutes, licensed per user band or owned outright."
+  description="A three-module Aboriginal and Torres Strait Islander cultural competence eLearning series, built on truth-telling and lived experience. SCORM-compliant for your LMS, licensed per user band or owned outright."
   canonical={`${SITE.url}/services/cultural-awareness-training/`}
   schema={[courseSchema, faqSchema]}
 >
@@ -217,7 +203,7 @@ const faqSchema = {
   <PageHero
     kicker="Cultural Competence eLearning Series"
     title="Cultural awareness training your team will actually finish"
-    intro="Three modules. About 90 minutes. Written and narrated by our founder, a proud Gooreng Gooreng woman — built on truth-telling and lived experience, and delivered as interactive eLearning you can run through your own LMS."
+    intro="Three modules — built on truth-telling and delivered as interactive eLearning you can run through your own LMS."
     breadcrumbs={[{ label: 'Services', href: 'services/rap/' }, { label: 'Cultural awareness training' }]}
   >
     <div class="mt-8 flex flex-wrap gap-3">
@@ -236,8 +222,8 @@ const faqSchema = {
       </p>
       <p>
         Most online cultural training fails for the same reasons: it is generic, bought off a shelf, and taught by
-        someone with no connection to the content. This series is written and narrated by our founder, and blends
-        truth-telling, lived experience and contemporary leadership insight. Every module includes interactive
+        someone with no connection to the content. This series blends truth-telling, lived experience and
+        contemporary leadership insight. Every module includes interactive
         activities, reflection exercises and knowledge checks designed to move learners from awareness into action.
       </p>
       <p>
@@ -328,7 +314,7 @@ const faqSchema = {
       <p class="kicker">Program features</p>
       <h2 class="mt-2 text-2xl md:text-3xl font-semibold">Built to drop into how you already train</h2>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+    <div class="grid sm:grid-cols-2 gap-6 mt-8">
       {features.map((f) => (
         <div class="grid-card">
           <span class="icon-soft"><Icon name={f.icon as any} size={20} /></span>
