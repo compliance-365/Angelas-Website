@@ -37,7 +37,7 @@ jobs:
 
       - name: Build
         env:
-          BASE_PATH: "/Angelas-Website"   # must match repo name (case-sensitive)
+          BASE_PATH: ""   # serving from the custom domain root, not a /reponame/ subpath
         run: npm run build
 
       - name: Upload artifact
