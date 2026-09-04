@@ -56,7 +56,7 @@ const menuInner = 'rounded-xl border border-white/10 bg-surface p-3 shadow-xl';
       class="hidden md:flex flex-col md:flex-row md:items-center gap-1 md:gap-6 text-base font-medium w-full md:w-auto py-4 md:py-0"
     >
       <!-- SERVICES -->
-      <li class="relative group md:static">
+      <li class="relative group">
         <button
           class="nav-dd-toggle flex w-full md:w-auto items-center justify-between md:justify-start gap-1 py-2 md:py-0"
           aria-expanded="false"
@@ -65,7 +65,7 @@ const menuInner = 'rounded-xl border border-white/10 bg-surface p-3 shadow-xl';
           Services
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
         </button>
-        <div id="services-menu" class={`nav-dd-panel ${menuPanel} md:left-1/2 md:right-auto md:-translate-x-1/2`}>
+        <div id="services-menu" class={`nav-dd-panel ${menuPanel} md:left-0 md:right-auto`}>
           <div class={`${menuInner} md:w-[560px] md:grid md:grid-cols-2 md:gap-5`}>
             <div>
               <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-brand-light">Reconciliation Action Plans</p>
