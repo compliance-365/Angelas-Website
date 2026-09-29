@@ -34,15 +34,6 @@ const problems = [
 
 const services = SERVICES;
 
-// Ported from the live site (2waysconsultancy.com.au) — real figures, not
-// invented. Keep in sync if the business updates them.
-const stats = [
-  { value: '35', label: 'Reconciliation Action Plans', sub: 'guided across diverse sectors' },
-  { value: '210', label: 'Cultural competence workshops', sub: 'delivered to organisations of all sizes' },
-  { value: '1,500', label: 'Hours of consulting support', sub: 'provided to clients for lasting outcomes' },
-  { value: '98%', label: 'Client satisfaction rate', sub: 'reflecting our commitment to excellence' }
-];
-
 const testimonials = [
   {
     quote: 'The Reconciliation Action Plan developed by 2Ways has been instrumental in guiding our company’s efforts towards reconciliation. Their professional approach and comprehensive support made the entire process seamless.',
@@ -291,21 +282,6 @@ const faqSchema = {
           </p>
         </div>
         <a href={`${base}rap-delivery-framework/`} class="btn-outline shrink-0">See the framework</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <section class="section">
-    <div class="rounded-2xl border border-white/10 bg-surface p-8 md:p-10">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {stats.map((s) => (
-          <div>
-            <p class="stat-value">{s.value}</p>
-            <p class="mt-2 font-semibold text-sm">{s.label}</p>
-            <p class="mt-1 text-xs text-white/55 leading-relaxed">{s.sub}</p>
-          </div>
-        ))}
       </div>
     </div>
   </section>

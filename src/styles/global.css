@@ -138,9 +138,6 @@
   .link-arrow svg, .link-arrow span[data-arrow] { @apply transition-transform; }
   .link-arrow:hover svg, .link-arrow:hover span[data-arrow] { transform: translateX(3px); }
 
-  /* Large display figure used in stat bands. */
-  .stat-value { @apply text-4xl md:text-5xl font-extrabold tabular-nums leading-none; color: var(--brand-aqua); }
-
   /* CTA banner */
   .cta-banner { @apply rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4; background: var(--brand-aqua); color: var(--brand-dark); }
 
