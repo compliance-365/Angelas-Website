@@ -9,7 +9,7 @@
   var KINDS = ['plans', 'deliverables', 'dates', 'members', 'meetings'];
 
   /* ---------------- demo ---------------- */
-  var DEMO_KEY = 'rap-demo-v1';
+  var DEMO_KEY = 'rap-demo-v2';
   function seed() {
     var start = '2026-03-01', end = L.defaultEnd('innovate', start);
     var del = L.buildDeliverables('innovate', start, end);
@@ -20,6 +20,22 @@
       if (d.due < '2026-08-01') { d.status = 'Complete'; d.completed = d.due; d.notes = 'Done on time.'; }
       else if (d.due < '2026-12-31') d.status = i % 3 === 0 ? 'Not started' : 'In progress';
     });
+    /* Demo budgets (AUD), keyed by words in the deliverable: made up for
+       the demo, not a guide to what a RAP costs. */
+    var BUDGETS = [[/NRW event/, 2500, 'RWG members, half a day each'], [/Circulate Reconciliation/, 500, 'Communications lead, 4 hours'],
+      [/cultural learning strategy/, 15000, 'People and culture lead; external cultural learning provider'], [/review of cultural learning needs/, 3000, 'People and culture lead, 2 days'],
+      [/NAIDOC Week\. \(/, 2000, 'Communications lead; staff volunteers'], [/Supply Nation/, 4500, 'Procurement lead, 3 days; Supply Nation membership'],
+      [/engagement plan/, 6000, 'RAP Champion; local Aboriginal community-controlled organisation, paid for their time'],
+      [/business case for Aboriginal/, 2500, 'People and culture lead, 3 days'], [/Terms of Reference/, 1000, 'RAP Champion, 1 day; venue and catering for the first meeting']];
+    del.forEach(function (d) {
+      var hit = BUDGETS.find(function (b) { return b[0].test(d.deliverable); });
+      if (!hit) return;
+      d.budget = String(hit[1]); d.resources = hit[2];
+      if (d.status === 'Complete') d.spent = String(Math.round(hit[1] * 0.9));
+      else if (d.status === 'In progress') d.spent = String(Math.round(hit[1] * 0.4));
+    });
+    var overrun = del.find(function (d) { return /NRW event/.test(d.deliverable) && d.status === 'Complete'; });
+    if (overrun) { overrun.spent = '3100'; overrun.notes = 'Catering and transport cost more than planned.'; }
     var late = del.find(function (d) { return d.status === 'Complete' && d.area === 'Respect'; });
     if (late) { late.status = 'In progress'; late.completed = ''; late.notes = 'Waiting on the training provider.'; }
     return {
@@ -98,6 +114,7 @@
     if (c.type === 'text') d.text = {};
     else if (c.type === 'note') d.text = { allowMultipleLines: true, linesForEditing: 6 };
     else if (c.type === 'choice') d.choice = { choices: c.choices, displayAs: 'dropDownMenu' };
+    else if (c.type === 'number') d.number = { decimalPlaces: 'two' };
     return d;
   }
 
@@ -111,12 +128,24 @@
       var byName = {}; (existing.value || []).forEach(function (l) { byName[l.displayName] = l.id; });
       for (var i = 0; i < KINDS.length; i++) {
         var k = KINDS[i], def = L.LISTS[k];
-        if (byName[def.title]) { listIds[k] = byName[def.title]; continue; }
+        if (byName[def.title]) { listIds[k] = byName[def.title]; await addMissingColumns(listIds[k], def, progress); continue; }
         if (progress) progress('Creating the ' + def.title + ' list');
         var made = await graph('POST', '/sites/' + siteId + '/lists', { displayName: def.title, columns: def.columns.map(columnDef), list: { template: 'genericList' } });
         listIds[k] = made.id;
       }
       return site.displayName;
+    }
+    /* A list made by an earlier version is brought up to date: any column
+       added since (such as Budget, Spent and Resources) is created. */
+    async function addMissingColumns(listId, def, progress) {
+      var cols = await graph('GET', '/sites/' + siteId + '/lists/' + listId + '/columns?$select=name&$top=200');
+      var have = {}; (cols.value || []).forEach(function (c) { have[c.name] = true; });
+      for (var j = 0; j < def.columns.length; j++) {
+        var c = def.columns[j];
+        if (have[c.name]) continue;
+        if (progress) progress('Adding the ' + c.name + ' column to ' + def.title);
+        await graph('POST', '/sites/' + siteId + '/lists/' + listId + '/columns', columnDef(c));
+      }
     }
     async function items(kind) {
       var out = [], path = '/sites/' + siteId + '/lists/' + listIds[kind] + '/items?expand=fields&$top=999';
@@ -137,7 +166,7 @@
         return data;
       },
       create: async function (kind, rec) {
-        var fields = L.toFields(kind, rec); Object.keys(fields).forEach(function (k) { if (fields[k] === '') delete fields[k]; });
+        var fields = L.toFields(kind, rec); Object.keys(fields).forEach(function (k) { if (fields[k] === '' || fields[k] === null) delete fields[k]; });
         var made = await graph('POST', '/sites/' + siteId + '/lists/' + listIds[kind] + '/items', { fields: fields });
         return Object.assign({}, rec, { id: String(made.id) });
       },

@@ -90,9 +90,25 @@
         return '<tr><td>' + fmt(d.date) + (d.end && d.end !== d.date ? ' to ' + fmt(d.end) : '') + '</td><td>' + esc(d.title) + (d.estimate ? ' <span class="est">date to confirm</span>' : '') + '</td></tr>';
       }).join('') + '</tbody></table>' : '<p class="empty">Nothing scheduled.</p>') + '</div>' +
       '</div>' +
+      budgetCard() +
       '<div class="card" style="margin-top:14px"><h3>Overdue</h3>' + list(s.overdue, 'Nothing is overdue.') + '</div>' +
       '<div class="card" style="margin-top:14px"><h3>Due in the next 30 days</h3>' + list(s.dueSoon, 'Nothing is due in the next 30 days.') + '</div>' +
       (s.noOwner.length ? '<div class="card" style="margin-top:14px"><h3>No owner yet</h3>' + list(s.noOwner, '') + '</div>' : '');
+  }
+
+  function budgetCard() {
+    var b = L.budgetSummary(data.deliverables);
+    if (!b.budgeted) return '<div class="card" style="margin-top:14px"><h3>Budget</h3><p class="empty">No budgets set yet. Open a deliverable to add its budget, spend and resources.</p></div>';
+    var max = Math.max.apply(null, b.areas.map(function (a) { return Math.max(a.budget, a.spent); }).concat([1]));
+    return '<div class="card" style="margin-top:14px"><h3>Budget</h3>' +
+      '<div class="grid g4 budget-kpis"><div class="kpi"><b>' + L.aud(b.budget) + '</b><span>budgeted</span></div><div class="kpi"><b>' + L.aud(b.spent) + '</b><span>spent (' + b.pctSpent + '%)</span></div>' +
+      '<div class="kpi"><b class="' + (b.remaining < 0 ? 'late' : '') + '">' + L.aud(b.remaining) + '</b><span>remaining</span></div><div class="kpi"><b class="' + (b.over.length ? 'late' : '') + '">' + b.over.length + '</b><span>over budget</span></div></div>' +
+      b.areas.map(function (a) {
+        return '<div class="area-row"><div class="top"><span>' + a.area + '</span><span class="muted">' + (a.budget || a.spent ? L.aud(a.spent) + ' of ' + L.aud(a.budget) : 'No budget set') + '</span></div>' +
+          '<div class="bar budget-bar"><i class="budget-plan" style="width:' + Math.round(100 * a.budget / max) + '%"></i><i class="budget-spent' + (a.spent > a.budget ? ' over' : '') + '" style="width:' + Math.round(100 * a.spent / max) + '%"></i></div></div>';
+      }).join('') +
+      (b.over.length ? '<p class="small"><span class="late">Over budget:</span> ' + b.over.map(function (d) { return '<button class="lnk" data-edit="' + esc(d.id) + '">' + esc(d.ref) + '</button>'; }).join(', ') + '</p>' : '') +
+      '<p class="small muted">' + b.unbudgeted + ' deliverable' + (b.unbudgeted === 1 ? ' has' : 's have') + ' no budget set. ' + b.withResources + ' list' + (b.withResources === 1 ? 's' : '') + ' the people or resources assigned.</p></div>';
   }
 
   /* ---------- deliverables ---------- */
@@ -103,18 +119,23 @@
         (!q || (d.deliverable + ' ' + d.action + ' ' + d.owner + ' ' + d.ref).toLowerCase().indexOf(q) > -1);
     }).sort(function (a, b) { return a.due < b.due ? -1 : a.due > b.due ? 1 : 0; });
     var opt = function (vals, cur, all) { return '<option value="">' + all + '</option>' + vals.map(function (v) { return '<option' + (v === cur ? ' selected' : '') + '>' + esc(v) + '</option>'; }).join(''); };
-    return '<div class="vhead"><h1>Deliverables</h1><p>Every deliverable in the current RAP. Select one to update its status, owner, notes and evidence.</p></div>' +
+    return '<div class="vhead"><h1>Deliverables</h1><p>Every deliverable in the current RAP. Select one to update its status, owner, budget, resources, notes and evidence.</p></div>' +
       '<div class="filters"><select data-filter="area" aria-label="Area">' + opt(L.AREAS, filters.area, 'All areas') + '</select>' +
       '<select data-filter="status" aria-label="Status">' + opt(L.STATUSES, filters.status, 'All statuses') + '</select>' +
       '<input data-filter="q" type="search" placeholder="Search" value="' + esc(filters.q) + '" aria-label="Search deliverables">' +
       '<button class="btn ghost sm" data-act="add-deliverable">Add a deliverable</button></div>' +
-      '<div class="card"><table><thead><tr><th>Ref</th><th>Area</th><th>Deliverable</th><th>Due</th><th>Owner</th><th>Status</th></tr></thead><tbody>' +
+      '<div class="card"><table><thead><tr><th>Ref</th><th>Area</th><th>Deliverable</th><th>Due</th><th>Owner</th><th class="num">Budget</th><th>Status</th></tr></thead><tbody>' +
       (rows.length ? rows.map(function (d) {
-        return '<tr class="click" data-edit="' + esc(d.id) + '"><td>' + esc(d.ref) + '</td><td>' + esc(d.area) + '</td><td>' + esc(d.deliverable) + (d.evidence ? ' <span class="small muted">· evidence</span>' : '') + '</td><td class="nw ' + (L.isOpen(d) && d.due < t ? 'late' : '') + '">' + fmt(d.due) + '</td><td>' + esc(d.owner || '') + '</td><td>' + pill(d.status) + '</td></tr>';
-      }).join('') : '<tr><td colspan="6" class="empty">No deliverables match.</td></tr>') + '</tbody></table></div>';
+        return '<tr class="click" data-edit="' + esc(d.id) + '"><td>' + esc(d.ref) + '</td><td>' + esc(d.area) + '</td><td>' + esc(d.deliverable) + (d.evidence ? ' <span class="small muted">· evidence</span>' : '') + '</td><td class="nw ' + (L.isOpen(d) && d.due < t ? 'late' : '') + '">' + fmt(d.due) + '</td><td>' + esc(d.owner || '') + '</td><td class="num nw">' + budgetCell(d) + '</td><td>' + pill(d.status) + '</td></tr>';
+      }).join('') : '<tr><td colspan="7" class="empty">No deliverables match.</td></tr>') + '</tbody></table></div>';
+  }
+  function budgetCell(d) {
+    var b = L.amount(d.budget), sp = L.amount(d.spent);
+    if (b == null && sp == null) return '<span class="muted">–</span>';
+    return (sp != null ? '<span class="' + (b != null && sp > b ? 'late' : '') + '">' + L.aud(sp) + '</span> of ' : '') + (b != null ? L.aud(b) : 'no budget');
   }
   function editDeliverable(id) {
-    var d = id ? data.deliverables.find(function (x) { return x.id === id; }) : { ref: 'D-' + String(data.deliverables.length + 1).padStart(3, '0'), area: 'Relationships', action: '', deliverable: '', due: today(), role: '', owner: '', status: 'Not started', notes: '', evidence: '' };
+    var d = id ? data.deliverables.find(function (x) { return x.id === id; }) : { ref: 'D-' + String(data.deliverables.length + 1).padStart(3, '0'), area: 'Relationships', action: '', deliverable: '', due: today(), role: '', owner: '', status: 'Not started', notes: '', evidence: '', budget: '', spent: '', resources: '' };
     if (!d) return;
     var sel = function (name, vals, cur) { return '<select name="' + name + '">' + vals.map(function (v) { return '<option' + (v === cur ? ' selected' : '') + '>' + esc(v) + '</option>'; }).join('') + '</select>'; };
     modal('<h2 id="modalTitle">' + esc(d.ref) + (id ? '' : ' (new)') + '</h2>' +
@@ -124,6 +145,8 @@
       '<div class="grid g2"><div><label>Area</label>' + sel('area', L.AREAS, d.area) + '</div><div><label>Status</label>' + sel('status', L.STATUSES, d.status) + '</div>' +
       '<div><label>Due</label><input type="date" name="due" value="' + esc(d.due) + '"></div><div><label>Owner</label><input name="owner" value="' + esc(d.owner) + '"></div></div>' +
       '<label>Responsible role</label><input name="role" value="' + esc(d.role) + '">' +
+      '<div class="grid g2"><div><label for="dBudget">Budget (AUD)</label><input id="dBudget" name="budget" inputmode="decimal" placeholder="e.g. 5000" value="' + esc(d.budget) + '"></div><div><label for="dSpent">Spent to date (AUD)</label><input id="dSpent" name="spent" inputmode="decimal" placeholder="e.g. 1200" value="' + esc(d.spent) + '"></div></div>' +
+      '<label for="dResources">Resources (people, hours, partners or in-kind support)</label><textarea id="dResources" name="resources" placeholder="e.g. 2 RWG members, 10 hours; local Land Council to co-design">' + esc(d.resources) + '</textarea>' +
       '<label>Progress notes</label><textarea name="notes">' + esc(d.notes) + '</textarea>' +
       '<label>Evidence links (one per line, e.g. a SharePoint link to photos, minutes or a report)</label><textarea name="evidence">' + esc(d.evidence) + '</textarea>' +
       '<div class="row-actions"><button class="btn" type="submit">Save</button><button class="btn ghost" type="button" data-act="close">Cancel</button>' +
@@ -131,7 +154,10 @@
     $('dForm').onsubmit = function (e) {
       e.preventDefault();
       var f = new FormData(e.target), rec = Object.assign({}, d);
-      ['deliverable', 'action', 'area', 'status', 'due', 'owner', 'role', 'notes', 'evidence'].forEach(function (k) { rec[k] = String(f.get(k) || '').trim(); });
+      ['deliverable', 'action', 'area', 'status', 'due', 'owner', 'role', 'notes', 'evidence', 'budget', 'spent', 'resources'].forEach(function (k) { rec[k] = String(f.get(k) || '').trim(); });
+      var bad = ['budget', 'spent'].filter(function (k) { return rec[k] && L.amount(rec[k]) == null; });
+      if (bad.length) return toast('Enter the ' + (bad[0] === 'budget' ? 'budget' : 'amount spent') + ' as a number of dollars, for example 5000.');
+      ['budget', 'spent'].forEach(function (k) { if (rec[k]) rec[k] = String(L.amount(rec[k])); });
       if (rec.status === 'Complete' && d.status !== 'Complete') rec.completed = today();
       if (rec.status !== 'Complete') rec.completed = '';
       closeModal();

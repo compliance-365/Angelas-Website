@@ -93,12 +93,50 @@ describe('summary and report', () => {
   });
 });
 
+describe('budget and resources', () => {
+  const d = [
+    { ref: 'D-1', area: 'Relationships', status: 'Complete', budget: '2500', spent: '3100', resources: 'RWG' },
+    { ref: 'D-2', area: 'Respect', status: 'In progress', budget: '$15,000', spent: '6000', resources: '' },
+    { ref: 'D-3', area: 'Respect', status: 'Not started', budget: '', spent: '' },
+    { ref: 'D-4', area: 'Governance', status: 'Deferred', budget: '9999', spent: '' }
+  ];
+  test('totals budget and spend, by area, leaving out deferred deliverables', () => {
+    const b = L.budgetSummary(d);
+    assert.equal(b.budget, 17500);
+    assert.equal(b.spent, 9100);
+    assert.equal(b.remaining, 8400);
+    assert.equal(b.pctSpent, 52);
+    assert.deepEqual(b.areas.find((a) => a.area === 'Respect'), { area: 'Respect', budget: 15000, spent: 6000 });
+    assert.equal(b.budgeted, 2);
+    assert.equal(b.unbudgeted, 1);
+    assert.equal(b.withResources, 1);
+  });
+  test('flags a deliverable that has spent more than its budget', () => {
+    assert.deepEqual(L.budgetSummary(d).over.map((x) => x.ref), ['D-1']);
+  });
+  test('a blank budget is "not set", which is different from $0', () => {
+    assert.equal(L.amount(''), null);
+    assert.equal(L.amount('0'), 0);
+    assert.equal(L.amount('$4,500'), 4500);
+    assert.equal(L.amount('lots'), null);
+  });
+  test('the progress report has a budget section', () => {
+    const r = L.progressReport({ name: 'Acme', type: 'innovate', start: '2026-01-01', end: '2028-01-01' }, d, [], '2026-06-01');
+    const sec = r.find((x) => x.heading === 'Budget and resources');
+    assert.match(sec.lines[0], /^\$17,500 budgeted across 2 deliverables; \$9,100 spent \(52%\), \$8,400 remaining\.$/);
+    assert.ok(sec.lines.includes('D-1 has spent $3,100 against a budget of $2,500.'));
+    assert.ok(sec.lines.includes('1 deliverable has no budget set.'));
+  });
+});
+
 describe('SharePoint mapping', () => {
   test('a deliverable round-trips through list fields, dates as ISO text', () => {
-    const rec = { deliverable: 'Hold an NRW event', ref: 'D-007', area: 'Relationships', action: 'Build relationships', due: '2026-06-03', role: 'Comms', owner: 'J', status: 'In progress', completed: '', notes: 'n', evidence: 'https://x' };
+    const rec = { deliverable: 'Hold an NRW event', ref: 'D-007', area: 'Relationships', action: 'Build relationships', due: '2026-06-03', role: 'Comms', owner: 'J', status: 'In progress', completed: '', notes: 'n', evidence: 'https://x', budget: '2500', spent: '', resources: '2 RWG members' };
     const f = L.toFields('deliverables', rec);
     assert.equal(f.Title, 'Hold an NRW event');
     assert.equal(f.DueDate, '2026-06-03');
+    assert.equal(f.Budget, 2500, 'stored as a number');
+    assert.equal(f.Spent, null, 'blank clears the number');
     assert.deepEqual(L.fromFields('deliverables', f, 12), Object.assign({ id: '12' }, rec));
   });
   test('the RAP type is stored by name and read back as its key', () => {

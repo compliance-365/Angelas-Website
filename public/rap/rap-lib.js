@@ -114,7 +114,7 @@
           ref: 'D-' + String(n).padStart(3, '0'),
           area: t.area, action: t.action,
           deliverable: t.deliverable + (d.year ? ' (' + d.year + ')' : ''),
-          due: d.due, role: t.role, owner: '', status: 'Not started', notes: '', evidence: ''
+          due: d.due, role: t.role, owner: '', status: 'Not started', notes: '', evidence: '', budget: '', spent: '', resources: ''
         });
       });
     });
@@ -162,6 +162,32 @@
     };
   }
 
+  /* Money in AUD. Blank means "no budget set", which is different from $0. */
+  function amount(v) { var n = Number(String(v == null ? '' : v).replace(/[$,\s]/g, '')); return String(v == null ? '' : v).trim() !== '' && isFinite(n) ? n : null; }
+  function aud(n) { return n == null ? '' : '$' + Math.round(n).toLocaleString('en-AU'); }
+
+  /* Budget against deliverables: totals, each area, and the deliverables
+     that have spent more than their budget. Deferred deliverables are
+     left out, as they are in the completion figures. */
+  function budgetSummary(deliverables) {
+    var list = (deliverables || []).filter(function (d) { return d.status !== 'Deferred'; });
+    var sum = function (rows, k) { return rows.reduce(function (t, d) { var n = amount(d[k]); return t + (n || 0); }, 0); };
+    var budgeted = list.filter(function (d) { return amount(d.budget) != null; });
+    var areas = AREAS.map(function (a) {
+      var rows = list.filter(function (d) { return d.area === a; });
+      return { area: a, budget: sum(rows, 'budget'), spent: sum(rows, 'spent') };
+    });
+    var over = list.filter(function (d) { var b = amount(d.budget), sp = amount(d.spent); return b != null && sp != null && sp > b; });
+    var budget = sum(list, 'budget'), spent = sum(list, 'spent');
+    return {
+      budget: budget, spent: spent, remaining: budget - spent,
+      pctSpent: budget ? Math.round(100 * spent / budget) : 0,
+      budgeted: budgeted.length, unbudgeted: list.length - budgeted.length,
+      withResources: list.filter(function (d) { return String(d.resources || '').trim(); }).length,
+      areas: areas, over: over
+    };
+  }
+
   /* Where the RAP is in its term. */
   function termProgress(rap, today) {
     if (!rap || !rap.start || !rap.end) return null;
@@ -185,6 +211,14 @@
     var recent = (deliverables || []).filter(function (d) { return d.status === 'Complete' && (!d.completed || d.completed >= yearAgo); });
     sections.push({ heading: 'Achievements', lines: recent.length ? recent.map(function (d) { return d.ref + ': ' + d.deliverable + (d.notes ? ' Note: ' + d.notes : ''); }) : ['No deliverables have been completed yet.'] });
     sections.push({ heading: 'Overdue and at risk', lines: s.overdue.length ? s.overdue.map(function (d) { return d.ref + ': ' + d.deliverable + ' Due ' + d.due + ', ' + (d.owner ? 'owner ' + d.owner : 'no owner') + '.'; }) : ['Nothing is overdue.'] });
+    var b = budgetSummary(deliverables);
+    var money = b.budgeted ? [
+      aud(b.budget) + ' budgeted across ' + b.budgeted + ' deliverable' + (b.budgeted === 1 ? '' : 's') + '; ' + aud(b.spent) + ' spent (' + b.pctSpent + '%), ' + aud(b.remaining) + ' remaining.'
+    ].concat(b.areas.filter(function (a) { return a.budget || a.spent; }).map(function (a) { return a.area + ': ' + aud(a.spent) + ' spent of ' + aud(a.budget) + '.'; }))
+     .concat(b.over.map(function (d) { return d.ref + ' has spent ' + aud(amount(d.spent)) + ' against a budget of ' + aud(amount(d.budget)) + '.'; }))
+     .concat(b.unbudgeted ? [b.unbudgeted + ' deliverable' + (b.unbudgeted === 1 ? ' has' : 's have') + ' no budget set.'] : [])
+      : ['No budgets have been set against deliverables yet.'];
+    sections.push({ heading: 'Budget and resources', lines: money });
     var mtgs = (meetings || []).filter(function (m) { return m.date >= yearAgo && m.date <= today; });
     sections.push({ heading: 'RAP Working Group', lines: [mtgs.length + ' meeting' + (mtgs.length === 1 ? '' : 's') + ' held in the last 12 months' + (mtgs.length < 4 ? ', below the four a year the RAP commits to.' : '.')] });
     return sections;
@@ -209,7 +243,8 @@
       { name: 'ResponsibleRole', type: 'text' }, { name: 'Owner', type: 'text' },
       { name: 'Status', type: 'choice', choices: STATUSES },
       { name: 'CompletedDate', type: 'text' },
-      { name: 'ProgressNotes', type: 'note' }, { name: 'EvidenceLinks', type: 'note' }
+      { name: 'ProgressNotes', type: 'note' }, { name: 'EvidenceLinks', type: 'note' },
+      { name: 'Budget', type: 'number' }, { name: 'Spent', type: 'number' }, { name: 'Resources', type: 'note' }
     ] },
     dates: { title: 'RAP Key Dates', columns: [
       { name: 'EventDate', type: 'text' }, { name: 'Notes', type: 'note' }
@@ -226,17 +261,19 @@
   /* Record <-> SharePoint fields, one pair per list. */
   var MAP = {
     plans: { name: 'Title', type: 'RapType', start: 'StartDate', end: 'EndDate', status: 'RapStatus', endorsed: 'EndorsedDate', link: 'PublishedLink' },
-    deliverables: { deliverable: 'Title', ref: 'Ref', area: 'Area', action: 'RapAction', due: 'DueDate', role: 'ResponsibleRole', owner: 'Owner', status: 'Status', completed: 'CompletedDate', notes: 'ProgressNotes', evidence: 'EvidenceLinks' },
+    deliverables: { deliverable: 'Title', ref: 'Ref', area: 'Area', action: 'RapAction', due: 'DueDate', role: 'ResponsibleRole', owner: 'Owner', status: 'Status', completed: 'CompletedDate', notes: 'ProgressNotes', evidence: 'EvidenceLinks', budget: 'Budget', spent: 'Spent', resources: 'Resources' },
     dates: { title: 'Title', date: 'EventDate', notes: 'Notes' },
     members: { name: 'Title', role: 'MemberRole', email: 'Email', joined: 'JoinedDate' },
     meetings: { title: 'Title', date: 'MeetingDate', attendees: 'Attendees', minutes: 'Minutes', decisions: 'Decisions' }
   };
   var DATE_KEYS = { start: 1, end: 1, endorsed: 1, due: 1, completed: 1, date: 1, joined: 1 };
+  var NUMBER_KEYS = { budget: 1, spent: 1 };
   function toFields(kind, rec) {
     var m = MAP[kind], f = {};
     Object.keys(m).forEach(function (k) {
       if (rec[k] === undefined) return;
       var v = rec[k];
+      if (NUMBER_KEYS[k]) v = amount(v);
       if (kind === 'plans' && k === 'type') v = (RAP_TYPES[v] || {}).name || v;
       f[m[k]] = v;
     });
@@ -248,6 +285,7 @@
       var v = fields[m[k]];
       if (v == null) v = '';
       if (DATE_KEYS[k] && v) v = String(v).slice(0, 10);
+      if (NUMBER_KEYS[k]) v = v === '' ? '' : String(v);
       if (kind === 'plans' && k === 'type') v = String(v).toLowerCase();
       rec[k] = v;
     });
@@ -265,6 +303,6 @@
     TEMPLATE: TEMPLATE, LISTS: LISTS, MAP: MAP,
     addMonths: addMonths, daysBetween: daysBetween, defaultEnd: defaultEnd, eventDates: eventDates,
     buildDeliverables: buildDeliverables, keyDates: keyDates, summary: summary, termProgress: termProgress,
-    progressReport: progressReport, toFields: toFields, fromFields: fromFields, siteRef: siteRef, isOpen: isOpen
+    progressReport: progressReport, budgetSummary: budgetSummary, amount: amount, aud: aud, toFields: toFields, fromFields: fromFields, siteRef: siteRef, isOpen: isOpen
   };
 }));
