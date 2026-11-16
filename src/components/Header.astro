@@ -112,20 +112,16 @@ const menuInner = 'rounded-xl border border-white/10 bg-surface p-3 shadow-xl';
             <!-- Only from 768px to 1023px, where the top-level RAP Tracker item
                  is hidden for lack of room, so the tracker is listed once at
                  every width. -->
-            <li class="hidden md:block lg:hidden"><a href={`${base}rap/`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">RAP Tracker (prototype)</a></li>
+            <li class="hidden md:block lg:hidden"><a href={`${base}rap/`} class="block rounded-lg px-3 py-2 text-sm hover:bg-white/10">RAP Tracker</a></li>
           </ul>
         </div>
       </li>
 
       <!-- The RAP Tracker is a static app in public/rap/, not an Astro page,
-           so it is linked here directly. Labelled a prototype until it saves
-           to SharePoint. Hidden from 768px to 1023px, where the bar has no
+           so it is linked here directly. Hidden from 768px to 1023px, where the bar has no
            room for a seventh item; Resources lists it at those widths only. -->
       <li class="md:hidden lg:block">
-        <a href={`${base}rap/`} class="flex items-center gap-2 py-2 md:py-0 whitespace-nowrap">
-          RAP Tracker
-          <span class="md:hidden xl:inline-block rounded-full border border-brand-light/50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-light">Prototype</span>
-        </a>
+        <a href={`${base}rap/`} class="block py-2 md:py-0 whitespace-nowrap">RAP Tracker</a>
       </li>
       <li><a href={`${base}pricing/`} class="block py-2 md:py-0">Pricing</a></li>
       <li><a href={`${base}about/`} class="block py-2 md:py-0">About</a></li>
